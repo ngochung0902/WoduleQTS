@@ -1,0 +1,78 @@
+<resources>
+
+    <!--ActLogin-->
+    <string name="app_name">Wodule</string>
+    <string name="Secured">Secured connection</string>
+    <string name="Please">Please sign in:</string>
+    <string name="Register">Register / New User</string>
+    <string name="Forgot">Forgot your password?</string>
+    <string name="License">License Agreement</string>
+    <string name="hintUsername">Username</string>
+    <string name="hintPassword">Password</string>
+    <string name="Submit">Submit</string>
+
+    <!--ActLicense-->
+    <string name="LICENSE">LICENSE AGREEMENT</string>
+    <string name="textLICENSE">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <!--Profile-->
+    <string name="NEW">NEW USER</string>
+    <string name="Profile">Profile</string>
+    <string name="hintFirst">First name</string>
+    <string name="hintMiddle">Middle name</string>
+    <string name="hintLast">Last name</string>
+    <string name="hintNative">Native name</string>
+    <string name="hintSuffix">Suffix</string>
+    <string name="Display">Display last name first name</string>
+    <string name="Date">Date of birth</string>
+    <string name="Country">Country of birth</string>
+
+    <!--Profile1-->
+    <string name="hintResidence">Residence Address</string>
+    <string name="hintCity">City</string>
+    <string name="hintCountry">Country</string>
+    <string name="hintTelephone">Telephone</string>
+    <string name="hintEmail">Email</string>
+    <string name="hintNationality">Nationality</string>
+    <string name="hintEthnility">Ethnility</string>
+
+    <!--Profile2-->
+    <string name="hintStatus">Status</string>
+    <string name="hintReligion">Religion</string>
+    <string name="hintGender">Gender</string>
+    <string name="hintCode">Code</string>
+
+    <!--Profile3-->
+    <string name="SUBMIT">SUBMIT</string>
+    <string name="RESET">RESET</string>
+
+    <!--check-->
+    <string name="check_login_fb">We couldn\'t connect your Facebook account. Please try later or check you Facebook account.</string>
+    <string name="check_fname">First name is invalid</string>
+    <string name="check_mname">Middle name is invalid</string>
+    <string name="check_lname">Last name is invalid</string>
+    <string name="check_nativename">Native name is invalid</string>
+    <string name="check_password">Password is invalid</string>
+    <string name="check_dateofbirth">Date of birth is invalid</string>
+    <string name="check_country_of_birth">Country of birth is invalid</string>
+    <string name="check_city">City is invalid</string>
+    <string name="check_country">Country is invalid</string>
+    <string name="check_telephone">Phone number is invalid</string>
+    <string name="check_nationality">Nationality is invalid</string>
+    <string name="check_status">Status is invalid</string>
+    <string name="check_gender">Gender is invalid</string>
+    <string name="check_code">Code is invalid</string>
+    <string name="check_username">User name is invalid</string>
+    <string name="check_email">Email is invalid</string>
+    <string name="check_suffx">Suffx is invalid</string>
+    <string name="check_infirst">Infirst is invalid</string>
+    <string name="check_address">Address is invalid</string>
+    <string name="check_ethnicity">Ethnicity is invalid</string>
+    <string name="check_religion">Religion is invalid</string>
+    <string name="check_Picture">Picture is invalid</string>
+    <string name="check_school">School is invalid</string>
+    <string name="check_class">Class is invalid</string>
+    <string name="check_advise">Adviser is invalid</string>
+
+    <string name="check_network">Network is disconnect.</string>
+</resources>
