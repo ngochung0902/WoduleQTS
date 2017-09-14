@@ -51,13 +51,19 @@ public class FrmProfile1 extends Fragment {
         ivNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setProfile();
-                FrmProfile2 fragment1 = new FrmProfile2();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
-                fragmentTransaction.commit();
-                QTSHelp.setIsEdit(getActivity(),false);
+                if (checkValid().equalsIgnoreCase("isOk"))
+                {
+                    setProfile();
+                    FrmProfile2 fragment1 = new FrmProfile2();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
+                    fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
+                    fragmentTransaction.commit();
+                    QTSHelp.setIsEdit(getActivity(),false);
+                }
+                else QTSHelp.ShowpopupMessage(getActivity(),checkValid());
+
             }
         });
 
@@ -71,18 +77,18 @@ public class FrmProfile1 extends Fragment {
         edNational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCountry();
+                selectNational();
             }
         });
-
-        setProfile();
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                QTSHelp.setIsEdit(getActivity(),true);
                 FrmProfile fragment1 = new FrmProfile();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.anim_enter1, R.anim.anim_exit1);
                 fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
                 fragmentTransaction.commit();
 
@@ -97,7 +103,6 @@ public class FrmProfile1 extends Fragment {
         Gson gson = new Gson();
         String json = appSharedPrefs.getString("MyObject", "");
         User obj = gson.fromJson(json, User.class);
-        Log.e("GsonObject",obj.getFirst_name()+""+obj.getMiddle_name());
         edAddress.setText(String.valueOf(obj.getResidence_address()));
         edAddress2.setText(String.valueOf(obj.getVd1()));
         edAddress3.setText(String.valueOf(obj.getVd2()));
@@ -107,28 +112,29 @@ public class FrmProfile1 extends Fragment {
         edEthn.setText(String.valueOf(obj.getEthnility()));
         edCountry.setText(String.valueOf(obj.getCountry()));
         edNational.setText(String.valueOf(obj.getNationality()));
+        Log.e("testuser",obj.getFirst_name()+obj.getMiddle_name());
+        Log.e("testuser",obj.getResidence_address()+obj.getVd1());
     }
 
     private void setProfile() {
-        User newUser = new User();
-        newUser.setResidence_address(edAddress.getText().toString());
-        newUser.setVd1(edAddress2.getText().toString());
-        newUser.setVd2(edAddress3.getText().toString());
-        newUser.setCity(edCity.getText().toString());
-        newUser.setCountry(edCountry.getText().toString());
-        newUser.setTelephone(edPhone.getText().toString());
-        newUser.setEmail(edEmail.getText().toString());
-        newUser.setNationality(edNational.getText().toString());
-        newUser.setEthnility(edEthn.getText().toString());
+        FrmProfile.newUser.setResidence_address(edAddress.getText().toString());
+        FrmProfile.newUser.setVd1(edAddress2.getText().toString());
+        FrmProfile.newUser.setVd2(edAddress3.getText().toString());
+        FrmProfile.newUser.setCity(edCity.getText().toString());
+        FrmProfile.newUser.setCountry(edCountry.getText().toString());
+        FrmProfile.newUser.setTelephone(edPhone.getText().toString());
+        FrmProfile.newUser.setEmail(edEmail.getText().toString());
+        FrmProfile.newUser.setNationality(edNational.getText().toString());
+        FrmProfile.newUser.setEthnility(edEthn.getText().toString());
 
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(newUser);
+        String json = gson.toJson(FrmProfile.newUser);
         prefsEditor.putString("MyObject", json);
         prefsEditor.commit();
-        QTSHelp.setIsEdit(getActivity(),true);
+//        QTSHelp.setIsEdit(getActivity(),true);
     }
 
     private void selectCountry() {
@@ -142,5 +148,43 @@ public class FrmProfile1 extends Fragment {
             }
         });
         builder.show();
+    }
+
+    private void selectNational() {
+        final CharSequence[] itemCountry=  {"A", "B","C"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("SELECT NATIONAL");
+        builder.setItems(itemCountry, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                edNational.setText(itemCountry[item]);
+            }
+        });
+        builder.show();
+    }
+
+    private String checkValid(){
+        if (edAddress.getText().toString().trim().length() == 0){
+            return getString(R.string.check_address);
+        }
+        if (edPhone.getText().toString().trim().length() == 0){
+            return getString(R.string.check_telephone);
+        }
+        if (edEmail.getText().toString().trim().length() == 0){
+            return getString(R.string.check_email);
+        }
+        if (edCity.getText().toString().trim().length() == 0){
+            return getString(R.string.check_city);
+        }
+        if (edCountry.getText().toString().trim().length() == 0){
+            return getString(R.string.check_country);
+        }
+        if (edNational.getText().toString().trim().length() == 0){
+            return getString(R.string.check_nationality);
+        }
+        if (edEthn.getText().toString().trim().length() == 0){
+            return getString(R.string.check_ethnicity);
+        }
+        return "isOk";
     }
 }

@@ -73,6 +73,48 @@
     <string name="check_school">School is invalid</string>
     <string name="check_class">Class is invalid</string>
     <string name="check_advise">Adviser is invalid</string>
-
     <string name="check_network">Network is disconnect.</string>
+
+    <!-- act_assessment_history_e -->
+    <string name="ASSESSMENT">ASSESSMENT HISTORY</string>
+    <string name="DATE">DATE</string>
+    <string name="USERID">USER-ID</string>
+    <string name="SCORE">SCORE</string>
+    <string name="No">No results</string>
+
+    <!-- act_calendar_e -->
+    <string name="CALENDAR">CALENDAR OF ASESSMENT</string>
+    <string name="RELATED">RELATED EVENTS:</string>
+    <string name="MidTerm">MidTerm Exam</string>
+    <string name="Final">Final Exam      </string>
+
+    <!--act_examiner-->
+    <string name="log">log out</string>
+    <string name="Examinee">Examinee ID:</string>
+    <string name="Sex">Sex: N/A</string>
+    <string name="Age">Age: N/A</string>
+    <string name="START">START ASSESSMENT</string>
+
+    <!--act_assessor-->
+    <string name="ACCOUNTING">ACCOUNTING</string>
+
+    <!--frm_instructions_e-->
+    <string name="INSTRUCTION">INSTRUCTION / GUIDES</string>
+
+    <!--frm_part1_a-->
+    <string name="PART1">PART 1</string>
+    <string name="Reading">Reading Aloud</string>
+
+    <string name="Talk">Talk about this Picture</string>
+    <string name="Describe">Describe Picture</string>
+    <string name="PART2">PART2</string>
+    <string name="PART3">PART3</string>
+    <string name="Interview">Interview Questions</string>
+    <string name="What">What is your hobby?</string>
+    <string name="Whatis">What is your favourite book?</string>
+    <string name="PART4">PART4</string>
+    <string name="END">END</string>
+    <string name="Thank">Thank you!</string>
+    <string name="Your">Your grade will be available soon.</string>
+    <string name="TAKE">TAKE ANOTHER ASSESSMENT</string>
 </resources>

@@ -56,6 +56,16 @@ public class User implements Serializable {
     String password;
     @SerializedName("code")
     String code;
+    @SerializedName("picture")
+    String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 
     public int getId() {
         return id;

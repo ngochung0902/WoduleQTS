@@ -39,6 +39,7 @@ public class FrmProfile extends Fragment {
     private TextView edDate,edCountry;
     private DatePickerDialog fromDatePickerDialog;
     private SimpleDateFormat dateFormatter;
+    public static User newUser = new User();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,9 +69,10 @@ public class FrmProfile extends Fragment {
                     FrmProfile1 fragment1 = new FrmProfile1();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
                     fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
                     fragmentTransaction.commit();
-                    QTSHelp.setIsEdit(getActivity(),true);
+                    QTSHelp.setIsEdit(getActivity(),false);
                 }
                 else{
                     QTSHelp.ShowpopupMessage(getActivity(),checkValid());
@@ -154,7 +156,6 @@ public class FrmProfile extends Fragment {
     }
 
     private void setProfiles(){
-        User newUser = new User();
         newUser.setFirst_name(edFirstName.getText().toString());
         newUser.setMiddle_name(edMiddleName.getText().toString());
         newUser.setLast_name(edLastName.getText().toString());
@@ -196,7 +197,6 @@ public class FrmProfile extends Fragment {
         if (edCountry.getText().toString().trim().length() == 0){
             return getString(R.string.check_country_of_birth);
         }
-
         return "isOk";
     }
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="wodule.com.wodule">
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +21,14 @@
         <activity android:name=".activity.ActLogin" />
         <activity android:name=".activity.ActLicense" />
         <activity android:name=".activity.ActForgotPass" />
-        <activity android:name=".activity.ActRegister"></activity>
+        <activity android:name=".activity.ActRegister" />
+        <activity android:name=".activity.ActExaminer" />
+        <activity android:name=".activity.ActAssessmentHistoryE" />
+        <activity android:name=".activity.ActCalendarE" />
+        <activity android:name=".activity.ActAssessmentStartE" />
+        <activity android:name=".activity.ActAssessor" />
+        <activity android:name=".activity.ActAssessmentHistoryA" />
+        <activity android:name=".activity.ActAssessmentStartA"></activity>
     </application>
 
 </manifest>
