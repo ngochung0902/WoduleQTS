@@ -506,4 +506,18 @@ public class QTSHelp {
 
         return output;
     }
+
+    public static String formatDatetime2(String datetime){
+        String date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");//2017-06-29 03:35:37
+        Date newDate = null;
+        try {
+            newDate = sdf.parse(datetime);
+            sdf = new SimpleDateFormat("dd.MM.yy");
+            date = sdf.format(newDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 }

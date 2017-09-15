@@ -8,62 +8,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         android:gravity="center">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/ivPlay"
+                    android:src="@mipmap/btn_play"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/margin10"
+                    android:layout_marginRight="@dimen/margin10"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+                <ProgressBar
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/progressBar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:indeterminate="false"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_bar_line"/>
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvTime"
+                    android:textSize="@dimen/text16"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_white"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/margin10"
+                    android:paddingRight="@dimen/margin10"
+                    android:layout_marginTop="@dimen/margin5"
+                    android:layout_marginBottom="@dimen/margin5"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ivPlayPre"
-            android:src="@mipmap/btn_back"
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/margin10"
-            android:layout_marginRight="@dimen/margin10"
-            android:layout_marginBottom="@dimen/margin15"
-            android:layout_marginTop="@dimen/margin15"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ivPlay"
-            android:src="@mipmap/btn_play"
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/margin10"
-            android:layout_marginRight="@dimen/margin10"
-            android:layout_marginBottom="@dimen/margin15"
-            android:layout_marginTop="@dimen/margin15"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ivPlayNext"
-            android:src="@mipmap/btn_back"
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/margin10"
-            android:layout_marginRight="@dimen/margin20"
-            android:layout_marginBottom="@dimen/margin15"
-            android:layout_marginTop="@dimen/margin15"/>
-        <TextView
-            android:text="SCORE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnScore"
-            android:textSize="@dimen/text16"
-            android:textColor="@color/color_white"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/margin15"
-            android:paddingRight="@dimen/margin15"
-            android:layout_marginTop="@dimen/margin15"
-            android:layout_marginBottom="@dimen/margin15"
-            android:background="@drawable/border_rect_green_dark"/>
+            <TextView
+                android:text="SCORE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnScore"
+                android:textSize="@dimen/text16"
+                android:textColor="@color/color_white"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/margin15"
+                android:paddingRight="@dimen/margin15"
+                android:layout_marginTop="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:background="@drawable/border_rect_green_dark"/>
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ivNext"
-            android:src="@mipmap/btn_next"
-            android:layout_marginRight="@dimen/margin10"
-            android:layout_marginLeft="@dimen/margin20"
-            android:layout_marginBottom="@dimen/margin15"
-            android:layout_marginTop="@dimen/margin15"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/ivNext"
+                android:src="@mipmap/btn_next"
+                android:layout_marginRight="@dimen/margin10"
+                android:layout_marginLeft="@dimen/margin20"
+                android:layout_marginBottom="@dimen/margin15"
+                android:layout_marginTop="@dimen/margin15"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +99,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
         <TextView
-            android:text="@string/PART4"
+            android:text="@string/PART2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/color_white"
@@ -100,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_rect_white">
                 <TextView
-                    android:text="@string/Whatis"
+                    android:text="@string/Talk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/lbHeader"

@@ -12,13 +12,13 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import wodule.com.wodule.R;
-import wodule.com.wodule.adapter.CalendarAdapter;
+import wodule.com.wodule.adapter.AdapterCalendar;
 
 
 public class ActCalendarE extends AppCompatActivity {
     private static final String TAG = ActCalendarE.class.getSimpleName();
     public Calendar month;
-    public CalendarAdapter adapter;
+    public AdapterCalendar adapter;
     public Handler handler;
     private TextView tvtoday, lbSun, lbMon, lbThu, lbWed, lbTue, lbFri, lbSat;
     private TextView lbMonthyear;
@@ -45,7 +45,7 @@ public class ActCalendarE extends AppCompatActivity {
 
         lbTitle.setText(mTitle);
         month = Calendar.getInstance();
-        adapter = new CalendarAdapter(this, month, -1);
+        adapter = new AdapterCalendar(this, month, -1);
 
         gridview = (GridView) findViewById(R.id.gridview);
 //		gridview.setLayoutParams(new GridView.AUTO_FIT, LakRun.GetWidthDevice(getApplicationContext()) / 7);
@@ -111,7 +111,7 @@ public class ActCalendarE extends AppCompatActivity {
                 }
 //				LakRun.showToast(getApplicationContext(),"date:"+month.get(Calendar.YEAR)+"-"+strMonth+"-"+days);
                 strSearch = month.get(Calendar.YEAR) + "-" + strMonth + "-" + days;
-                adapter = new CalendarAdapter(ActCalendarE.this, month, pos);
+                adapter = new AdapterCalendar(ActCalendarE.this, month, pos);
                 gridview.setAdapter(adapter);
                 refreshCalendar();
 

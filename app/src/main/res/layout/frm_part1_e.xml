@@ -58,6 +58,7 @@
                 android:layout_marginTop="@dimen/margin5"
                 android:layout_marginBottom="@dimen/margin5"
                 android:visibility="invisible"/>
+
             <TextView
                 android:text="RECORD"
                 android:layout_width="wrap_content"

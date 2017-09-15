@@ -30,11 +30,13 @@
             android:padding="@dimen/margin15">
 
             <ImageView
+                android:layout_marginTop="@dimen/margin5"
+                android:layout_marginRight="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin5"
                 android:id="@+id/iconBag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_assessmenthistory"
-                android:layout_margin="@dimen/margin5"/>
+                android:src="@mipmap/ic_assessmenthistory" />
 
             <TextView
                 android:id="@+id/lbExamhistory"
@@ -62,7 +64,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_calendar_home"
-                android:layout_margin="@dimen/margin5"/>
+                android:layout_marginTop="@dimen/margin5"
+                android:layout_marginRight="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin5"/>
 
             <TextView
                 android:id="@+id/lbCalender"
@@ -91,7 +95,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_startassessment"
-                android:layout_margin="@dimen/margin5"/>
+                android:layout_marginTop="@dimen/margin5"
+                android:layout_marginRight="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin5"/>
 
             <TextView
                 android:id="@+id/lbStartExam"

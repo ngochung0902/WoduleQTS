@@ -14,7 +14,7 @@ import java.util.Calendar;
 import wodule.com.wodule.R;
 import wodule.com.wodule.helper.QTSHelp;
 
-public class CalendarAdapter extends BaseAdapter {
+public class AdapterCalendar extends BaseAdapter {
 	static final int FIRST_DAY_OF_WEEK =0; // Sunday = 0, Monday = 1
 	
 	
@@ -23,7 +23,7 @@ public class CalendarAdapter extends BaseAdapter {
     private Calendar month;
     private Calendar selectedDate;
     private int pos = 0;
-    public CalendarAdapter(Context c, Calendar monthCalendar, int pos_choose) {
+    public AdapterCalendar(Context c, Calendar monthCalendar, int pos_choose) {
     	month = monthCalendar;
     	selectedDate = (Calendar)monthCalendar.clone();
     	mContext = c;

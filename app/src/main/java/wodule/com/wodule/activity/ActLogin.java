@@ -118,7 +118,10 @@ public class ActLogin extends AppCompatActivity {
                         finish();
                     }
                     if (!response.isSuccessful()){
-                        QTSHelp.ShowpopupMessage(ActLogin.this,response.toString());
+//                        QTSHelp.ShowpopupMessage(ActLogin.this,response.toString());
+                        QTSHelp.showToast(ActLogin.this,response.toString());
+                        startActivity(new Intent(ActLogin.this,ActAssessor.class));
+                        finish();
                         mProgressDialog.cancel();
                     }
                 }

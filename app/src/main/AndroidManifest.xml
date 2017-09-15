@@ -28,6 +28,7 @@
         <activity android:name=".activity.ActAssessmentStartE" />
         <activity android:name=".activity.ActAssessor" />
         <activity android:name=".activity.ActAssessmentHistoryA" />
+        <activity android:name=".activity.ActAcounting"/>
         <activity android:name=".activity.ActAssessmentStartA"></activity>
     </application>
 
