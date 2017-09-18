@@ -1,167 +1,197 @@
 package wodule.com.wodule.object;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 /**
  * Created by MyPC on 13/09/2017.
  */
-public class User implements Serializable {
+
+public class User {
+
     @SerializedName("id")
-    int id;
+    @Expose
+    private Integer id;
+    @SerializedName("role_id")
+    @Expose
+    private Integer roleId;
     @SerializedName("first_name")
-    String first_name;
+    @Expose
+    private String firstName;
     @SerializedName("middle_name")
-    String middle_name;
+    @Expose
+    private String middleName;
     @SerializedName("last_name")
-    String last_name;
+    @Expose
+    private String lastName;
     @SerializedName("native_name")
-    String native_name;
-    @SerializedName("suffx")
-    String suffx;
-    @SerializedName("display")
-    int display;
+    @Expose
+    private String nativeName;
+    @SerializedName("suffix")
+    @Expose
+    private Object suffix;
+    @SerializedName("ln_first")
+    @Expose
+    private Object lnFirst;
     @SerializedName("date_of_birth")
-    String date_of_birth;
+    @Expose
+    private String dateOfBirth;
     @SerializedName("country_of_birth")
-    String country_of_birth;
-    @SerializedName("residence_address")
-    String residence_address;
-    @SerializedName("vd1")
-    String vd1;
-    @SerializedName("vd2")
-    String vd2;
+    @Expose
+    private String countryOfBirth;
+    @SerializedName("address")
+    @Expose
+    private String address;
     @SerializedName("city")
-    String city;
+    @Expose
+    private String city;
     @SerializedName("country")
-    String country;
+    @Expose
+    private String country;
     @SerializedName("telephone")
-    String telephone;
-    @SerializedName("email")
-    String email;
+    @Expose
+    private String telephone;
     @SerializedName("nationality")
-    String nationality;
-    @SerializedName("ethnility")
-    String ethnility;
+    @Expose
+    private String nationality;
+    @SerializedName("ethnicity")
+    @Expose
+    private String ethnicity;
     @SerializedName("status")
-    String status;
+    @Expose
+    private String status;
     @SerializedName("religion")
-    String religion;
+    @Expose
+    private Object religion;
     @SerializedName("gender")
-    String gender;
-    @SerializedName("username")
-    String username;
-    @SerializedName("password")
-    String password;
-    @SerializedName("code")
-    String code;
+    @Expose
+    private String gender;
+    @SerializedName("organization")
+    @Expose
+    private String organization;
+    @SerializedName("student_class")
+    @Expose
+    private String studentClass;
+    @SerializedName("adviser")
+    @Expose
+    private String adviser;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
     @SerializedName("picture")
-    String picture;
+    @Expose
+    private String picture;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("verified")
+    @Expose
+    private String verified;
+    @SerializedName("verification_token")
+    @Expose
+    private String verificationToken;
+    @SerializedName("admin")
+    @Expose
+    private String admin;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("deleted_at")
+    @Expose
+    private Object deletedAt;
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public String getSuffx() {
-        return suffx;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setSuffx(String suffx) {
-        this.suffx = suffx;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getNative_name() {
-        return native_name;
+    public String getNativeName() {
+        return nativeName;
     }
 
-    public void setNative_name(String native_name) {
-        this.native_name = native_name;
+    public void setNativeName(String nativeName) {
+        this.nativeName = nativeName;
     }
 
-
-    public int getDisplay() {
-        return display;
+    public Object getSuffix() {
+        return suffix;
     }
 
-    public void setDisplay(int display) {
-        this.display = display;
+    public void setSuffix(Object suffix) {
+        this.suffix = suffix;
     }
 
-    public String getDate_of_birth() {
-        return date_of_birth;
+    public Object getLnFirst() {
+        return lnFirst;
     }
 
-    public void setDate_of_birth(String date_of_birth) {
-        this.date_of_birth = date_of_birth;
+    public void setLnFirst(Object lnFirst) {
+        this.lnFirst = lnFirst;
     }
 
-    public String getCountry_of_birth() {
-        return country_of_birth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setCountry_of_birth(String country_of_birth) {
-        this.country_of_birth = country_of_birth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getResidence_address() {
-        return residence_address;
+    public String getCountryOfBirth() {
+        return countryOfBirth;
     }
 
-    public void setResidence_address(String residence_address) {
-        this.residence_address = residence_address;
+    public void setCountryOfBirth(String countryOfBirth) {
+        this.countryOfBirth = countryOfBirth;
     }
 
-    public String getVd1() {
-        return vd1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setVd1(String vd1) {
-        this.vd1 = vd1;
-    }
-
-    public String getVd2() {
-        return vd2;
-    }
-
-    public void setVd2(String vd2) {
-        this.vd2 = vd2;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -188,14 +218,6 @@ public class User implements Serializable {
         this.telephone = telephone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getNationality() {
         return nationality;
     }
@@ -204,12 +226,12 @@ public class User implements Serializable {
         this.nationality = nationality;
     }
 
-    public String getEthnility() {
-        return ethnility;
+    public String getEthnicity() {
+        return ethnicity;
     }
 
-    public void setEthnility(String ethnility) {
-        this.ethnility = ethnility;
+    public void setEthnicity(String ethnicity) {
+        this.ethnicity = ethnicity;
     }
 
     public String getStatus() {
@@ -220,11 +242,11 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public String getReligion() {
+    public Object getReligion() {
         return religion;
     }
 
-    public void setReligion(String religion) {
+    public void setReligion(Object religion) {
         this.religion = religion;
     }
 
@@ -236,29 +258,112 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public String getUsername() {
-        return username;
+    public String getOrganization() {
+        return organization;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
-    public String getPassword() {
-        return password;
+    public String getStudentClass() {
+        return studentClass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
     }
 
-    public String getCode() {
-        return code;
+    public String getAdviser() {
+        return adviser;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setAdviser(String adviser) {
+        this.adviser = adviser;
     }
 
+    public String getUserName() {
+        return userName;
+    }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVerified() {
+        return verified;
+    }
+
+    public void setVerified(String verified) {
+        this.verified = verified;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Object getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Object deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

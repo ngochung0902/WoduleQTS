@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/color_top_login"
-    tools:context="wodule.com.wodule.activity.ActLogin">
+    tools:context=".activity.ActLogin">
     <LinearLayout
         android:gravity="center"
         android:layout_weight="1.7"
@@ -199,4 +199,6 @@
             android:id="@+id/tvLicense" />
 
     </LinearLayout>
+
+
 </LinearLayout>

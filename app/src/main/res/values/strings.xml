@@ -220,4 +220,7 @@
         <item>99</item>
         <item>100</item>
     </string-array>
+
+    <string name="facebook_app_id">324526487985081</string>
+    <string name="fb_login_protocol_scheme">fb324526487985081</string>
 </resources>

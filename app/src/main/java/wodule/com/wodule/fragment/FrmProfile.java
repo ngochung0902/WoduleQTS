@@ -118,14 +118,14 @@ public class FrmProfile extends Fragment {
         Gson gson = new Gson();
         String json = appSharedPrefs.getString("MyObject", "");
         User obj = gson.fromJson(json, User.class);
-        Log.e("GsonObject",obj.getFirst_name()+""+obj.getMiddle_name());
-        edFirstName.setText(String.valueOf(obj.getFirst_name()));
-        edLastName.setText(String.valueOf(obj.getLast_name()));
-        edMiddleName.setText(String.valueOf(obj.getMiddle_name()));
-        edNativeName.setText(String.valueOf(obj.getNative_name()));
-        edCountry.setText(String.valueOf(obj.getCountry_of_birth()));
-        edDate.setText(String.valueOf(obj.getDate_of_birth()));
-        edSuffx.setText(String.valueOf(obj.getSuffx()));
+        Log.e("GsonObject",obj.getFirstName()+""+obj.getMiddleName());
+        edFirstName.setText(String.valueOf(obj.getFirstName()));
+        edLastName.setText(String.valueOf(obj.getLastName()));
+        edMiddleName.setText(String.valueOf(obj.getMiddleName()));
+        edNativeName.setText(String.valueOf(obj.getNativeName()));
+        edCountry.setText(String.valueOf(obj.getCountryOfBirth()));
+        edDate.setText(String.valueOf(obj.getDateOfBirth()));
+        edSuffx.setText(String.valueOf(obj.getSuffix()));
     }
 
     private void selectCountry() {
@@ -156,16 +156,16 @@ public class FrmProfile extends Fragment {
     }
 
     private void setProfiles(){
-        newUser.setFirst_name(edFirstName.getText().toString());
-        newUser.setMiddle_name(edMiddleName.getText().toString());
-        newUser.setLast_name(edLastName.getText().toString());
-        newUser.setNative_name(edNativeName.getText().toString());
-        newUser.setSuffx(edSuffx.getText().toString());
-        newUser.setDate_of_birth(edDate.getText().toString());
-        newUser.setCountry_of_birth(edCountry.getText().toString());
-        if (isCheck)
-            newUser.setDisplay(1);
-        else newUser.setDisplay(0);
+        newUser.setFirstName(edFirstName.getText().toString());
+        newUser.setMiddleName(edMiddleName.getText().toString());
+        newUser.setLastName(edLastName.getText().toString());
+        newUser.setNativeName(edNativeName.getText().toString());
+        newUser.setSuffix(edSuffx.getText().toString());
+        newUser.setDateOfBirth(edDate.getText().toString());
+        newUser.setCountryOfBirth(edCountry.getText().toString());
+//        if (isCheck)
+//            newUser.setDisplay(1);
+//        else newUser.setDisplay(0);
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();

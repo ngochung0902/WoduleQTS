@@ -154,9 +154,9 @@ public class FrmProfile2 extends Fragment {
         FrmProfile.newUser.setStatus(edStatus.getText().toString());
         FrmProfile.newUser.setReligion(edReligion.getText().toString());
         FrmProfile.newUser.setGender(edGender.getText().toString());
-        FrmProfile.newUser.setUsername(edUsername.getText().toString());
-        FrmProfile.newUser.setPassword(edPassword.getText().toString());
-        FrmProfile.newUser.setCode(edCode.getText().toString());
+        FrmProfile.newUser.setUserName(edUsername.getText().toString());
+//        FrmProfile.newUser.setPassword(edPassword.getText().toString());
+//        FrmProfile.newUser.setCode(edCode.getText().toString());
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
@@ -175,9 +175,9 @@ public class FrmProfile2 extends Fragment {
         edStatus.setText(String.valueOf(obj.getStatus()));
         edReligion.setText(String.valueOf(obj.getReligion()));
         edGender.setText(String.valueOf(obj.getGender()));
-        edUsername.setText(String.valueOf(obj.getUsername()));
-        edPassword.setText(String.valueOf(obj.getPassword()));
-        edCode.setText(String.valueOf(obj.getCode()));
+        edUsername.setText(String.valueOf(obj.getUserName()));
+//        edPassword.setText(String.valueOf(obj.getPassword()));
+//        edCode.setText(String.valueOf(obj.getCode()));
         if (FrmProfile.newUser.getPicture() != null) {
 //            Glide.with(getActivity()).load("http://wodule.io/" + String.valueOf(FrmProfile.newUser.getPicture()))
 //                    .asBitmap()
@@ -186,10 +186,6 @@ public class FrmProfile2 extends Fragment {
 //                    .into(ivCamera);
 //            ivCamera.setImageURI();
         }
-
-        Log.e("testuser2",obj.getFirst_name()+obj.getMiddle_name());
-        Log.e("testuser2",obj.getResidence_address()+obj.getVd1());
-        Log.e("testuser2",obj.getStatus()+obj.getUsername());
     }
 
     private String checkValid() {

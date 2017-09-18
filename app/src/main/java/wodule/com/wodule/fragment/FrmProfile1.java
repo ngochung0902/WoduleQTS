@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,29 +102,27 @@ public class FrmProfile1 extends Fragment {
         Gson gson = new Gson();
         String json = appSharedPrefs.getString("MyObject", "");
         User obj = gson.fromJson(json, User.class);
-        edAddress.setText(String.valueOf(obj.getResidence_address()));
-        edAddress2.setText(String.valueOf(obj.getVd1()));
-        edAddress3.setText(String.valueOf(obj.getVd2()));
+        edAddress.setText(String.valueOf(obj.getAddress()));
+//        edAddress2.setText(String.valueOf(obj.getVd1()));
+//        edAddress3.setText(String.valueOf(obj.getVd2()));
         edCity.setText(String.valueOf(obj.getCity()));
         edPhone.setText(String.valueOf(obj.getTelephone()));
         edEmail.setText(String.valueOf(obj.getEmail()));
-        edEthn.setText(String.valueOf(obj.getEthnility()));
+        edEthn.setText(String.valueOf(obj.getEthnicity()));
         edCountry.setText(String.valueOf(obj.getCountry()));
         edNational.setText(String.valueOf(obj.getNationality()));
-        Log.e("testuser",obj.getFirst_name()+obj.getMiddle_name());
-        Log.e("testuser",obj.getResidence_address()+obj.getVd1());
     }
 
     private void setProfile() {
-        FrmProfile.newUser.setResidence_address(edAddress.getText().toString());
-        FrmProfile.newUser.setVd1(edAddress2.getText().toString());
-        FrmProfile.newUser.setVd2(edAddress3.getText().toString());
+        FrmProfile.newUser.setAddress(edAddress.getText().toString());
+//        FrmProfile.newUser.setVd1(edAddress2.getText().toString());
+//        FrmProfile.newUser.setVd2(edAddress3.getText().toString());
         FrmProfile.newUser.setCity(edCity.getText().toString());
         FrmProfile.newUser.setCountry(edCountry.getText().toString());
         FrmProfile.newUser.setTelephone(edPhone.getText().toString());
         FrmProfile.newUser.setEmail(edEmail.getText().toString());
         FrmProfile.newUser.setNationality(edNational.getText().toString());
-        FrmProfile.newUser.setEthnility(edEthn.getText().toString());
+        FrmProfile.newUser.setEthnicity(edEthn.getText().toString());
 
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
