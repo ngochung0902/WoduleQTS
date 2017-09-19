@@ -103,8 +103,8 @@ public class FrmProfile1 extends Fragment {
         String json = appSharedPrefs.getString("MyObject", "");
         User obj = gson.fromJson(json, User.class);
         edAddress.setText(String.valueOf(obj.getAddress()));
-//        edAddress2.setText(String.valueOf(obj.getVd1()));
-//        edAddress3.setText(String.valueOf(obj.getVd2()));
+        edAddress2.setText(String.valueOf(obj.getAddress1()));
+        edAddress3.setText(String.valueOf(obj.getAddress2()));
         edCity.setText(String.valueOf(obj.getCity()));
         edPhone.setText(String.valueOf(obj.getTelephone()));
         edEmail.setText(String.valueOf(obj.getEmail()));
@@ -115,8 +115,8 @@ public class FrmProfile1 extends Fragment {
 
     private void setProfile() {
         FrmProfile.newUser.setAddress(edAddress.getText().toString());
-//        FrmProfile.newUser.setVd1(edAddress2.getText().toString());
-//        FrmProfile.newUser.setVd2(edAddress3.getText().toString());
+        FrmProfile.newUser.setAddress1(edAddress2.getText().toString());
+        FrmProfile.newUser.setAddress2(edAddress3.getText().toString());
         FrmProfile.newUser.setCity(edCity.getText().toString());
         FrmProfile.newUser.setCountry(edCountry.getText().toString());
         FrmProfile.newUser.setTelephone(edPhone.getText().toString());

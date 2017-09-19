@@ -29,10 +29,10 @@ public class User {
     private String nativeName;
     @SerializedName("suffix")
     @Expose
-    private Object suffix;
+    private String suffix;
     @SerializedName("ln_first")
     @Expose
-    private Object lnFirst;
+    private String lnFirst;
     @SerializedName("date_of_birth")
     @Expose
     private String dateOfBirth;
@@ -62,7 +62,7 @@ public class User {
     private String status;
     @SerializedName("religion")
     @Expose
-    private Object religion;
+    private String religion;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -104,7 +104,36 @@ public class User {
     private String updatedAt;
     @SerializedName("deleted_at")
     @Expose
-    private Object deletedAt;
+    private String deletedAt;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("code")
+    @Expose
+    private String code;
+    @SerializedName("address1")
+    @Expose
+    private String address1;
+    @SerializedName("address2")
+    @Expose
+    private String address2;
+    @SerializedName("token")
+    @Expose
+    String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Object getAddress1() {
+        return address1;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -158,17 +187,13 @@ public class User {
         return suffix;
     }
 
-    public void setSuffix(Object suffix) {
-        this.suffix = suffix;
-    }
+
 
     public Object getLnFirst() {
         return lnFirst;
     }
 
-    public void setLnFirst(Object lnFirst) {
-        this.lnFirst = lnFirst;
-    }
+
 
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -246,9 +271,7 @@ public class User {
         return religion;
     }
 
-    public void setReligion(Object religion) {
-        this.religion = religion;
-    }
+
 
     public String getGender() {
         return gender;
@@ -358,12 +381,54 @@ public class User {
         return deletedAt;
     }
 
-    public void setDeletedAt(Object deletedAt) {
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public void setLnFirst(String lnFirst) {
+        this.lnFirst = lnFirst;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
+    public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
     }
 
     @Override
     public String toString() {
         return super.toString();
     }
+
+
 }

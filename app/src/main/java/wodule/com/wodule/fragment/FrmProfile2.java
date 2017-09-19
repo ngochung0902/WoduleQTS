@@ -67,6 +67,7 @@ public class FrmProfile2 extends Fragment {
         edCode = (EditText) view.findViewById(R.id.edCode);
         ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
 
+
         if (QTSHelp.getIsEdit(getActivity()))
             getProfile();
 
@@ -82,6 +83,9 @@ public class FrmProfile2 extends Fragment {
                     fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
                     fragmentTransaction.commit();
                     QTSHelp.setIsEdit(getActivity(), false);
+                    Log.e("ivCamera",QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15).toString());
+                }else {
+                    QTSHelp.ShowpopupMessage(getActivity(),checkValid());
                 }
             }
         });
@@ -155,8 +159,9 @@ public class FrmProfile2 extends Fragment {
         FrmProfile.newUser.setReligion(edReligion.getText().toString());
         FrmProfile.newUser.setGender(edGender.getText().toString());
         FrmProfile.newUser.setUserName(edUsername.getText().toString());
-//        FrmProfile.newUser.setPassword(edPassword.getText().toString());
-//        FrmProfile.newUser.setCode(edCode.getText().toString());
+        FrmProfile.newUser.setPassword(edPassword.getText().toString());
+        FrmProfile.newUser.setCode(edCode.getText().toString());
+        FrmProfile.newUser.setPicture(QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15).toString());
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
@@ -176,15 +181,10 @@ public class FrmProfile2 extends Fragment {
         edReligion.setText(String.valueOf(obj.getReligion()));
         edGender.setText(String.valueOf(obj.getGender()));
         edUsername.setText(String.valueOf(obj.getUserName()));
-//        edPassword.setText(String.valueOf(obj.getPassword()));
-//        edCode.setText(String.valueOf(obj.getCode()));
-        if (FrmProfile.newUser.getPicture() != null) {
-//            Glide.with(getActivity()).load("http://wodule.io/" + String.valueOf(FrmProfile.newUser.getPicture()))
-//                    .asBitmap()
-//                    .fitCenter()
-//                    .signature(new StringSignature(UUID.randomUUID().toString()))
-//                    .into(ivCamera);
-//            ivCamera.setImageURI();
+        edPassword.setText(String.valueOf(obj.getPassword()));
+        edCode.setText(String.valueOf(obj.getCode()));
+        if (QTSConstrains.bmAvatar != null) {
+            ivCamera.setImageBitmap(QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15));
         }
     }
 
@@ -205,9 +205,9 @@ public class FrmProfile2 extends Fragment {
             if (edPassword.getText().toString().trim().length() == 0) {
                 return getString(R.string.check_password);
             }
-//            if (QTSConstrains.bmAvatar == null) {
-//                return getString(R.string.check_Picture);
-//            }
+            if (QTSConstrains.bmAvatar == null) {
+                return getString(R.string.check_Picture);
+            }
             if (edCode.getText().toString().trim().length() == 0) {
                 return getString(R.string.check_code);
             }

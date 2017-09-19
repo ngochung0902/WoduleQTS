@@ -66,6 +66,7 @@ public class FrmProfile extends Fragment {
             public void onClick(View v) {
                 if (checkValid().equalsIgnoreCase("isOk")) {
                     setProfiles();
+                    Log.e("ivcheck",""+isCheck);
                     FrmProfile1 fragment1 = new FrmProfile1();
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -126,6 +127,10 @@ public class FrmProfile extends Fragment {
         edCountry.setText(String.valueOf(obj.getCountryOfBirth()));
         edDate.setText(String.valueOf(obj.getDateOfBirth()));
         edSuffx.setText(String.valueOf(obj.getSuffix()));
+        if (obj.getLnFirst().toString().trim()=="true")
+            ivChecked.setImageResource(R.mipmap.ic_ticked);
+        else
+            ivChecked.setImageResource(R.mipmap.ic_tick);
     }
 
     private void selectCountry() {
@@ -163,9 +168,7 @@ public class FrmProfile extends Fragment {
         newUser.setSuffix(edSuffx.getText().toString());
         newUser.setDateOfBirth(edDate.getText().toString());
         newUser.setCountryOfBirth(edCountry.getText().toString());
-//        if (isCheck)
-//            newUser.setDisplay(1);
-//        else newUser.setDisplay(0);
+        newUser.setLnFirst(String.valueOf(isCheck));
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,12 +23,14 @@ import wodule.com.wodule.utils.APIUtils;
 public class ActExaminer extends AppCompatActivity implements View.OnClickListener {
     private TextView lbLogout,lbName,lbId,tvIdExam,lbSchool,lbSex,lbAge,lbExamhistory,lbCalender,lbStartExam;
     private RatingBar ratingBar2;
-    private ImageView iconBag,iconCalendar,iconStart,btnEdit;
+    private ImageView iconBag,iconCalendar,iconStart,btnEdit,iconAvatar;
     private APIService mAPIService;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_examiner);
+        token=getIntent().getStringExtra("token");
         initUI();
         mAPIService = APIUtils.getAPIService();
         getProfile();
@@ -48,6 +52,7 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
         iconCalendar = (ImageView) findViewById(R.id.iconCalendar);
         iconStart = (ImageView) findViewById(R.id.iconStart);
         btnEdit = (ImageView) findViewById(R.id.btnEdit);
+        iconAvatar = (ImageView) findViewById(R.id.iconAvatar);
 
         iconBag.setOnClickListener(this);
         lbExamhistory.setOnClickListener(this);
@@ -61,50 +66,51 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.iconBag)
-        {
-            Log.e("onlickexminar","onclick");
-            startActivity(new Intent(ActExaminer.this,ActAssessmentHistoryE.class));
-        }
-        if (v.getId()==R.id.lbExamhistory)
-        {
-            startActivity(new Intent(ActExaminer.this, ActAssessmentHistoryE.class));
-        }
-        if (v.getId()==R.id.iconCalendar)
-        {
-            startActivity(new Intent(ActExaminer.this, ActCalendarE.class));
-        }
-        if (v.getId()==R.id.lbCalender)
-        {
-            startActivity(new Intent(ActExaminer.this, ActCalendarE.class));
-        }
-        if (v.getId()==R.id.iconStart)
-        {
-            startActivity(new Intent(ActExaminer.this, ActAssessmentStartE.class));
-        }
-        if (v.getId()==R.id.lbStartExam)
-        {
-            startActivity(new Intent(ActExaminer.this, ActAssessmentStartE.class));
-        }
-        if (v.getId()==R.id.lbLogout)
-        {
-            startActivity(new Intent(ActExaminer.this, ActLogin.class));
-            finish();
-            QTSHelp.setIsLogin(ActExaminer.this,false);
-        }
-        if (v.getId()==R.id.btnEdit)
-        {
+        switch (v.getId()){
+            case R.id.iconBag:
+//                Log.e("onlickexminar","onclick");
+                startActivity(new Intent(ActExaminer.this,ActAssessmentHistoryE.class));
+                break;
+            case R.id.lbExamhistory:
+                startActivity(new Intent(ActExaminer.this, ActAssessmentHistoryE.class));
+                break;
+            case R.id.iconCalendar:
+                startActivity(new Intent(ActExaminer.this, ActCalendarE.class));
+                break;
+            case R.id.lbCalender:
+                startActivity(new Intent(ActExaminer.this, ActCalendarE.class));
+                break;
+            case R.id.iconStart:
+                startActivity(new Intent(ActExaminer.this, ActAssessmentStartE.class));
+                break;
+            case R.id.lbStartExam:
+                startActivity(new Intent(ActExaminer.this, ActAssessmentStartE.class));
+                break;
+            case R.id.lbLogout:
+                startActivity(new Intent(ActExaminer.this, ActLogin.class));
+                finish();
+                QTSHelp.setIsLogin(ActExaminer.this,false);
+                break;
+            case R.id.btnEdit:
+                break;
 
         }
     }
 
     public void getProfile(){
-        //mAPIService.getAnswers().request().headers("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI4LCJpc3MiOiJodHRwOi8vd29kdWxlLmlvL2FwaS91c2VyX2xvZ2luIiwiaWF0IjoxNTA1NzMwOTU4LCJleHAiOjE1MDU3MzQ1NTgsIm5iZiI6MTUwNTczMDk1OCwianRpIjoibmJqVHJVc1FXTEdIOGtSUCJ9.2HvlZXasZNcGiCWX5bIoPNaweIS7dtHQM-ZGKYTe07w");
-        mAPIService.getAnswers().enqueue(new Callback<Example>() {
+        mAPIService.getAnswers("Bearer "+token).enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
                 if (response.isSuccessful()){
                     Log.e("getProfile",response.message().toString());
+                    lbName.setText(response.body().getUser().getFirstName());
+//                    tvIdExam.setText(response.body().getUser().getRoleId());
+                    lbSchool.setText(response.body().getUser().getStudentClass());
+                    lbSex.setText(response.body().getUser().getGender());
+
+                    String[] strdate =response.body().getUser().getDateOfBirth().split("-");
+                    lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
+                    Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
                 }
                 else
                     Log.e("getProfile",response.message().toString());

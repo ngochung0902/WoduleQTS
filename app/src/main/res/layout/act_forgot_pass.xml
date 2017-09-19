@@ -110,7 +110,7 @@
                 android:imeOptions="actionNext"
                 android:ems="10"
                 android:hint="Username"
-                android:id="@+id/editText3"
+                android:id="@+id/edtUsername"
                 android:textSize="@dimen/text16"
                 android:textColor="@color/color_text_green"
                 android:textColorHint="@color/color_hint_text"

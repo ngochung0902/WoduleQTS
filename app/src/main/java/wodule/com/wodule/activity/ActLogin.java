@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -68,6 +69,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 007;
     private InstagramHelper instagramHelper;
+    private CountDownTimer mCountDownTimer1;
+    private boolean checktimeout = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 .withRedirectUrl("http://wodule.io/api/redirectIG")
                 .withScope(scope)
                 .build();
+
+
     }
 
     LoginManager getLoginManager() {
@@ -223,6 +228,22 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 username = edUserName.getText().toString().trim();
                 password = edPassword.getText().toString().trim();
                 new GetData().execute();
+                mCountDownTimer1=new CountDownTimer(30000,1000) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if(checktimeout==true)
+                        {
+                            mProgressDialog.cancel();
+                            QTSHelp.showToast(ActLogin.this,"Time out");
+                        }
+                    }
+                };
+                mCountDownTimer1.start();
                 break;
             case R.id.iconFacebook:
                 loginFB();
@@ -254,19 +275,45 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
                     Log.e("response",response.toString());
                     if (response.isSuccessful()){
+                        final String token =response.body().getToken().toString().trim();
+//                        mAPIService.getAnswers("Bearer "+response.body().getToken().toString()).enqueue(new Callback<Example>() {
+//                            @Override
+//                            public void onResponse(Call<Example> call, Response<Example> response) {
+//                                if (response.isSuccessful())
+//                                {
+//                                    if (response.body().getUser().getType().toString().trim()=="Examinee") {
+//                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+//                                        intent.putExtra("token",token);
+//                                        startActivity(intent);
+//                                    }
+//                                    else {
+//                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+//                                        intent.putExtra("token",token);
+//                                        startActivity(intent);
+//                                    }
+//                                    finish();
+//                                    mProgressDialog.cancel();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<Example> call, Throwable t) {
+//
+//                            }
+//                        });
                         Log.e("token",response.body().getToken().toString());
                         Intent intent = new Intent(ActLogin.this,ActExaminer.class);
                         startActivity(intent);
                         mProgressDialog.cancel();
                         finish();
                         QTSHelp.setIsLogin(ActLogin.this,true);
+                        checktimeout = false;
                     }
                     if (!response.isSuccessful()){
-//                        QTSHelp.ShowpopupMessage(ActLogin.this,response.toString());
-                        QTSHelp.showToast(ActLogin.this,response.toString());
-                        startActivity(new Intent(ActLogin.this,ActAssessor.class));
-                        finish();
+                        checktimeout = false;
                         mProgressDialog.cancel();
+                        QTSHelp.ShowpopupMessage(ActLogin.this,response.toString());
+//                        startActivity(new Intent(ActLogin.this,ActAssessor.class));
                     }
                 }
 

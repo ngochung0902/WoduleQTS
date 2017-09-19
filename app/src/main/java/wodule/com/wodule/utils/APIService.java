@@ -4,8 +4,10 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import wodule.com.wodule.object.Example;
+import wodule.com.wodule.object.User;
 import wodule.com.wodule.object.UserExaminer;
 
 /**
@@ -18,7 +20,32 @@ public interface APIService {
                                 @Field("password") String password,
                                 @Field("social") boolean social);
 
-    @GET("api/profile/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI4LCJpc3MiOiJodHRwOi8vd29kdWxlLmlvL2FwaS91c2VyX2xvZ2luIiwiaWF0IjoxNTA1NzMwOTU4LCJleHAiOjE1MDU3MzQ1NTgsIm5iZiI6MTUwNTczMDk1OCwianRpIjoibmJqVHJVc1FXTEdIOGtSUCJ9.2HvlZXasZNcGiCWX5bIoPNaweIS7dtHQM-ZGKYTe07w")
-    //@Headers("Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI4LCJpc3MiOiJodHRwOi8vd29kdWxlLmlvL2FwaS91c2VyX2xvZ2luIiwiaWF0IjoxNTA1NzMwOTU4LCJleHAiOjE1MDU3MzQ1NTgsIm5iZiI6MTUwNTczMDk1OCwianRpIjoibmJqVHJVc1FXTEdIOGtSUCJ9.2HvlZXasZNcGiCWX5bIoPNaweIS7dtHQM-ZGKYTe07w")
-    Call <Example> getAnswers();
+    @GET("api/profile")
+    Call <Example> getAnswers(@Header("Authorization")String auth);
+
+    @POST("api/user_register")
+    @FormUrlEncoded
+    Call<User> postRegister(
+            @Field("In_first") String ln_first,
+            @Field("address") String address,
+            @Field("ethnicity") String ethnicity,
+            @Field("religion") String religion,
+            @Field("picture") String picture,
+            @Field("email") String email,
+            @Field("last_name") String last_name,
+            @Field("city") String city,
+            @Field("nationality") String nationality,
+            @Field("code") String code,
+            @Field("password") String password,
+            @Field("native_name") String native_name,
+            @Field("Suffx") String Suffx,
+            @Field("first_name") String first_name,
+            @Field("date_of_birth") String date_of_birth,
+            @Field("country") String country,
+            @Field("status") String status,
+            @Field("user_name") String user_name,
+            @Field("middle_name") String middle_name,
+            @Field("country_of_birth") String country_of_birth,
+            @Field("telephone") String telephone,
+            @Field("gender") String gender);
 }
