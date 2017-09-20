@@ -44,6 +44,15 @@ public class FrmProfile1 extends Fragment {
         edEthn = (EditText) view.findViewById(R.id.edEthn);
         edCountry = (TextView) view.findViewById(R.id.edCountry);
         edNational = (TextView) view.findViewById(R.id.edNational);
+
+        edAddress.setText("Nguyen Huy Tuong");
+        edAddress2.setText("Hoa Minh");
+        edAddress3.setText("Lien Chieu");
+        edCity.setText("Da Nang");
+        edPhone.setText("1234567890");
+        edEmail.setText("hungnn@gmail.com");
+        edEthn.setText("Kinh");
+
         if (QTSHelp.getIsEdit(getActivity()))
             getProfile();
 
@@ -135,7 +144,7 @@ public class FrmProfile1 extends Fragment {
     }
 
     private void selectCountry() {
-        final CharSequence[] itemCountry=  {"A", "B","C"};
+        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("SELECT COUNTRY");
         builder.setItems(itemCountry, new DialogInterface.OnClickListener() {
@@ -148,7 +157,7 @@ public class FrmProfile1 extends Fragment {
     }
 
     private void selectNational() {
-        final CharSequence[] itemCountry=  {"A", "B","C"};
+        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("SELECT NATIONAL");
         builder.setItems(itemCountry, new DialogInterface.OnClickListener() {

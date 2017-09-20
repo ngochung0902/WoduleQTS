@@ -51,6 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wodule.com.wodule.R;
 import wodule.com.wodule.helper.QTSHelp;
+import wodule.com.wodule.object.Example;
 import wodule.com.wodule.object.UserExaminer;
 import wodule.com.wodule.utils.APIService;
 import wodule.com.wodule.utils.APIUtils;
@@ -228,7 +229,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 username = edUserName.getText().toString().trim();
                 password = edPassword.getText().toString().trim();
                 new GetData().execute();
-                mCountDownTimer1=new CountDownTimer(30000,1000) {
+                mCountDownTimer1=new CountDownTimer(20000,1000) {
 
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -276,34 +277,35 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                     Log.e("response",response.toString());
                     if (response.isSuccessful()){
                         final String token =response.body().getToken().toString().trim();
-//                        mAPIService.getAnswers("Bearer "+response.body().getToken().toString()).enqueue(new Callback<Example>() {
-//                            @Override
-//                            public void onResponse(Call<Example> call, Response<Example> response) {
-//                                if (response.isSuccessful())
-//                                {
-//                                    if (response.body().getUser().getType().toString().trim()=="Examinee") {
-//                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
-//                                        intent.putExtra("token",token);
-//                                        startActivity(intent);
-//                                    }
-//                                    else {
-//                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
-//                                        intent.putExtra("token",token);
-//                                        startActivity(intent);
-//                                    }
-//                                    finish();
-//                                    mProgressDialog.cancel();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<Example> call, Throwable t) {
-//
-//                            }
-//                        });
+                        mAPIService.getAnswers("Bearer "+response.body().getToken().toString()).enqueue(new Callback<Example>() {
+                            @Override
+                            public void onResponse(Call<Example> call, Response<Example> response) {
+                                if (response.isSuccessful())
+                                {
+                                    Log.e("Type",response.body().getUser().getType().toString());
+                                    if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
+                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+                                        intent.putExtra("token",token);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+                                        intent.putExtra("token",token);
+                                        startActivity(intent);
+                                    }
+                                    finish();
+                                    mProgressDialog.cancel();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Example> call, Throwable t) {
+
+                            }
+                        });
                         Log.e("token",response.body().getToken().toString());
-                        Intent intent = new Intent(ActLogin.this,ActExaminer.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(ActLogin.this,ActExaminer.class);
+//                        startActivity(intent);
                         mProgressDialog.cancel();
                         finish();
                         QTSHelp.setIsLogin(ActLogin.this,true);

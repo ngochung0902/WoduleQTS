@@ -56,6 +56,12 @@ public class FrmProfile extends Fragment {
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         setDateTimeField();
 
+        edFirstName.setText("Nguyen");
+        edLastName.setText("Hung");
+        edMiddleName.setText("Ngoc");
+        edNativeName.setText("Hung");
+        edSuffx.setText("Nguyen");
+
         if (QTSHelp.getIsEdit(getActivity()))
             getProfile();
 
@@ -134,7 +140,7 @@ public class FrmProfile extends Fragment {
     }
 
     private void selectCountry() {
-        final CharSequence[] itemCountry=  {"A", "B","C"};
+        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("SELECT COUNTRY");
         builder.setItems(itemCountry, new DialogInterface.OnClickListener() {

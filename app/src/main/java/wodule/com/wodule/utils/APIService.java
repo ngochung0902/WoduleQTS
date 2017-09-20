@@ -5,7 +5,9 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import wodule.com.wodule.object.Example;
 import wodule.com.wodule.object.User;
 import wodule.com.wodule.object.UserExaminer;
@@ -23,29 +25,29 @@ public interface APIService {
     @GET("api/profile")
     Call <Example> getAnswers(@Header("Authorization")String auth);
 
+    @Multipart
     @POST("api/user_register")
-    @FormUrlEncoded
     Call<User> postRegister(
-            @Field("In_first") String ln_first,
-            @Field("address") String address,
-            @Field("ethnicity") String ethnicity,
-            @Field("religion") String religion,
-            @Field("picture") String picture,
-            @Field("email") String email,
-            @Field("last_name") String last_name,
-            @Field("city") String city,
-            @Field("nationality") String nationality,
-            @Field("code") String code,
-            @Field("password") String password,
-            @Field("native_name") String native_name,
-            @Field("Suffx") String Suffx,
-            @Field("first_name") String first_name,
-            @Field("date_of_birth") String date_of_birth,
-            @Field("country") String country,
-            @Field("status") String status,
-            @Field("user_name") String user_name,
-            @Field("middle_name") String middle_name,
-            @Field("country_of_birth") String country_of_birth,
-            @Field("telephone") String telephone,
-            @Field("gender") String gender);
+////            @Part("In_first") String ln_first,
+//            @Part("address") String address,
+//            @Part("ethnicity") String ethnicity,
+//            @Part("religion") String religion,
+////            @Part MultipartBody.Part picture,
+            @Part("last_name") String last_name,
+            @Part("email") String email,
+            @Part("city") String city,
+            @Part("nationality") String nationality,
+//            @Part("code") String code,
+            @Part("password") String password,
+//            @Part("native_name") String native_name,
+//            @Part("Suffx") String Suffx,
+            @Part("first_name") String first_name,
+            @Part("date_of_birth") String date_of_birth,
+            @Part("country") String country,
+            @Part("status") String status,
+            @Part("user_name") String user_name,
+            @Part("middle_name") String middle_name,
+            @Part("country_of_birth") String country_of_birth,
+            @Part("telephone") String telephone,
+            @Part("gender") String gender);
 }

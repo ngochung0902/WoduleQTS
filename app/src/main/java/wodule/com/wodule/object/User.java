@@ -120,6 +120,17 @@ public class User {
     @SerializedName("token")
     @Expose
     String token;
+    @SerializedName("error")
+    @Expose
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
     public String getToken() {
         return token;

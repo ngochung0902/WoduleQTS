@@ -136,8 +136,8 @@
                 android:id="@+id/ivBack"
                 android:src="@mipmap/btn_back"
                 android:layout_marginLeft="@dimen/margin20"
-                android:layout_marginBottom="@dimen/margin15"
-                android:layout_marginTop="@dimen/margin15"/>
+                android:layout_marginBottom="@dimen/margin5"
+                android:layout_marginTop="@dimen/margin5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

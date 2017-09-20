@@ -67,6 +67,10 @@ public class FrmProfile2 extends Fragment {
         edCode = (EditText) view.findViewById(R.id.edCode);
         ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
 
+        edUsername.setText("hungnn");
+        edPassword.setText("123456");
+        edCode.setText("0m7EQV");
+        edReligion.setText("No");
 
         if (QTSHelp.getIsEdit(getActivity()))
             getProfile();
