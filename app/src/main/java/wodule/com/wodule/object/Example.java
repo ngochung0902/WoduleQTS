@@ -10,14 +10,21 @@ public class Example {
 
     @SerializedName("user")
     @Expose
-    private User user;
+    private UserObject user;
 
-    public User getUser() {
+
+    public UserObject getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserObject user) {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "Example{" +
+                "user=" + user +
+                '}';
+    }
 }

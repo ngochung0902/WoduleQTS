@@ -58,7 +58,7 @@ public class UserExaminer {
                 "user_name='" + user_name + '\'' +
                 ", password='" + password + '\'' +
                 ", social=" + social +
-                ", token='" + token + '\'' +
+                ", token='" + token +
                 '}';
     }
 }

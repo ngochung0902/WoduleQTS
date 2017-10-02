@@ -21,4 +21,8 @@
 
     <color name="dark_green">#032F11</color>
     <color name="color_blue">#0070b1</color>
+    <color name="handle">#86C166</color>
+    <color name="frame">#86C166</color>
+    <color name="guide">#AA86C166</color>
+    <color name="overlay">#AA1C1C1C</color>
 </resources>

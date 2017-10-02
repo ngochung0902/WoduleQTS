@@ -542,4 +542,19 @@ public class QTSHelp {
             return 0;
         return a;
     }
+
+    public static boolean getIsStudent(Context context) {
+        int mode = Activity.MODE_PRIVATE;
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                QTSConstrains.SHAREPRE_ID, mode);
+        return sharedPreferences.getBoolean("isloginStudent", false);
+    }
+
+    public static void setIsStudent(Context context, boolean isloginStudent) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                QTSConstrains.SHAREPRE_ID, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isloginStudent", isloginStudent);
+        editor.commit();
+    }
 }

@@ -43,12 +43,6 @@ public class HistoryExam {
     @SerializedName("part_4_comment")
     String part_4_comment;
 
-    @SerializedName("error")
-    String error;
-
-    public String getError() {
-        return error;
-    }
 
     public String getUser_id() {
         return user_id;

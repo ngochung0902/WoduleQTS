@@ -25,10 +25,18 @@ public class ActSplash extends AppCompatActivity {
                     synchronized (this) {
                         // Wait given period of time or exit on touch
                         if(QTSHelp.getIsLogin(ActSplash.this)) {
-                            wait(QTSConstrains.Splash_Time);
-                            Intent intent = new Intent(ActSplash.this, ActLogin.class);
-                            startActivity(intent);
-                            finish();
+                            if (QTSHelp.getIsStudent(ActSplash.this)){
+                                wait(QTSConstrains.Splash_Time);
+                                Intent intent = new Intent(ActSplash.this, ActExaminer.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                wait(QTSConstrains.Splash_Time);
+                                Intent intent = new Intent(ActSplash.this,ActAssessor.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                         else {
                             wait(QTSConstrains.Splash_Time);

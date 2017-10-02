@@ -4,21 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,91 +23,88 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import wodule.com.wodule.R;
+import wodule.com.wodule.activity.ChooseCropAct;
 import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
-import wodule.com.wodule.object.User;
+import wodule.com.wodule.utils.BaseTFragment;
 import wodule.com.wodule.utils.Utility;
 
 /**
- * Created by MyPC on 13/09/2017.
+ * Created by Administrator on 5/9/2017.
  */
-public class FrmProfile2 extends Fragment {
-    private ImageView ivNext,ivBack,ivCamera;
-    private EditText edReligion,edUsername,edPassword,edCode;
-    private TextView edStatus,edGender;
+
+public class ProfileFragment3 extends BaseTFragment {
+    private ImageView ivBack, ivCamera;
+    private ImageView ivNext;
+    private TextView lbTitle, edStatus, edGender;
+    private EditText edReligion, edCode, edUsername, edPassword;
+    private int w;
     private String userChoosenTask;
     private final int REQUEST_CAMERA = 0, CAPTURE_PICTURE = 1, SELECT_FILE = 2;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frm_profile2, container, false);
-
-        ivNext = (ImageView) view.findViewById(R.id.ivNext);
         ivBack = (ImageView) view.findViewById(R.id.ivBack);
+        ivNext = (ImageView) view.findViewById(R.id.ivNext);
+        lbTitle = (TextView) view.findViewById(R.id.lbTitle);
+
+        ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
         edStatus = (TextView) view.findViewById(R.id.edStatus);
-        edReligion = (EditText) view.findViewById(R.id.edReligion);
         edGender = (TextView) view.findViewById(R.id.edGender);
+        edReligion = (EditText) view.findViewById(R.id.edReligion);
+        edCode = (EditText) view.findViewById(R.id.edCode);
         edUsername = (EditText) view.findViewById(R.id.edUsername);
         edPassword = (EditText) view.findViewById(R.id.edPassword);
-        edCode = (EditText) view.findViewById(R.id.edCode);
-        ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
-
-        edUsername.setText("hungnn");
-        edPassword.setText("123456");
-        edCode.setText("0m7EQV");
-        edReligion.setText("No");
-
-        if (QTSHelp.getIsEdit(getActivity()))
+        if (QTSHelp.getIsEdit(getActivity())) {
+            lbTitle.setText("EDIT USER");
             getProfile();
-
+        }
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
         ivNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkValid().equalsIgnoreCase("isOk")) {
-                    setProfile();
-                    FrmProfile3 fragment1 = new FrmProfile3();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit);
-                    fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
-                    fragmentTransaction.commit();
-                    QTSHelp.setIsEdit(getActivity(), false);
-                    Log.e("ivCamera",QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15).toString());
-                }else {
-                    QTSHelp.ShowpopupMessage(getActivity(),checkValid());
-                }
+                    setProfiles();
+                    startNewScreen(ProfileFragment3.this, new ProfileFragment4());
+                    if (newUser != null) {
+                        startNewScreen(ProfileFragment3.this, new ChooseCropAct());
+                    }
+                } else QTSHelp.ShowpopupMessage(getActivity(), checkValid());
             }
         });
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
+        ivCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FrmProfile1 fragment1 = new FrmProfile1();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.anim_enter1, R.anim.anim_exit1);
-                fragmentTransaction.replace(R.id.fragmentHolder, fragment1);
-                fragmentTransaction.commit();
-                QTSHelp.setIsEdit(getActivity(),true);
-
+                selectImage();
             }
         });
+        if (QTSHelp.getIsEdit(getActivity())) {
+            edCode.setVisibility(View.GONE);
+        } else {
+            edCode.setVisibility(View.VISIBLE);
+        }
+//        FontUtils.loadFont(getActivity(), QTSConstrains.FONT_HEV_REGULAR);
+//        FontUtils.setFont((LinearLayout) view.findViewById(R.id.ll_group_center));
+//        FontUtils.loadFont(getActivity(), QTSConstrains.FONT_HEV_MEDIUM);
+//        FontUtils.setFont((TextView) view.findViewById(R.id.lbTitle));
 
-        edStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectStatus();
-            }
-        });
 
         edGender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,102 +112,41 @@ public class FrmProfile2 extends Fragment {
                 selectGender();
             }
         });
-
-        ivCamera.setOnClickListener(new View.OnClickListener() {
+        edStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                selectStatus();
             }
         });
-
         return view;
     }
 
-    private void selectStatus() {
-        final CharSequence[] itemStatus = {"Single", "Married"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("SELECT STATUS");
-        builder.setItems(itemStatus, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                edStatus.setText(itemStatus[item]);
-            }
-        });
-        builder.show();
-    }
-
-    private void selectGender() {
-        final CharSequence[] itemGender = {"Male", "Female"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("SELECT GENDER");
-        builder.setItems(itemGender, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                edGender.setText(itemGender[item]);
-            }
-        });
-        builder.show();
-    }
-
-    private void setProfile() {
-        FrmProfile.newUser.setStatus(edStatus.getText().toString());
-        FrmProfile.newUser.setReligion(edReligion.getText().toString());
-        FrmProfile.newUser.setGender(edGender.getText().toString());
-        FrmProfile.newUser.setUserName(edUsername.getText().toString());
-        FrmProfile.newUser.setPassword(edPassword.getText().toString());
-        FrmProfile.newUser.setCode(edCode.getText().toString());
-        FrmProfile.newUser.setPicture(QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15).toString());
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(FrmProfile.newUser);
-        prefsEditor.putString("MyObject", json);
-        prefsEditor.commit();
-    }
-
     private void getProfile() {
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-        Gson gson = new Gson();
-        String json = appSharedPrefs.getString("MyObject", "");
-        User obj = gson.fromJson(json, User.class);
-        edStatus.setText(String.valueOf(obj.getStatus()));
-        edReligion.setText(String.valueOf(obj.getReligion()));
-        edGender.setText(String.valueOf(obj.getGender()));
-        edUsername.setText(String.valueOf(obj.getUserName()));
-        edPassword.setText(String.valueOf(obj.getPassword()));
-        edCode.setText(String.valueOf(obj.getCode()));
-        if (QTSConstrains.bmAvatar != null) {
-            ivCamera.setImageBitmap(QTSHelp.getRoundedCornerBitmap(QTSConstrains.bmAvatar, 15));
+        edStatus.setText(String.valueOf(QTSConstrains.userObj.getStatus()));
+        edGender.setText(String.valueOf(QTSConstrains.userObj.getGender()));
+        edReligion.setText(String.valueOf(QTSConstrains.userObj.getReligion()));
+        edUsername.setText(String.valueOf(QTSConstrains.userObj.getUser_name()));
+//        edPassword.setText(String.valueOf(HomeActivity.userObj.getPassword()));
+        edUsername.setEnabled(false);
+        edPassword.setEnabled(false);
+        if (QTSConstrains.userObj.getPicture() != null) {
+            Glide.with(getActivity()).load("http://wodule.io/" + String.valueOf(QTSConstrains.userObj.getPicture()))
+                    .asBitmap()
+                    .fitCenter()
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(ivCamera);
         }
     }
 
-    private String checkValid() {
-        if (edStatus.getText().toString().trim().length() == 0) {
-            return getString(R.string.check_status);
-        }
-        if (edReligion.getText().toString().trim().length() == 0) {
-            return getString(R.string.check_religion);
-        }
-        if (edGender.getText().toString().trim().length() == 0) {
-            return getString(R.string.check_gender);
-        }
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
 
-            if (edUsername.getText().toString().trim().length() == 0) {
-                return getString(R.string.check_username);
-            }
-            if (edPassword.getText().toString().trim().length() == 0) {
-                return getString(R.string.check_password);
-            }
-            if (QTSConstrains.bmAvatar == null) {
-                return getString(R.string.check_Picture);
-            }
-            if (edCode.getText().toString().trim().length() == 0) {
-                return getString(R.string.check_code);
-            }
+    @Override
+    public void onBackPressed() {
 
-        return "isOk";
     }
 
     private void selectImage() {
@@ -410,40 +340,69 @@ public class FrmProfile2 extends Fragment {
         return file;
     }
 
-    @Nullable
-    private Bitmap getThumbnail(Uri imageUri) throws IOException {
-        InputStream input = getActivity().getContentResolver().openInputStream(imageUri);
-
-        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
-        onlyBoundsOptions.inJustDecodeBounds = true;
-        onlyBoundsOptions.inDither = true;//optional
-        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
-        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
-        input.close();
-        if ((onlyBoundsOptions.outWidth == -1) || (onlyBoundsOptions.outHeight == -1))
-            return null;
-
-        int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ? onlyBoundsOptions.outHeight : onlyBoundsOptions.outWidth;
-
-        double ratio = (originalSize > 1280) ? (originalSize / 1280) : 1.0;
-
-        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
-        bitmapOptions.inDither = true;//optional
-        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
-        input = getActivity().getContentResolver().openInputStream(imageUri);
-        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
-        try {
-            input.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private String checkValid() {
+        if (edStatus.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_status);
         }
-        return bitmap;
+        if (edReligion.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_religion);
+        }
+        if (edGender.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_gender);
+        }
+
+        if (!QTSHelp.getIsEdit(getActivity())) {
+            if (edUsername.getText().toString().trim().length() == 0) {
+                return getString(R.string.check_username);
+            }
+            if (edPassword.getText().toString().trim().length() == 0) {
+                return getString(R.string.check_password);
+            }
+            if (QTSConstrains.bmAvatar == null) {
+                return getString(R.string.check_Picture);
+            }
+            if (edCode.getText().toString().trim().length() == 0) {
+                return getString(R.string.check_code);
+            }
+        }
+        return "isOk";
     }
 
-    public static int getPowerOfTwoForSampleRatio(double ratio) {
-        int k = Integer.highestOneBit((int) Math.floor(ratio));
-        if (k == 0) return 1;
-        else return k;
+    private void setProfiles() {
+        newUser.setStatus(edStatus.getText().toString());
+        newUser.setReligion(edReligion.getText().toString());
+        newUser.setGender(edGender.getText().toString());
+        newUser.setUser_name(edUsername.getText().toString());
+        if (!QTSHelp.getIsEdit(getActivity())){
+            newUser.setPassword(edPassword.getText().toString());
+            newUser.setCode(edCode.getText().toString());
+        }
     }
+
+    private void selectStatus() {
+        final CharSequence[] itemStatus = {"Single", "Married"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("SELECT STATUS");
+        builder.setItems(itemStatus, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                edStatus.setText(itemStatus[item]);
+            }
+        });
+        builder.show();
+    }
+
+    private void selectGender() {
+        final CharSequence[] itemGender = {"Male", "Female"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("SELECT GENDER");
+        builder.setItems(itemGender, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                edGender.setText(itemGender[item]);
+            }
+        });
+        builder.show();
+    }
+
 }

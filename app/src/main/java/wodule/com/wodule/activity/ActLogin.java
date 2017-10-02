@@ -196,7 +196,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         btnSubmit.setOnClickListener(this);
         iconFacebook.setOnClickListener(this);
         iconGPlus.setOnClickListener(this);
-        //QTSHelp.setLayoutView(img_logosmall,QTSHelp.GetWidthDevice(ActLogin.this)/3,QTSHelp.GetHeightDevice(ActLogin.this)/3*54/119);
+
     }
 
     private void getWidthHeight() {
@@ -274,7 +274,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             mAPIService.savePost(username,password,false).enqueue(new Callback<UserExaminer>() {
                 @Override
                 public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
-                    Log.e("response",response.toString());
+                    Log.e("Login response",response.toString());
+//                    Log.e("errorlist",response.body().getError().getEmail().toString()+"a");
                     if (response.isSuccessful()){
                         final String token =response.body().getToken().toString().trim();
                         mAPIService.getAnswers("Bearer "+response.body().getToken().toString()).enqueue(new Callback<Example>() {
@@ -286,15 +287,28 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                                     if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
                                         Intent intent = new Intent(ActLogin.this, ActExaminer.class);
                                         intent.putExtra("token",token);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this,true);
+                                        QTSHelp.setIsStudent(ActLogin.this,true);
+
                                     }
                                     else {
                                         Intent intent = new Intent(ActLogin.this, ActAssessor.class);
                                         intent.putExtra("token",token);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this,true);
+                                        QTSHelp.setIsStudent(ActLogin.this,false);
                                     }
                                     finish();
                                     mProgressDialog.cancel();
+                                }else {
+                                    Log.e("error","error");
+//                                    Log.e("error",response.body().getError().getEmail().get(1).toString());
+//                                    Log.e("error",response.body().getError().getEmail().get(0).toString());
                                 }
                             }
 
@@ -304,11 +318,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                             }
                         });
                         Log.e("token",response.body().getToken().toString());
-//                        Intent intent = new Intent(ActLogin.this,ActExaminer.class);
-//                        startActivity(intent);
                         mProgressDialog.cancel();
                         finish();
-                        QTSHelp.setIsLogin(ActLogin.this,true);
                         checktimeout = false;
                     }
                     if (!response.isSuccessful()){

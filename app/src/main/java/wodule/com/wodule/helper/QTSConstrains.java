@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 
 import java.io.File;
 
+import wodule.com.wodule.object.UserObject;
+
 /**
  * Created by MyPC on 24/07/2017.
  */
 public class QTSConstrains
 {
+    public static UserObject userObj = null;
     public static int Splash_Time = 3000;
     public static String SHAREPRE_ID = "hungQTS";
 

@@ -21,7 +21,7 @@ import wodule.com.wodule.utils.APIUtils;
 
 public class ActAssessor extends AppCompatActivity implements View.OnClickListener {
     private ImageView iconAccount,iconBag,iconCalendar,iconStart,iconAvatar;
-    private TextView lbAccounting,lbAssessmentRecord,lbCalender,lbStartAssessment,lbName,tvIdExam,lbSchool,lbSex,lbAge;
+    private TextView lbAccounting,lbAssessmentRecord,lbCalender,lbStartAssessment,lbName,tvIdExam,lbSchool,lbSex,lbAge,lbLogout;
     private APIService mAPIService;
     private String token;
     @Override
@@ -36,6 +36,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initUI() {
+        lbLogout = (TextView) findViewById(R.id.lbLogout);
         iconAccount = (ImageView) findViewById(R.id.iconAccount);
         lbAccounting = (TextView) findViewById(R.id.lbAccounting);
         iconBag = (ImageView) findViewById(R.id.iconBag);
@@ -59,6 +60,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
         lbCalender.setOnClickListener(this);
         iconStart.setOnClickListener(this);
         lbStartAssessment.setOnClickListener(this);
+        lbLogout.setOnClickListener(this);
 
         lbName.setText("N/A");
         tvIdExam.setText("1");
@@ -105,6 +107,11 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
             case R.id.lbStartAssessment:
                 startActivity(new Intent(ActAssessor.this,ActAssessmentStartA.class));
                 break;
+            case R.id.lbLogout:
+                startActivity(new Intent(ActAssessor.this, ActLogin.class));
+                finish();
+                QTSHelp.setIsLogin(ActAssessor.this,false);
+                break;
         }
     }
 
@@ -112,13 +119,14 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
         mAPIService.getAnswers("Bearer "+token).enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
+                Log.e("Assessor response",response.toString());
                 if (response.isSuccessful()){
                     Log.e("getProfile",response.message().toString());
-                    lbName.setText(response.body().getUser().getFirstName());
-//                    tvIdExam.setText(response.body().getUser().getRoleId());
-                    lbSchool.setText(response.body().getUser().getStudentClass());
+                    lbName.setText(response.body().getUser().getFirst_name());
+                    tvIdExam.setText(response.body().getUser().getRole_id()+"");
+                    lbSchool.setText(response.body().getUser().getStudent_class());
                     lbSex.setText(response.body().getUser().getGender());
-                    String[] strdate =response.body().getUser().getDateOfBirth().split("-");
+                    String[] strdate =response.body().getUser().getDate_of_birth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActAssessor.this).load(response.body().getUser().getPicture()).into(iconAvatar);
                 }

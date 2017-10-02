@@ -62,6 +62,11 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
         lbStartExam.setOnClickListener(this);
         lbLogout.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
+
+        QTSHelp.setLayoutView(iconAvatar, QTSHelp.GetWidthDevice(getApplicationContext()) * 2 / 5, QTSHelp.GetWidthDevice(getApplicationContext()) * 2 / 5);
+        QTSHelp.setLayoutView(iconBag, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
+        QTSHelp.setLayoutView(iconCalendar, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
+        QTSHelp.setLayoutView(iconStart, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
     }
 
     @Override
@@ -101,14 +106,14 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
         mAPIService.getAnswers("Bearer "+token).enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
+                Log.e("Examiner response",response.toString());
                 if (response.isSuccessful()){
-                    Log.e("getProfile",response.message().toString());
-                    lbName.setText(response.body().getUser().getFirstName());
-//                    tvIdExam.setText(response.body().getUser().getRoleId());
-                    lbSchool.setText(response.body().getUser().getStudentClass());
+                    lbName.setText(response.body().getUser().getFirst_name());
+                    tvIdExam.setText(response.body().getUser().getRole_id()+"");
+                    lbSchool.setText(response.body().getUser().getStudent_class());
                     lbSex.setText(response.body().getUser().getGender());
-
-                    String[] strdate =response.body().getUser().getDateOfBirth().split("-");
+                    Log.e("picture",response.body().getUser().getPicture());
+                    String[] strdate =response.body().getUser().getDate_of_birth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
                 }
