@@ -58,6 +58,7 @@
                     android:drawableRight="@mipmap/ic_dropdown"
                     android:background="@drawable/border_rect_button"/>
                 <EditText
+                    android:text="Da nang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -96,13 +97,77 @@
                     android:layout_marginLeft="@dimen/margin20"
                     android:layout_marginRight="@dimen/margin20"
                     android:background="@drawable/border_rect_button"/>
+                <EditText
+                    android:text="Da nang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintSchool"
+                    android:inputType="textCapSentences"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/edSchool"
+                    android:textSize="@dimen/text16"
+                    android:textColor="@color/color_text_green"
+                    android:textColorHint="@color/color_hint_text"
+                    android:paddingLeft="@dimen/margin15"
+                    android:paddingRight="@dimen/margin15"
+                    android:paddingTop="@dimen/margin7"
+                    android:paddingBottom="@dimen/margin7"
+                    android:singleLine="true"
+                    android:layout_marginTop="@dimen/margin20"
+                    android:layout_marginLeft="@dimen/margin20"
+                    android:layout_marginRight="@dimen/margin20"
+                    android:background="@drawable/border_rect_button"/>
+                <EditText
+                    android:text="Da nang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintClass"
+                    android:inputType="textCapSentences"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/edClass"
+                    android:textSize="@dimen/text16"
+                    android:textColor="@color/color_text_green"
+                    android:textColorHint="@color/color_hint_text"
+                    android:paddingLeft="@dimen/margin15"
+                    android:paddingRight="@dimen/margin15"
+                    android:paddingTop="@dimen/margin7"
+                    android:paddingBottom="@dimen/margin7"
+                    android:singleLine="true"
+                    android:layout_marginTop="@dimen/margin10"
+                    android:layout_marginLeft="@dimen/margin20"
+                    android:layout_marginRight="@dimen/margin20"
+                    android:background="@drawable/border_rect_button"/>
+                <EditText
+                    android:text="Da nang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hintAdviser"
+                    android:inputType="textCapSentences"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/edAdviser"
+                    android:textSize="@dimen/text16"
+                    android:textColor="@color/color_text_green"
+                    android:textColorHint="@color/color_hint_text"
+                    android:paddingLeft="@dimen/margin15"
+                    android:paddingRight="@dimen/margin15"
+                    android:paddingTop="@dimen/margin7"
+                    android:paddingBottom="@dimen/margin7"
+                    android:singleLine="true"
+                    android:layout_marginTop="@dimen/margin10"
+                    android:layout_marginLeft="@dimen/margin20"
+                    android:layout_marginRight="@dimen/margin20"
+                    android:background="@drawable/border_rect_button"/>
+
 
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin40"
+                    android:layout_marginTop="@dimen/margin20"
                     android:layout_marginLeft="@dimen/margin20"
                     android:layout_marginRight="@dimen/margin20">
                     <ImageView
@@ -116,6 +181,7 @@
                         />
 
                     <EditText
+                        android:text="hungnn28"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -135,6 +201,7 @@
                         android:layout_marginRight="@dimen/margin5"
                         android:layout_toLeftOf="@+id/ivCamera" />
                     <EditText
+                        android:text="123456"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
@@ -158,6 +225,7 @@
                 </RelativeLayout>
 
                 <EditText
+                    android:text="0m7EQV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -172,7 +240,7 @@
                     android:paddingTop="@dimen/margin7"
                     android:paddingBottom="@dimen/margin7"
                     android:singleLine="true"
-                    android:layout_marginTop="@dimen/margin30"
+                    android:layout_marginTop="@dimen/margin20"
                     android:layout_marginLeft="@dimen/margin20"
                     android:layout_marginRight="@dimen/margin20"
                     android:background="@drawable/border_rect_button"/>

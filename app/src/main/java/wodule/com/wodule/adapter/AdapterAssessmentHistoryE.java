@@ -69,9 +69,9 @@ public class AdapterAssessmentHistoryE extends BaseAdapter {
         holder.date.setText(String.valueOf(QTSHelp.formatDatetime2(arrList.get(position).getCreated_at())));
         holder.examId.setText(String.valueOf(arrList.get(position).getUser_id()));
         holder.score.setText(String.valueOf(arrList.get(position).getScored_at()));
-//        LakRun.setFontTV(context, holder.date, LakConst.FONT_HEV_MEDIUM);
-//        LakRun.setFontTV(context, holder.examId, LakConst.FONT_HEV_MEDIUM);
-//        LakRun.setFontTV(context, holder.score, LakConst.FONT_HEV_MEDIUM);
+//        QTSHelp.setFontTV(context, holder.date, LakConst.FONT_HEV_MEDIUM);
+//        QTSHelp.setFontTV(context, holder.examId, LakConst.FONT_HEV_MEDIUM);
+//        QTSHelp.setFontTV(context, holder.score, LakConst.FONT_HEV_MEDIUM);
         return convertView;
     }
     public void setData(List<HistoryExam> itemList) {

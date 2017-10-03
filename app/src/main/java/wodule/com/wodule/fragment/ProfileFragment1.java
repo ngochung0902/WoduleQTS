@@ -1,16 +1,18 @@
 package wodule.com.wodule.fragment;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -18,6 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import wodule.com.wodule.R;
+import wodule.com.wodule.adapter.CountryAdapter;
 import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.object.UserObject;
@@ -83,13 +86,13 @@ public class ProfileFragment1 extends BaseTFragment{
     }
 
     private void getProfile(){
-        edFirstName.setText(String.valueOf(QTSConstrains.userObj.getFirst_name()));
-        edLastName.setText(String.valueOf(QTSConstrains.userObj.getLast_name()));
-        edMiddleName.setText(String.valueOf(QTSConstrains.userObj.getMiddle_name()));
-        edNativeName.setText(String.valueOf(QTSConstrains.userObj.getNative_name()));
-        edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountry_of_birth()));
-        edDate.setText(String.valueOf(QTSConstrains.userObj.getDate_of_birth()));
-        edSuffx.setText(String.valueOf(QTSConstrains.userObj.getSuffx()));
+        edFirstName.setText(String.valueOf(QTSConstrains.userObj.getFirstName()));
+        edLastName.setText(String.valueOf(QTSConstrains.userObj.getLastName()));
+        edMiddleName.setText(String.valueOf(QTSConstrains.userObj.getMiddleName()));
+        edNativeName.setText(String.valueOf(QTSConstrains.userObj.getNativeName()));
+        edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountryOfBirth()));
+        edDate.setText(String.valueOf(QTSConstrains.userObj.getDateOfBirth()));
+        edSuffx.setText(String.valueOf(QTSConstrains.userObj.getSuffix()));
     }
 
 
@@ -136,24 +139,11 @@ public class ProfileFragment1 extends BaseTFragment{
         edCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCountry();
+                dialogCountry();
             }
         });
     }
 
-    private void selectCountry() {
-        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("SELECT COUNTRY");
-        builder.setItems(itemCountry, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                edCountry.setText(itemCountry[item]);
-            }
-        });
-        builder.show();
-    }
-    
     private String checkValid(){
         if (edFirstName.getText().toString().trim().length() == 0){
             return getString(R.string.check_fname);
@@ -180,35 +170,35 @@ public class ProfileFragment1 extends BaseTFragment{
         return "isOk";
     }
     private void setProfiles(){
-        newUser.setFirst_name(edFirstName.getText().toString());
-        newUser.setMiddle_name(edMiddleName.getText().toString());
-        newUser.setLast_name(edLastName.getText().toString());
-        newUser.setNative_name(edNativeName.getText().toString());
-        newUser.setSuffx(edSuffx.getText().toString());
-        newUser.setDate_of_birth(QTSHelp.formatDatetime1(edDate.getText().toString()));
-        newUser.setCountry_of_birth(edCountry.getText().toString());
+        newUser.setFirstName(edFirstName.getText().toString());
+        newUser.setMiddleName(edMiddleName.getText().toString());
+        newUser.setLastName(edLastName.getText().toString());
+        newUser.setNativeName(edNativeName.getText().toString());
+        newUser.setSuffix(edSuffx.getText().toString());
+        newUser.setDateOfBirth(QTSHelp.formatDatetime1(edDate.getText().toString()));
+        newUser.setCountryOfBirth(edCountry.getText().toString());
         if (isCheck)
-            newUser.setIn_first("1");
-        else newUser.setIn_first("0");
+            newUser.setLnFirst("1");
+        else newUser.setLnFirst("0");
     }
-//    private void dialogCountry(){
-//        final Dialog dialog_font = new Dialog(getActivity());
-//        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
-////        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-////                WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog_font.setTitle("SELECT COUNTRY");
-//        dialog_font.setContentView(R.layout.layout_list_country);
-//        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
-//        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
-//        lv.setAdapter(adapter);
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                edCountry.setText(String.valueOf(parent.getItemAtPosition(position)));
-//                dialog_font.dismiss();
-//            }
-//        });
-//        dialog_font.setCancelable(true);
-//        dialog_font.show();
-//    }
+    private void dialogCountry(){
+        final Dialog dialog_font = new Dialog(getActivity());
+        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog_font.setTitle("SELECT COUNTRY");
+        dialog_font.setContentView(R.layout.layout_list_country);
+        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
+        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                edCountry.setText(String.valueOf(parent.getItemAtPosition(position)));
+                dialog_font.dismiss();
+            }
+        });
+        dialog_font.setCancelable(true);
+        dialog_font.show();
+    }
 }

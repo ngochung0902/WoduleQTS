@@ -52,6 +52,9 @@ public interface APIService {
             @Part("address") RequestBody  address,
             @Part("ethnicity") RequestBody  ethnicity,
             @Part("religion") RequestBody  religion,
+            @Part("organization") RequestBody  organization,
+            @Part("student_class") RequestBody  student_class,
+            @Part("adviser") RequestBody  adviser,
             @Part MultipartBody.Part picture
     );
 }

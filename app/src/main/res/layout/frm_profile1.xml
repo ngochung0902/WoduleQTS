@@ -81,6 +81,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:text="Da nang"
                     android:id="@+id/edAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,6 +103,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="Da nang"
                     android:id="@+id/edAddress2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,6 +124,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="Da nang"
                     android:id="@+id/edAddress3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,6 +145,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="Da nang"
                     android:id="@+id/edCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,6 +187,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="0123456789"
                     android:id="@+id/edPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -204,6 +209,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="hungnn28@gmail.com"
                     android:id="@+id/edEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -246,6 +252,7 @@
                     android:textSize="@dimen/text16" />
 
                 <EditText
+                    android:text="Da nang"
                     android:id="@+id/edEthn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,17 +1,21 @@
 package wodule.com.wodule.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import wodule.com.wodule.R;
+import wodule.com.wodule.adapter.CountryAdapter;
 import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.utils.BaseTFragment;
@@ -68,13 +72,13 @@ public class ProfileFragment2 extends BaseTFragment {
         edCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCountry();
+                dialogCountry();
             }
         });
         edNational.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectNational();
+                dialogNational();
             }
         });
         return view;
@@ -131,51 +135,27 @@ public class ProfileFragment2 extends BaseTFragment {
         newUser.setNationality(edNational.getText().toString());
         newUser.setEthnicity(edEthn.getText().toString());
     }
-    private void selectCountry() {
-        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("SELECT COUNTRY");
-        builder.setItems(itemCountry, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                edCountry.setText(itemCountry[item]);
-            }
-        });
-        builder.show();
-    }
 
-    private void selectNational() {
-        final CharSequence[] itemCountry=  {"Viet Nam", "B","C"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("SELECT NATIONAL");
-        builder.setItems(itemCountry, new DialogInterface.OnClickListener() {
+    private void dialogCountry(){
+        final Dialog dialog_font = new Dialog(getActivity());
+        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog_font.setTitle("SELECT COUNTRY");
+        dialog_font.setContentView(R.layout.layout_list_country);
+        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
+        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
-                edNational.setText(itemCountry[item]);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                edCountry.setText(String.valueOf(parent.getItemAtPosition(position)));
+                dialog_font.dismiss();
             }
         });
-        builder.show();
+        dialog_font.setCancelable(true);
+        dialog_font.show();
     }
-//    private void dialogCountry(){
-//        final Dialog dialog_font = new Dialog(getActivity());
-//        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-//                WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog_font.setTitle("SELECT COUNTRY");
-//        dialog_font.setContentView(R.layout.layout_list_country);
-//        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
-//        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
-//        lv.setAdapter(adapter);
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                edCountry.setText(String.valueOf(parent.getItemAtPosition(position)));
-//                dialog_font.dismiss();
-//            }
-//        });
-//        dialog_font.setCancelable(true);
-//        dialog_font.show();
-//    }
 //    private void dialogCity(){
 //        final Dialog dialog_font = new Dialog(getActivity());
 //        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -196,26 +176,26 @@ public class ProfileFragment2 extends BaseTFragment {
 //        dialog_font.setCancelable(true);
 //        dialog_font.show();
 //    }
-//    private void dialogNational(){
-//        final Dialog dialog_font = new Dialog(getActivity());
-//        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-//                WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog_font.setTitle("SELECT NATIONALITY");
-//        dialog_font.setContentView(R.layout.layout_list_country);
-//        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
-//        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
-//        lv.setAdapter(adapter);
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                edNational.setText(String.valueOf(parent.getItemAtPosition(position)));
-//                dialog_font.dismiss();
-//            }
-//        });
-//        dialog_font.setCancelable(true);
-//        dialog_font.show();
-//    }
+    private void dialogNational(){
+        final Dialog dialog_font = new Dialog(getActivity());
+        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_font.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog_font.setTitle("SELECT NATIONALITY");
+        dialog_font.setContentView(R.layout.layout_list_country);
+        ListView lv = (ListView)dialog_font.findViewById(R.id.listCountry);
+        CountryAdapter adapter = new CountryAdapter(getActivity(), getResources().getStringArray(R.array.country_arrs));
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                edNational.setText(String.valueOf(parent.getItemAtPosition(position)));
+                dialog_font.dismiss();
+            }
+        });
+        dialog_font.setCancelable(true);
+        dialog_font.show();
+    }
 //    private void dialogEthnicity(){
 //        final Dialog dialog_font = new Dialog(getActivity());
 //        dialog_font.requestWindowFeature(Window.FEATURE_NO_TITLE);

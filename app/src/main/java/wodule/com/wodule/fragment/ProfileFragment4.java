@@ -2,6 +2,7 @@ package wodule.com.wodule.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
+import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -40,6 +42,8 @@ public class ProfileFragment4 extends BaseTFragment {
     private ImageView ivBack, ivAvatar;
     private TextView btnSubmit, btnReset;
     private APIService mAPIService;
+    private boolean checktimeout = false;
+    private CountDownTimer mCountDownTimer1;
 
     @Nullable
     @Override
@@ -59,10 +63,27 @@ public class ProfileFragment4 extends BaseTFragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checktimeout = true;
                 if (newUser != null) {
                     pDialog.show();
                     getRegisterApi();
                 }
+                mCountDownTimer1=new CountDownTimer(20000,1000) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if(checktimeout==true)
+                        {
+                            pDialog.cancel();
+                            QTSHelp.showToast(getActivity(),"Time out");
+                        }
+                    }
+                };
+                mCountDownTimer1.start();
             }
 
         });
@@ -98,8 +119,10 @@ public class ProfileFragment4 extends BaseTFragment {
 
     }
     private void getRegisterApi(){
+        Log.e("organization:  ",newUser.getOrganization().toString());
+        Log.e("student_class :",newUser.getStudentClass().toString());
+        Log.e("adviser:       ",newUser.getAdviser().toString());
         File file = new File(QTSConstrains.pictureFile.getPath());
-        //RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), QTSConstrains.pictureFile.getPath());
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("picture", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
         RequestBody city = RequestBody.create(MediaType.parse("text/plain"), newUser.getCity().toString());
         RequestBody country = RequestBody.create(MediaType.parse("text/plain"), newUser.getCountry().toString());
@@ -107,34 +130,48 @@ public class ProfileFragment4 extends BaseTFragment {
         RequestBody nationality = RequestBody.create(MediaType.parse("text/plain"),newUser.getNationality().toString());
         RequestBody status = RequestBody.create(MediaType.parse("text/plain"),newUser.getStatus().toString());
         RequestBody gender = RequestBody.create(MediaType.parse("text/plain"),newUser.getGender().toString());
-        RequestBody username = RequestBody.create(MediaType.parse("text/plain"),newUser.getUser_name().toString());
+        RequestBody username = RequestBody.create(MediaType.parse("text/plain"),newUser.getUserName().toString());
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"),newUser.getEmail().toString());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"),newUser.getPassword().toString());
         RequestBody code = RequestBody.create(MediaType.parse("text/plain"),newUser.getCode().toString());
-        RequestBody fname = RequestBody.create(MediaType.parse("text/plain"),newUser.getFirst_name().toString());
-        RequestBody mname = RequestBody.create(MediaType.parse("text/plain"),newUser.getMiddle_name().toString());
-        RequestBody lname = RequestBody.create(MediaType.parse("text/plain"),newUser.getLast_name().toString());
-        RequestBody dateofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getDate_of_birth().toString());
-        RequestBody countryofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getCountry_of_birth().toString());
-        RequestBody nativename = RequestBody.create(MediaType.parse("text/plain"),newUser.getNative_name().toString());
-        RequestBody suffx = RequestBody.create(MediaType.parse("text/plain"),newUser.getSuffx().toString());
-        RequestBody ln_first = RequestBody.create(MediaType.parse("text/plain"),newUser.getIn_first().toString());
+        final RequestBody fname = RequestBody.create(MediaType.parse("text/plain"),newUser.getFirstName().toString());
+        RequestBody mname = RequestBody.create(MediaType.parse("text/plain"),newUser.getMiddleName().toString());
+        RequestBody lname = RequestBody.create(MediaType.parse("text/plain"),newUser.getLastName().toString());
+        RequestBody dateofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getDateOfBirth().toString());
+        RequestBody countryofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getCountryOfBirth().toString());
+        RequestBody nativename = RequestBody.create(MediaType.parse("text/plain"),newUser.getNativeName().toString());
+        RequestBody suffx = RequestBody.create(MediaType.parse("text/plain"),newUser.getSuffix().toString());
+        RequestBody ln_first = RequestBody.create(MediaType.parse("text/plain"),newUser.getLnFirst().toString());
         RequestBody address = RequestBody.create(MediaType.parse("text/plain"),newUser.getAddress().toString());
         RequestBody ethnicity = RequestBody.create(MediaType.parse("text/plain"),newUser.getEthnicity().toString());
         RequestBody religion = RequestBody.create(MediaType.parse("text/plain"),newUser.getReligion().toString());
-
+        RequestBody organization = RequestBody.create(MediaType.parse("text/plain"),newUser.getOrganization().toString());
+        RequestBody student_class = RequestBody.create(MediaType.parse("text/plain"),newUser.getStudentClass().toString());
+        RequestBody adviser = RequestBody.create(MediaType.parse("text/plain"),newUser.getAdviser().toString());
+        Log.e("result","organization"+organization.toString()+"\n"+
+                        "student_class"+student_class.toString()+"\n"+
+                        "adviser"+adviser.toString());
         mAPIService.postAPI(
                 city,country,telephone,nationality,status,gender,username,email,password,code,fname,mname,lname,dateofbirth,countryofbirth,nativename,
-                suffx,ln_first,address,ethnicity,religion,filePart).enqueue(new Callback<UserObject>() {
+                suffx,ln_first,address,ethnicity,religion,organization,student_class,adviser,filePart).enqueue(new Callback<UserObject>() {
             @Override
             public void onResponse(Call<UserObject> call, Response<UserObject> response) {
                 Log.e("User register response",response.toString());
                 if (response.isSuccessful()){
+                    checktimeout = false;
                     getProfile(response.body().getToken());
                 }
                 else {
-
-                    //Log.e("error",response.body().getError().getEmail().toString() + response.body().getError().getUserName().toString());
+                    try {
+                        StringBuilder a = new StringBuilder(response.errorBody().string());
+                        a.delete(0,10);
+                        a.delete(a.length()-2,a.length());
+                        QTSHelp.ShowpopupMessage(getActivity(),a.toString());
+                        pDialog.cancel();
+                        checktimeout = false;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

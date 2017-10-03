@@ -47,7 +47,7 @@ public class ProfileFragment3 extends BaseTFragment {
     private ImageView ivBack, ivCamera;
     private ImageView ivNext;
     private TextView lbTitle, edStatus, edGender;
-    private EditText edReligion, edCode, edUsername, edPassword;
+    private EditText edReligion, edCode, edUsername, edPassword, edSchool, edClass, edAdviser;
     private int w;
     private String userChoosenTask;
     private final int REQUEST_CAMERA = 0, CAPTURE_PICTURE = 1, SELECT_FILE = 2;
@@ -59,7 +59,9 @@ public class ProfileFragment3 extends BaseTFragment {
         ivBack = (ImageView) view.findViewById(R.id.ivBack);
         ivNext = (ImageView) view.findViewById(R.id.ivNext);
         lbTitle = (TextView) view.findViewById(R.id.lbTitle);
-
+        edAdviser = (EditText) view.findViewById(R.id.edAdviser);
+        edClass = (EditText) view.findViewById(R.id.edClass);
+        edSchool = (EditText) view.findViewById(R.id.edSchool);
         ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
         edStatus = (TextView) view.findViewById(R.id.edStatus);
         edGender = (TextView) view.findViewById(R.id.edGender);
@@ -93,6 +95,7 @@ public class ProfileFragment3 extends BaseTFragment {
             @Override
             public void onClick(View v) {
                 selectImage();
+                QTSHelp.hideKeyboard(getActivity());
             }
         });
         if (QTSHelp.getIsEdit(getActivity())) {
@@ -125,7 +128,10 @@ public class ProfileFragment3 extends BaseTFragment {
         edStatus.setText(String.valueOf(QTSConstrains.userObj.getStatus()));
         edGender.setText(String.valueOf(QTSConstrains.userObj.getGender()));
         edReligion.setText(String.valueOf(QTSConstrains.userObj.getReligion()));
-        edUsername.setText(String.valueOf(QTSConstrains.userObj.getUser_name()));
+        edUsername.setText(String.valueOf(QTSConstrains.userObj.getUserName()));
+        edAdviser.setText(String.valueOf(QTSConstrains.userObj.getAdviser()));
+        edClass.setText(String.valueOf(QTSConstrains.userObj.getStudentClass()));
+        edSchool.setText(String.valueOf(QTSConstrains.userObj.getOrganization()));
 //        edPassword.setText(String.valueOf(HomeActivity.userObj.getPassword()));
         edUsername.setEnabled(false);
         edPassword.setEnabled(false);
@@ -351,6 +357,16 @@ public class ProfileFragment3 extends BaseTFragment {
             return getString(R.string.check_gender);
         }
 
+        if (edAdviser.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_advise);
+        }
+        if (edClass.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_class);
+        }
+        if (edSchool.getText().toString().trim().length() == 0) {
+            return getString(R.string.check_school);
+        }
+
         if (!QTSHelp.getIsEdit(getActivity())) {
             if (edUsername.getText().toString().trim().length() == 0) {
                 return getString(R.string.check_username);
@@ -372,7 +388,10 @@ public class ProfileFragment3 extends BaseTFragment {
         newUser.setStatus(edStatus.getText().toString());
         newUser.setReligion(edReligion.getText().toString());
         newUser.setGender(edGender.getText().toString());
-        newUser.setUser_name(edUsername.getText().toString());
+        newUser.setUserName(edUsername.getText().toString());
+        newUser.setAdviser(edAdviser.getText().toString());
+        newUser.setStudentClass(edClass.getText().toString());
+        newUser.setOrganization(edSchool.getText().toString());
         if (!QTSHelp.getIsEdit(getActivity())){
             newUser.setPassword(edPassword.getText().toString());
             newUser.setCode(edCode.getText().toString());

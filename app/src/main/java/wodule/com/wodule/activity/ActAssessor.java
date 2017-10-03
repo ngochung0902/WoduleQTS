@@ -1,5 +1,6 @@
 package wodule.com.wodule.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,16 +21,19 @@ import wodule.com.wodule.utils.APIService;
 import wodule.com.wodule.utils.APIUtils;
 
 public class ActAssessor extends AppCompatActivity implements View.OnClickListener {
-    private ImageView iconAccount,iconBag,iconCalendar,iconStart,iconAvatar;
-    private TextView lbAccounting,lbAssessmentRecord,lbCalender,lbStartAssessment,lbName,tvIdExam,lbSchool,lbSex,lbAge,lbLogout;
+    private ImageView iconAccount, iconBag, iconCalendar, iconStart, iconAvatar;
+    private TextView lbAccounting, lbAssessmentRecord, lbCalender, lbStartAssessment, lbName, tvIdExam, lbSchool, lbSex, lbAge, lbLogout;
     private APIService mAPIService;
     private String token;
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_assessor);
         mAPIService = APIUtils.getAPIService();
         token = getIntent().getStringExtra("token");
+        load();
         getProfile();
         initUI();
 
@@ -68,7 +72,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
         lbSex.setText("Sex: " + "N/A");
         lbAge.setText("Age: " + "N/A");
 
-        QTSHelp.setLayoutView(iconAvatar, QTSHelp.GetWidthDevice(getApplicationContext())*2/5, QTSHelp.GetWidthDevice(getApplicationContext())*2/5);
+        QTSHelp.setLayoutView(iconAvatar, QTSHelp.GetWidthDevice(getApplicationContext()) * 2 / 5, QTSHelp.GetWidthDevice(getApplicationContext()) * 2 / 5);
         QTSHelp.setLayoutView(iconBag, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
         QTSHelp.setLayoutView(iconCalendar, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
         QTSHelp.setLayoutView(iconAccount, QTSHelp.GetWidthDevice(getApplicationContext()) / 8, QTSHelp.GetWidthDevice(getApplicationContext()) / 8);
@@ -77,61 +81,90 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.iconAccount:
-                Intent intent = new Intent(ActAssessor.this,ActAcounting.class);
-                QTSHelp.setNum(ActAssessor.this,0);
+                Intent intent = new Intent(ActAssessor.this, ActAcounting.class);
+                QTSHelp.setNum(ActAssessor.this, 0);
                 startActivity(intent);
                 break;
             case R.id.lbAccounting:
-                Intent intent1 = new Intent(ActAssessor.this,ActAcounting.class);
-                QTSHelp.setNum(ActAssessor.this,0);
+                Intent intent1 = new Intent(ActAssessor.this, ActAcounting.class);
+                QTSHelp.setNum(ActAssessor.this, 0);
                 startActivity(intent1);
                 break;
             case R.id.iconBag:
-                startActivity(new Intent(ActAssessor.this,ActAssessmentHistoryA.class));
+                startActivity(new Intent(ActAssessor.this, ActAssessmentHistoryA.class));
                 break;
             case R.id.lbAssessmentRecord:
-                startActivity(new Intent(ActAssessor.this,ActAssessmentHistoryA.class));
+                startActivity(new Intent(ActAssessor.this, ActAssessmentHistoryA.class));
                 break;
             case R.id.iconCalendar:
-                startActivity(new Intent(ActAssessor.this,ActCalendarE.class));
+                startActivity(new Intent(ActAssessor.this, ActCalendarE.class));
                 break;
             case R.id.lbCalender:
-                startActivity(new Intent(ActAssessor.this,ActCalendarE.class));
+                startActivity(new Intent(ActAssessor.this, ActCalendarE.class));
                 break;
             case R.id.iconStart:
-                startActivity(new Intent(ActAssessor.this,ActAssessmentStartA.class));
+                startActivity(new Intent(ActAssessor.this, ActAssessmentStartA.class));
                 break;
             case R.id.lbStartAssessment:
-                startActivity(new Intent(ActAssessor.this,ActAssessmentStartA.class));
+                startActivity(new Intent(ActAssessor.this, ActAssessmentStartA.class));
                 break;
             case R.id.lbLogout:
                 startActivity(new Intent(ActAssessor.this, ActLogin.class));
                 finish();
-                QTSHelp.setIsLogin(ActAssessor.this,false);
+                QTSHelp.setIsLogin(ActAssessor.this, false);
                 break;
         }
     }
 
-    public void getProfile(){
-        mAPIService.getAnswers("Bearer "+token).enqueue(new Callback<Example>() {
+    public void getProfile() {
+        mAPIService.getAnswers("Bearer " + token).enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
-                Log.e("Assessor response",response.toString());
-                if (response.isSuccessful()){
-                    Log.e("getProfile",response.message().toString());
-                    lbName.setText(response.body().getUser().getFirst_name());
-                    tvIdExam.setText(response.body().getUser().getRole_id()+"");
-                    lbSchool.setText(response.body().getUser().getStudent_class());
-                    lbSex.setText(response.body().getUser().getGender());
-                    String[] strdate =response.body().getUser().getDate_of_birth().split("-");
+                Log.e("Assessor response", response.toString());
+                if (response.isSuccessful()) {
+                    Log.e("getProfile", response.message().toString());
+                    Log.e("reponse result",
+                            response.body().getUser().getCity().toString() + "\n" +
+                            response.body().getUser().getCountry().toString() + "\n" +
+                            response.body().getUser().getTelephone().toString() + "\n" +
+                            response.body().getUser().getNationality().toString() + "\n" +
+                            response.body().getUser().getStatus().toString() + "\n" +
+                            response.body().getUser().getGender().toString() + "\n" +
+                            response.body().getUser().getUserName().toString() + "\n" +
+                            response.body().getUser().getEmail().toString() + "\n" +
+                            response.body().getUser().getFirstName().toString() + "\n" +
+                            response.body().getUser().getMiddleName().toString() + "\n" +
+                            response.body().getUser().getLastName().toString() + "\n" +
+                            response.body().getUser().getDateOfBirth().toString() + "\n" +
+                            response.body().getUser().getCountryOfBirth().toString() + "\n" +
+                            response.body().getUser().getNativeName().toString() + "\n" +
+//                            response.body().getUser().getSuffx().toString()+"\n"+
+//                            response.body().getUser().getIn_first().toString()+"\n"+
+                            response.body().getUser().getAddress().toString() + "\n" +
+                            response.body().getUser().getEthnicity().toString() + "\n" +
+                            response.body().getUser().getReligion().toString() + "\n" +
+                            response.body().getUser().getOrganization().toString() + "\n" +
+                            response.body().getUser().getStudentClass().toString() + "\n" +
+                            response.body().getUser().getAdviser().toString()
+                    );
+                    mProgressDialog.cancel();
+                    lbName.setText(response.body().getUser().getFirstName());
+                    tvIdExam.setText(response.body().getUser().getRoleId() + "");
+                    lbSchool.setText(response.body().getUser().getOrganization() + "");
+                    lbSex.setText("Sex: " + response.body().getUser().getGender());
+                    String[] strdate = response.body().getUser().getDateOfBirth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActAssessor.this).load(response.body().getUser().getPicture()).into(iconAvatar);
+                }else{
+                    mProgressDialog.cancel();
+                    Intent intent = new Intent(ActAssessor.this,ActLogin.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
                 }
-                else
-                    Log.e("getProfile",response.message().toString());
             }
 
             @Override
@@ -139,5 +172,12 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
 
             }
         });
+    }
+
+    private void load(){
+        mProgressDialog = new ProgressDialog(ActAssessor.this);
+        mProgressDialog.setMessage("Logging ...");
+        mProgressDialog.show();
+        mProgressDialog.setCancelable(false);
     }
 }

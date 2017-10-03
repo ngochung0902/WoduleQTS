@@ -1,5 +1,6 @@
 package wodule.com.wodule.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
     private ImageView iconBag,iconCalendar,iconStart,btnEdit,iconAvatar;
     private APIService mAPIService;
     private String token;
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
         token=getIntent().getStringExtra("token");
         initUI();
         mAPIService = APIUtils.getAPIService();
+        load();
         getProfile();
     }
 
@@ -108,17 +111,25 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
             public void onResponse(Call<Example> call, Response<Example> response) {
                 Log.e("Examiner response",response.toString());
                 if (response.isSuccessful()){
-                    lbName.setText(response.body().getUser().getFirst_name());
-                    tvIdExam.setText(response.body().getUser().getRole_id()+"");
-                    lbSchool.setText(response.body().getUser().getStudent_class());
+                    mProgressDialog.cancel();
+                    lbName.setText(response.body().getUser().getFirstName());
+                    tvIdExam.setText(response.body().getUser().getRoleId()+"");
+                    lbSchool.setText(response.body().getUser().getOrganization());
                     lbSex.setText(response.body().getUser().getGender());
                     Log.e("picture",response.body().getUser().getPicture());
-                    String[] strdate =response.body().getUser().getDate_of_birth().split("-");
+                    String[] strdate =response.body().getUser().getDateOfBirth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
                 }
-                else
-                    Log.e("getProfile",response.message().toString());
+                else{
+                    mProgressDialog.cancel();
+                    QTSHelp.showToast(ActExaminer.this,"Token is invalid");
+                    Intent intent = new Intent(ActExaminer.this,ActLogin.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override
@@ -126,5 +137,11 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
 
             }
         });
+    }
+    private void load(){
+        mProgressDialog = new ProgressDialog(ActExaminer.this);
+        mProgressDialog.setMessage("Logging ...");
+        mProgressDialog.show();
+        mProgressDialog.setCancelable(false);
     }
 }
