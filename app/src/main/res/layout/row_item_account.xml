@@ -10,14 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/row_date"
-        android:paddingLeft="@dimen/margin5"
-        android:paddingRight="@dimen/margin5"
+        android:paddingLeft="@dimen/margin7"
+        android:paddingRight="@dimen/margin20"
         android:textSize="@dimen/text14"
         android:gravity="left|center_vertical"
-        android:textColor="@color/color_black"
+        android:textColor="@color/color_white"
         android:layout_marginLeft="@dimen/margin5"
-        android:layout_alignParentLeft="true"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:layout_below="@+id/row_status"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="32626-YH-4648"
@@ -25,10 +26,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/row_examId"
         android:gravity="left"
-        android:paddingLeft="@dimen/margin5"
+        android:paddingLeft="@dimen/margin20"
         android:paddingRight="@dimen/margin5"
         android:textSize="@dimen/text14"
-        android:textColor="@color/color_black"
+        android:textColor="@color/color_white"
         android:layout_marginLeft="@dimen/margin5"
         android:layout_marginRight="@dimen/margin10"
         android:layout_toRightOf="@+id/row_date"
@@ -37,17 +38,17 @@
 
     <TextView
         android:text="34"
-        android:layout_width="60dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:id="@+id/row_score"
         android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/margin5"
-        android:paddingRight="@dimen/margin5"
+        android:paddingLeft="18dp"
         android:textSize="@dimen/text14"
-        android:textColor="@color/color_black"
+        android:textColor="@color/color_white"
         android:layout_marginRight="@dimen/margin10"
-        android:layout_toLeftOf="@+id/row_status"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:layout_alignTop="@+id/row_examId"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="Paid"
@@ -61,5 +62,5 @@
         android:textColor="@color/color_black"
         android:layout_marginRight="@dimen/margin10"
         android:layout_alignParentRight="true"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 </RelativeLayout>

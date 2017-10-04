@@ -19,6 +19,17 @@ public class UserExaminer {
     @SerializedName("token")
     @Expose
     String token;
+    @SerializedName("first")
+    @Expose
+    String first;
+
+    public String getFirst() {
+        return first;
+    }
+
+    public void setFirst(String first) {
+        this.first = first;
+    }
 
     public boolean isSocial() {
         return social;
@@ -58,7 +69,8 @@ public class UserExaminer {
                 "user_name='" + user_name + '\'' +
                 ", password='" + password + '\'' +
                 ", social=" + social +
-                ", token='" + token +
+                ", token='" + token + '\'' +
+                ", first='" + first + '\'' +
                 '}';
     }
 }

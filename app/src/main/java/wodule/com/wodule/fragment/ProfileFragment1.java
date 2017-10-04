@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class ProfileFragment1 extends BaseTFragment{
         newUser = new UserObject();
 
         setDateTimeField();
-        if (QTSHelp.getIsEdit(getActivity())){
+        if (QTSHelp.getIsEdit(getActivity())==true){
             lbTitle.setText("EDIT USER");
             getProfile();
         }
@@ -86,6 +87,7 @@ public class ProfileFragment1 extends BaseTFragment{
     }
 
     private void getProfile(){
+        Log.e("fist name",String.valueOf(QTSConstrains.userObj.getFirstName()));
         edFirstName.setText(String.valueOf(QTSConstrains.userObj.getFirstName()));
         edLastName.setText(String.valueOf(QTSConstrains.userObj.getLastName()));
         edMiddleName.setText(String.valueOf(QTSConstrains.userObj.getMiddleName()));

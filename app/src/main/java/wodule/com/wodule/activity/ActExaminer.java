@@ -16,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wodule.com.wodule.R;
+import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.object.Example;
 import wodule.com.wodule.utils.APIService;
@@ -26,13 +27,14 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
     private RatingBar ratingBar2;
     private ImageView iconBag,iconCalendar,iconStart,btnEdit,iconAvatar;
     private APIService mAPIService;
-    private String token;
+    private String token,password;
     private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_examiner);
         token=getIntent().getStringExtra("token");
+        password = getIntent().getStringExtra("password");
         initUI();
         mAPIService = APIUtils.getAPIService();
         load();
@@ -100,13 +102,18 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
                 QTSHelp.setIsLogin(ActExaminer.this,false);
                 break;
             case R.id.btnEdit:
+                Intent intent = new Intent(ActExaminer.this,ActRegister.class);
+                QTSHelp.setIsEdit(ActExaminer.this,true);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
 
         }
     }
 
     public void getProfile(){
-        mAPIService.getAnswers("Bearer "+token).enqueue(new Callback<Example>() {
+        mAPIService.getAnswers("Bearer "+QTSHelp.getAccessToken(ActExaminer.this)).enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
                 Log.e("Examiner response",response.toString());
@@ -120,6 +127,31 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
                     String[] strdate =response.body().getUser().getDateOfBirth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
+
+                    QTSConstrains.userObj.setFirstName(response.body().getUser().getFirstName().toString());
+                    QTSConstrains.userObj.setMiddleName(response.body().getUser().getMiddleName().toString());
+                    QTSConstrains.userObj.setLastName(response.body().getUser().getLastName().toString());
+                    QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
+//                    QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
+//                    QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
+                    QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
+                    QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
+                    QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());
+                    QTSConstrains.userObj.setCity(response.body().getUser().getCity().toString());
+                    QTSConstrains.userObj.setCountry(response.body().getUser().getCountry().toString());
+                    QTSConstrains.userObj.setTelephone(response.body().getUser().getTelephone().toString());
+                    QTSConstrains.userObj.setEmail(response.body().getUser().getEmail().toString());
+                    QTSConstrains.userObj.setNationality(response.body().getUser().getNationality().toString());
+                    QTSConstrains.userObj.setEthnicity(response.body().getUser().getEthnicity().toString());
+                    QTSConstrains.userObj.setStatus(response.body().getUser().getStatus().toString());
+//                    QTSConstrains.userObj.setReligion(response.body().getUser().getReligion().toString());
+                    QTSConstrains.userObj.setGender(response.body().getUser().getGender().toString());
+                    QTSConstrains.userObj.setOrganization(response.body().getUser().getOrganization().toString());
+                    QTSConstrains.userObj.setStudentClass(response.body().getUser().getStudentClass().toString());
+                    QTSConstrains.userObj.setAdviser(response.body().getUser().getAdviser().toString());
+                    QTSConstrains.userObj.setUserName(response.body().getUser().getUserName().toString());
+                    QTSConstrains.userObj.setPassword(password);
+                    QTSConstrains.userObj.setPicture(response.body().getUser().getPicture().toString());
                 }
                 else{
                     mProgressDialog.cancel();

@@ -11,7 +11,7 @@ import wodule.com.wodule.object.UserObject;
  */
 public class QTSConstrains
 {
-    public static UserObject userObj = null;
+    public static UserObject userObj = new UserObject();
     public static int Splash_Time = 3000;
     public static String SHAREPRE_ID = "hungQTS";
 

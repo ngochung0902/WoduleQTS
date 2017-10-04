@@ -1,9 +1,10 @@
 package wodule.com.wodule.fragment;
 
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -15,14 +16,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import wodule.com.wodule.R;
+import wodule.com.wodule.utils.BaseTFragment;
 
 /**
  * Created by MyPC on 14/09/2017.
  */
-public class FrmPart1_e extends Fragment implements View.OnClickListener {
+public class FrmPart1_e extends BaseTFragment implements View.OnClickListener,MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
     private ImageView ivNext;
     private TextView tvTime,btnRecord;
     private ProgressBar record_progress_bar,progressBar1;
+    private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
     CountDownTimer mCountDownTimer,mCountDownTimer1;
     int i=0;
 
@@ -98,5 +102,25 @@ public class FrmPart1_e extends Fragment implements View.OnClickListener {
             }
         };
         mCountDownTimer.start();
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+
     }
 }

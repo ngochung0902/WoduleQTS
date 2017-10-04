@@ -558,5 +558,17 @@ public class QTSHelp {
         editor.commit();
     }
 
+    public static String getAccessToken(Context context){
+        SharedPreferences sharedPre = context.getSharedPreferences(
+                QTSConstrains.SHAREPRE_ID, Context.MODE_PRIVATE);
+        return sharedPre.getString("accessToken", "");
+    }
+    public static void setAccessToken(Context context, String accessToken){
+        SharedPreferences sharedPre = context.getSharedPreferences(
+                QTSConstrains.SHAREPRE_ID, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPre.edit();
+        editor.putString("accessToken", accessToken);
+        editor.commit();
+    }
 
 }

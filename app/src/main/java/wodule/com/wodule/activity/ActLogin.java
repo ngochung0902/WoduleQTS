@@ -1,5 +1,6 @@
 package wodule.com.wodule.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,12 +16,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -74,7 +76,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
     private static final int RC_SIGN_IN = 007;
     private InstagramHelper instagramHelper;
     private CountDownTimer mCountDownTimer1;
-    private boolean checktimeout = true;
+    private boolean checktimeout = true, social = false, notlogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,8 +159,9 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             parameters.putString("fields", "id,name,email,gender,birthday");
             request.setParameters(parameters);
             request.executeAsync();
-            username = "u01"+loginResult.getAccessToken().getUserId();
+            username = "u01"+"10901034612419";//loginResult.getAccessToken().getUserId();
             password = "facebook";
+            social = true;
             Log.e("Id facebook",username +"\n"+ password);
             new GetData().execute();
         }
@@ -262,6 +265,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 startActivity(new Intent(ActLogin.this,ActRegister.class));
                 break;
             case R.id.btnSubmit:
+                social = false;
                 if (QTSHelp.isNetworkAvailable(ActLogin.this)) {
                     QTSHelp.hideKeyboard(ActLogin.this);
                     username = edUserName.getText().toString().trim();
@@ -311,14 +315,15 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(final String... params) {
             final String status = "";
-                mAPIService.savePost(username, password, false).enqueue(new Callback<UserExaminer>() {
+                mAPIService.savePost(username, password, social).enqueue(new Callback<UserExaminer>() {
                     @Override
                     public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
                         Log.e("Login response", response.toString());
-                        if (response.isSuccessful()) {
+                        if (response.isSuccessful()&&social==false) {
                             final String token = response.body().getToken().toString().trim();
+                            QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
                             mAPIService.getAnswers("Bearer " + response.body().getToken().toString()).enqueue(new Callback<Example>() {
                                 @Override
                                 public void onResponse(Call<Example> call, Response<Example> response) {
@@ -327,6 +332,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                                         if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
                                             Intent intent = new Intent(ActLogin.this, ActExaminer.class);
                                             intent.putExtra("token", token);
+                                            intent.putExtra("password",password);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
@@ -358,6 +364,14 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                             mProgressDialog.cancel();
                             finish();
                             checktimeout = false;
+                        }else if (response.isSuccessful()&&social==true){
+                            QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
+                            if (response.body().getFirst().equalsIgnoreCase("true")){
+                                dialogCode();
+                            }else {
+                                QTSHelp.showToast(ActLogin.this,"first false");
+                                mProgressDialog.cancel();
+                            }
                         }
                         if (!response.isSuccessful()) {
                             checktimeout = false;
@@ -388,6 +402,9 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.e("Showinfo Googlelogin",acct.getId().toString()+" - "+acct.getEmail().toString()+" - "+acct.getDisplayName().toString()+"-"+acct.getPhotoUrl().toString());
+            username = "u03"+acct.getId();
+            password = "google";
+            new GetData().execute();
         } else {
 
         }
@@ -400,12 +417,15 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         if (requestCode == InstagramHelperConstants.INSTA_LOGIN && resultCode == RESULT_OK) {
             InstagramUser user = instagramHelper.getInstagramUser(this);
             Log.e("login instagram",user.getData().getUsername() + "\n" + user.getData().getFullName() + "\n"
-                    + user.getData().getWebsite()+"");
+                    + user.getData().getWebsite()+"\n"+ user.getData().getId());
+            username ="u02"+user.getData().getId();
+            password = "instagram";
+            new GetData().execute();
         }
-        else
-        {
-            Toast.makeText(this, "Login failed", Toast.LENGTH_LONG).show();
-        }
+//        else
+//        {
+//            Toast.makeText(this, "Login failed", Toast.LENGTH_LONG).show();
+//        }
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -416,5 +436,49 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
         Log.e("GoogleLogin",mGoogleApiClient.isConnected()+"");
+    }
+
+    private void dialogCode() {
+        final Dialog dialog_code = new Dialog(ActLogin.this);
+        dialog_code.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_code.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog_code.setTitle("INPUT CODE");
+        dialog_code.setContentView(R.layout.activity_input_code);
+
+        final EditText edCode = (EditText) dialog_code.findViewById(R.id.edEnterCode);
+        Button btnOk = (Button) dialog_code.findViewById(R.id.btnOk);
+        Button btnCancel = (Button) dialog_code.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QTSHelp.setIsLogin(getApplicationContext(), false);
+                dialog_code.dismiss();
+                mProgressDialog.cancel();
+            }
+        });
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QTSHelp.hideKeyboard(ActLogin.this);
+                if (edCode.getText().toString().equalsIgnoreCase("0m7EQV")){
+                    Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }else if (edCode.getText().toString().equalsIgnoreCase("HJ5M9I")){
+                    Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    QTSHelp.showToast(ActLogin.this,"wrong code");
+                }
+            }
+        });
+        dialog_code.setCancelable(true);
+        dialog_code.show();
     }
 }

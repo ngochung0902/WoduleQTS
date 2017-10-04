@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import wodule.com.wodule.R;
-import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.object.HistoryExam;
 
 /**
@@ -66,12 +65,9 @@ public class AdapterAssessmentHistoryE extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.date.setText(String.valueOf(QTSHelp.formatDatetime2(arrList.get(position).getCreated_at())));
-        holder.examId.setText(String.valueOf(arrList.get(position).getUser_id()));
-        holder.score.setText(String.valueOf(arrList.get(position).getScored_at()));
-//        QTSHelp.setFontTV(context, holder.date, LakConst.FONT_HEV_MEDIUM);
-//        QTSHelp.setFontTV(context, holder.examId, LakConst.FONT_HEV_MEDIUM);
-//        QTSHelp.setFontTV(context, holder.score, LakConst.FONT_HEV_MEDIUM);
+        holder.date.setText(String.valueOf(arrList.get(position).getDate()));
+        holder.examId.setText(String.valueOf(arrList.get(position).getExam()));
+        holder.score.setText(String.valueOf(arrList.get(position).getScore()));
         return convertView;
     }
     public void setData(List<HistoryExam> itemList) {

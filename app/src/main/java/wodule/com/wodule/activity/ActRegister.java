@@ -19,7 +19,6 @@ public class ActRegister extends AppCompatActivity {
         setContentView(R.layout.activity_act_new_user);
         fragmentManager = getSupportFragmentManager();
         fragment = new ProfileFragment1();
-        QTSHelp.setIsEdit(ActRegister.this,false);
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentHolder, fragment).commit();
     }

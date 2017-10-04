@@ -11,6 +11,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import wodule.com.wodule.object.Example;
+import wodule.com.wodule.object.ListData;
 import wodule.com.wodule.object.UserExaminer;
 import wodule.com.wodule.object.UserObject;
 
@@ -57,4 +58,7 @@ public interface APIService {
             @Part("adviser") RequestBody  adviser,
             @Part MultipartBody.Part picture
     );
+
+    @GET("api/users/28/records")
+    Call <ListData> getAhistory(@Header("Authorization")String auth);
 }
