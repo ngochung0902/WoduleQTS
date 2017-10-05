@@ -21,7 +21,7 @@ import wodule.com.wodule.utils.APIService;
 import wodule.com.wodule.utils.APIUtils;
 
 public class ActAssessor extends AppCompatActivity implements View.OnClickListener {
-    private ImageView iconAccount, iconBag, iconCalendar, iconStart, iconAvatar;
+    private ImageView iconAccount, iconBag, iconCalendar, iconStart, iconAvatar,btnEdit;
     private TextView lbAccounting, lbAssessmentRecord, lbCalender, lbStartAssessment, lbName, tvIdExam, lbSchool, lbSex, lbAge, lbLogout;
     private APIService mAPIService;
     private String token;
@@ -40,6 +40,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initUI() {
+        btnEdit = (ImageView) findViewById(R.id.btnEdit);
         lbLogout = (TextView) findViewById(R.id.lbLogout);
         iconAccount = (ImageView) findViewById(R.id.iconAccount);
         lbAccounting = (TextView) findViewById(R.id.lbAccounting);
@@ -65,6 +66,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
         iconStart.setOnClickListener(this);
         lbStartAssessment.setOnClickListener(this);
         lbLogout.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
 
         lbName.setText("N/A");
         tvIdExam.setText("1");
@@ -115,6 +117,13 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
                 finish();
                 QTSHelp.setIsLogin(ActAssessor.this, false);
                 break;
+            case R.id.btnEdit:
+                Intent intent2 = new Intent(ActAssessor.this,ActRegister.class);
+                QTSHelp.setIsEdit(ActAssessor.this,true);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+                break;
         }
     }
 
@@ -157,6 +166,8 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
                     String[] strdate = response.body().getUser().getDateOfBirth().split("-");
                     lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
                     Picasso.with(ActAssessor.this).load(response.body().getUser().getPicture()).into(iconAvatar);
+
+
                 }else{
                     mProgressDialog.cancel();
                     Intent intent = new Intent(ActAssessor.this,ActLogin.class);

@@ -132,17 +132,19 @@ public class ProfileFragment3 extends BaseTFragment {
         edAdviser.setText(String.valueOf(QTSConstrains.userObj.getAdviser()));
         edClass.setText(String.valueOf(QTSConstrains.userObj.getStudentClass()));
         edSchool.setText(String.valueOf(QTSConstrains.userObj.getOrganization()));
-//        edPassword.setText(String.valueOf(HomeActivity.userObj.getPassword()));
+        edPassword.setText(String.valueOf(QTSConstrains.userObj.getPassword()));
         edUsername.setEnabled(false);
         edPassword.setEnabled(false);
         if (QTSConstrains.userObj.getPicture() != null) {
-            Glide.with(getActivity()).load("http://wodule.io/" + String.valueOf(QTSConstrains.userObj.getPicture()))
+            Glide.with(getActivity()).load(String.valueOf(QTSConstrains.userObj.getPicture()))
                     .asBitmap()
                     .fitCenter()
                     .signature(new StringSignature(UUID.randomUUID().toString()))
 //                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(ivCamera);
+//            Picasso.with(getActivity()).load(QTSConstrains.userObj.getPicture()).into(ivCamera);
         }
+
     }
 
     @Override
@@ -392,10 +394,10 @@ public class ProfileFragment3 extends BaseTFragment {
         newUser.setAdviser(edAdviser.getText().toString());
         newUser.setStudentClass(edClass.getText().toString());
         newUser.setOrganization(edSchool.getText().toString());
-        if (!QTSHelp.getIsEdit(getActivity())){
+//        if (!QTSHelp.getIsEdit(getActivity())){
             newUser.setPassword(edPassword.getText().toString());
             newUser.setCode(edCode.getText().toString());
-        }
+//        }
     }
 
     private void selectStatus() {

@@ -13,6 +13,7 @@ public class QTSConstrains
 {
     public static UserObject userObj = new UserObject();
     public static int Splash_Time = 3000;
+    public static String code = "";
     public static String SHAREPRE_ID = "hungQTS";
 
     public static Bitmap bmAvatar = null;

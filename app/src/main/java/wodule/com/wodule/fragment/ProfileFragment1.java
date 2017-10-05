@@ -95,6 +95,11 @@ public class ProfileFragment1 extends BaseTFragment{
         edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountryOfBirth()));
         edDate.setText(String.valueOf(QTSConstrains.userObj.getDateOfBirth()));
         edSuffx.setText(String.valueOf(QTSConstrains.userObj.getSuffix()));
+//        if (QTSConstrains.userObj.getLnFirst().toString().equalsIgnoreCase("1")){
+//            ivChecked.setImageResource(R.mipmap.ic_ticked);
+//        }else {
+//            ivChecked.setImageResource(R.mipmap.ic_tick);
+//        }
     }
 
 
@@ -115,6 +120,7 @@ public class ProfileFragment1 extends BaseTFragment{
                 if (checkValid().equalsIgnoreCase("isOk")) {
                     setProfiles();
                     startNewScreen(ProfileFragment1.this, new ProfileFragment2());
+
                 }
                 else QTSHelp.ShowpopupMessage(getActivity(),checkValid());
             }

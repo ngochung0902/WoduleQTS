@@ -17,6 +17,7 @@ public class ActRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_new_user);
+
         fragmentManager = getSupportFragmentManager();
         fragment = new ProfileFragment1();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();

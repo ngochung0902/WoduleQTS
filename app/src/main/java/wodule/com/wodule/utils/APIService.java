@@ -1,5 +1,7 @@
 package wodule.com.wodule.utils;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -10,6 +12,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Url;
 import wodule.com.wodule.object.Example;
 import wodule.com.wodule.object.ListData;
 import wodule.com.wodule.object.UserExaminer;
@@ -61,4 +64,78 @@ public interface APIService {
 
     @GET("api/users/28/records")
     Call <ListData> getAhistory(@Header("Authorization")String auth);
+
+    @GET
+    Call <List<UserObject>> getCode(@Header("Authorization") String auth,
+                              @Url String url
+    );
+
+    @Multipart
+    @POST("api/profile/update")
+    Call <UserObject> postUpdateImage(@Header("Authorization") String auth,
+                                      @Part("_method") RequestBody patch,
+                                      @Part("city") RequestBody city,
+                                      @Part("country") RequestBody  country,
+                                      @Part("telephone") RequestBody  telephone,
+                                      @Part("nationality") RequestBody  nationality,
+                                      @Part("status") RequestBody  status,
+                                      @Part("gender") RequestBody  gender,
+                                      @Part("user_name") RequestBody  user_name,
+                                      @Part("email") RequestBody  email
+////                                      @Part("password") RequestBody  password,
+//                                      @Part("first_name") RequestBody  first_name,
+//                                      @Part("middle_name") RequestBody  middle_name,
+//                                      @Part("last_name") RequestBody  last_name,
+//                                      @Part("date_of_birth") RequestBody  date_of_birth,
+//                                      @Part("country_of_birth") RequestBody  country_of_birth,
+//                                      @Part("native_name") RequestBody  native_name,
+//                                      @Part("Suffx") RequestBody  Suffx,
+//                                      @Part("Ln_first") RequestBody  ln_first,
+//                                      @Part("address") RequestBody  address,
+//                                      @Part("ethnicity") RequestBody  ethnicity,
+//                                      @Part("religion") RequestBody  religion,
+//                                      @Part("organization") RequestBody  organization,
+//                                      @Part("student_class") RequestBody  student_class,
+//                                      @Part("adviser") RequestBody  adviser,
+//                                      @Part MultipartBody.Part picture
+    );
+
+    @Multipart
+    @POST("api/profile/update")
+    Call <UserObject> postUpdatenoImage(@Header("Authorization") String auth,
+                                      @Part("_method") RequestBody patch,
+                                      @Part("city") RequestBody city,
+                                      @Part("country") RequestBody  country,
+                                      @Part("telephone") RequestBody  telephone,
+                                      @Part("nationality") RequestBody  nationality,
+                                      @Part("status") RequestBody  status,
+                                      @Part("gender") RequestBody  gender,
+                                      @Part("user_name") RequestBody  user_name,
+                                      @Part("email") RequestBody  email,
+//                                      @Part("password") RequestBody  password,
+                                      @Part("first_name") RequestBody  first_name,
+                                      @Part("middle_name") RequestBody  middle_name,
+                                      @Part("last_name") RequestBody  last_name,
+                                      @Part("date_of_birth") RequestBody  date_of_birth,
+                                      @Part("country_of_birth") RequestBody  country_of_birth,
+                                      @Part("native_name") RequestBody  native_name,
+                                      @Part("Suffx") RequestBody  Suffx,
+                                      @Part("Ln_first") RequestBody  ln_first,
+                                      @Part("address") RequestBody  address,
+                                      @Part("ethnicity") RequestBody  ethnicity,
+                                      @Part("religion") RequestBody  religion,
+                                      @Part("organization") RequestBody  organization,
+                                      @Part("student_class") RequestBody  student_class,
+                                      @Part("adviser") RequestBody  adviser);
+
+    @Multipart
+    @POST("api/profile/update")
+    Call <UserObject> postUpdateLogin(@Header("Authorization") String auth,
+                                      @Part("_method") RequestBody patch,
+                                      @Part("organization") RequestBody organization,
+                                      @Part("student_class") RequestBody student_class,
+                                      @Part("type") RequestBody type,
+                                      @Part("user_name") RequestBody user_name,
+                                      @Part("password") RequestBody password,
+                                      @Part("adviser") RequestBody adviser);
 }

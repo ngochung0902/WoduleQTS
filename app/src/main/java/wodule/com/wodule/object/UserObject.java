@@ -112,8 +112,17 @@ public class UserObject {
     @SerializedName("token")
     @Expose
     private String token;
+    @SerializedName("class")
+    @Expose
+    private String class1;
 
+    public String getClass1() {
+        return class1;
+    }
 
+    public void setClass1(String class1) {
+        this.class1 = class1;
+    }
 
     public String getToken() {
         return token;
