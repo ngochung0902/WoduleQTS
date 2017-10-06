@@ -14,14 +14,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
+
+import java.util.UUID;
+
 import wodule.com.wodule.R;
+import wodule.com.wodule.helper.QTSConstrains;
 
 /**
  * Created by MyPC on 14/09/2017.
  */
 public class FrmPart3_e extends Fragment implements View.OnClickListener {
-    private ImageView ivNext;
-    private TextView tvTime,btnRecord;
+    private ImageView ivNext,ivHobby;
+    private TextView tvTime,btnRecord,lbQuestion;
     private ProgressBar record_progress_bar,progressBar1;
     CountDownTimer mCountDownTimer,mCountDownTimer1;
     int i=0;
@@ -33,10 +39,28 @@ public class FrmPart3_e extends Fragment implements View.OnClickListener {
         tvTime = (TextView) view.findViewById(R.id.tvTime);
         btnRecord = (TextView) view.findViewById(R.id.btnRecord);
         btnRecord.setOnClickListener(this);
+        ivHobby = (ImageView) view.findViewById(R.id.ivHobby);
+        lbQuestion = (TextView) view.findViewById(R.id.lbQuestion);
         record_progress_bar = (ProgressBar) view.findViewById(R.id.record_progress_bar);
         progressBar1 = (ProgressBar) view.findViewById(R.id.progressBar1);
         ivNext.setOnClickListener(this);
         progressBar();
+        for (int i=0;i<=QTSConstrains.arrayList.size()-1;i++)
+        {
+            if (QTSConstrains.arrayList.get(i).getNumber()==3) {
+                if (QTSConstrains.arrayList.get(i).getQuestioner() == null) {
+                    lbQuestion.setVisibility(View.GONE);
+                    Glide.with(getActivity()).load(String.valueOf(QTSConstrains.arrayList.get(i).getPhoto()))
+                            .asBitmap()
+                            .fitCenter()
+                            .signature(new StringSignature(UUID.randomUUID().toString()))
+                            .into(ivHobby);
+                } else {
+                    ivHobby.setVisibility(View.GONE);
+                    lbQuestion.setText(QTSConstrains.arrayList.get(i).getQuestioner().toString());
+                }
+            }
+        }
         return view;
     }
 

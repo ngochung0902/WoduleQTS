@@ -121,6 +121,8 @@
     <string name="Your">Your grade will be available soon.</string>
     <string name="TAKE">TAKE ANOTHER ASSESSMENT</string>
 
+    <string name="CATEGORY">CATEGORY</string>
+
     <string-array name="score_arrs">
         <item>1</item>
         <item>2</item>

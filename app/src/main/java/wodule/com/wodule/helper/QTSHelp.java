@@ -391,18 +391,18 @@ public class QTSHelp {
     }
 
     //set and get number color
-    public static void setNumColor(Context context, int num) {
+    public static void setNumCategory(Context context, int num) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 QTSConstrains.SHAREPRE_ID, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("Color", num);
+        editor.putInt("Category", num);
         editor.commit();
     }
-    public static int getNumColor(Context context) {
+    public static int getNumCategory(Context context) {
         int mode = Activity.MODE_PRIVATE;
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 QTSConstrains.SHAREPRE_ID, mode);
-        return sharedPreferences.getInt("Color", -1);
+        return sharedPreferences.getInt("Category", -1);
     }
     //set and get num
     public static void setNum(Context context, int number) {

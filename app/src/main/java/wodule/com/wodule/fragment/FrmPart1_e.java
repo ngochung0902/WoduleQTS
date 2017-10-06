@@ -15,15 +15,21 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
+
+import java.util.UUID;
+
 import wodule.com.wodule.R;
+import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.utils.BaseTFragment;
 
 /**
  * Created by MyPC on 14/09/2017.
  */
 public class FrmPart1_e extends BaseTFragment implements View.OnClickListener,MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
-    private ImageView ivNext;
-    private TextView tvTime,btnRecord;
+    private ImageView ivNext,img_photo;
+    private TextView tvTime,btnRecord,tvContent;
     private ProgressBar record_progress_bar,progressBar1;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
@@ -40,10 +46,30 @@ public class FrmPart1_e extends BaseTFragment implements View.OnClickListener,Me
         btnRecord.setOnClickListener(this);
         progressBar1 = (ProgressBar) view.findViewById(R.id.progressBar1);
         record_progress_bar = (ProgressBar) view.findViewById(R.id.record_progress_bar);
+        tvContent = (TextView) view.findViewById(R.id.tvContent);
+        img_photo = (ImageView) view.findViewById(R.id.img_photo);
         ivNext.setOnClickListener(this);
         progressBar();
+        for (int i=0;i<=QTSConstrains.arrayList.size()-1;i++)
+        {
+            if (QTSConstrains.arrayList.get(i).getNumber()==1){
+                if (QTSConstrains.arrayList.get(i).getQuestioner()==null){
+                    tvContent.setVisibility(View.GONE);
+                    Glide.with(getActivity()).load(String.valueOf(QTSConstrains.arrayList.get(i).getPhoto()))
+                            .asBitmap()
+                            .fitCenter()
+                            .signature(new StringSignature(UUID.randomUUID().toString()))
+                            .into(img_photo);
+                }else {
+                    img_photo.setVisibility(View.GONE);
+                    tvContent.setText(QTSConstrains.arrayList.get(i).getQuestioner().toString());
+                }
+            }
+        }
         return view;
     }
+
+
 
     @Override
     public void onClick(View v) {

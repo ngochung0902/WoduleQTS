@@ -78,7 +78,6 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iconBag:
-//                Log.e("onlickexminar","onclick");
                 startActivity(new Intent(ActExaminer.this,ActAssessmentHistoryE.class));
                 break;
             case R.id.lbExamhistory:
@@ -134,6 +133,7 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
                     QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
 //                    QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
 //                    QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
+
                     QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
                     QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
                     QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());

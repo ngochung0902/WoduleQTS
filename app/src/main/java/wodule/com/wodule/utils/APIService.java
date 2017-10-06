@@ -15,6 +15,8 @@ import retrofit2.http.Part;
 import retrofit2.http.Url;
 import wodule.com.wodule.object.Example;
 import wodule.com.wodule.object.ListData;
+import wodule.com.wodule.object.ListDataCategory;
+import wodule.com.wodule.object.ListDataExam;
 import wodule.com.wodule.object.UserExaminer;
 import wodule.com.wodule.object.UserObject;
 
@@ -138,4 +140,10 @@ public interface APIService {
                                       @Part("user_name") RequestBody user_name,
                                       @Part("password") RequestBody password,
                                       @Part("adviser") RequestBody adviser);
+
+    @GET("api/category")
+    Call <ListDataCategory> getCategory(@Header("Authorization") String auth);
+
+    @GET
+    Call <ListDataExam> getExamCategory(@Url String url);
 }

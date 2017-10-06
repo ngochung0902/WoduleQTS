@@ -3,7 +3,9 @@ package wodule.com.wodule.helper;
 import android.graphics.Bitmap;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import wodule.com.wodule.object.ExamCategory;
 import wodule.com.wodule.object.UserObject;
 
 /**
@@ -19,4 +21,5 @@ public class QTSConstrains
     public static Bitmap bmAvatar = null;
     public static File pictureFile = null;
     public static String FONT_SANSPRO_LIGHT = "fonts/ProximaNovaBold.otf";
+    public static ArrayList<ExamCategory> arrayList = new ArrayList<ExamCategory>();
 }

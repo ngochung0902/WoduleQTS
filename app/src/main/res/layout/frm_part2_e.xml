@@ -126,6 +126,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_rect_white">
@@ -170,13 +171,43 @@
                     android:src="@mipmap/btn_circle1" />
             </RelativeLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:background="@drawable/border_rect_layout_white">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <TextView
+                        android:text=""
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/text16"
+                        android:padding="@dimen/margin5"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="@dimen/margin10"
+                        android:layout_marginLeft="@dimen/margin10"
+                        android:id="@+id/tvContent"
+                        />
+                    <ImageView
+                        android:id="@+id/img_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </ScrollView>
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/ivAvatar"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:scaleType="fitXY" />
+
 
         </LinearLayout>
     </LinearLayout>

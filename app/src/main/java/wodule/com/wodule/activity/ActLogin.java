@@ -500,7 +500,6 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                                         }
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<UserObject> call, Throwable t) {
                                     Log.e("onFailure",t.toString());

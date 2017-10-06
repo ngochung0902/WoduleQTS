@@ -140,9 +140,7 @@ public class ProfileFragment3 extends BaseTFragment {
                     .asBitmap()
                     .fitCenter()
                     .signature(new StringSignature(UUID.randomUUID().toString()))
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(ivCamera);
-//            Picasso.with(getActivity()).load(QTSConstrains.userObj.getPicture()).into(ivCamera);
         }
 
     }

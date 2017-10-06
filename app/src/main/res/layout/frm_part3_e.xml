@@ -119,78 +119,83 @@
             android:text="@string/PART3"
             android:textColor="@color/color_white"
             android:textSize="@dimen/text14" />
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/boder_content_no_padding"
-            android:orientation="vertical">
-
-            <RelativeLayout
+            android:scrollbars="none"
+            android:background="@drawable/border_rect_layout_white">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_rect_white">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/lbHeader"
+                <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/imageView"
-                    android:layout_toStartOf="@+id/imageView"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/margin10"
-                    android:text="@string/Interview"
-                    android:textColor="@color/color_white"
+                    android:background="@drawable/border_rect_white">
+
+                    <TextView
+                        android:id="@+id/lbHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/imageView"
+                        android:layout_toStartOf="@+id/imageView"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/margin10"
+                        android:text="@string/Interview"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/text18" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:src="@mipmap/btn_circle1" />
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin5"
+                        android:layout_marginRight="@dimen/margin5"
+                        android:layout_toLeftOf="@+id/imageView2"
+                        android:src="@mipmap/btn_circle2" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin5"
+                        android:src="@mipmap/btn_circle1" />
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:id="@+id/ivHobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin35"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_hobby" />
+
+                <TextView
+                    android:id="@+id/lbQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin25"
+                    android:gravity="center"
+                    android:text="@string/What"
+                    android:textColor="@color/color_black"
                     android:textSize="@dimen/text18" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/imageView1"
-                    android:src="@mipmap/btn_circle1" />
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin5"
-                    android:layout_marginRight="@dimen/margin5"
-                    android:layout_toLeftOf="@+id/imageView2"
-                    android:src="@mipmap/btn_circle2" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/margin5"
-                    android:src="@mipmap/btn_circle1" />
-            </RelativeLayout>
-
-
-            <ImageView
-                android:id="@+id/ivHobby"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin35"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_hobby" />
-
-            <TextView
-                android:id="@+id/lbQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin25"
-                android:gravity="center"
-                android:text="@string/What"
-                android:textColor="@color/color_black"
-                android:textSize="@dimen/text18" />
-
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </RelativeLayout>
