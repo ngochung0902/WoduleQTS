@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -21,11 +20,12 @@ import android.widget.TextView;
 
 import wodule.com.wodule.R;
 import wodule.com.wodule.adapter.ScoreAdapter;
+import wodule.com.wodule.utils.BaseTFragment;
 
 /**
  * Created by MyPC on 15/09/2017.
  */
-public class Frm_Part4_a extends Fragment implements View.OnClickListener {
+public class Frm_Part4_a extends BaseTFragment implements View.OnClickListener {
     private TextView btnScore, lbComment,tvTime;
     private ImageView ivDropdown, ivDropUp,ivNext,ivPlay;
     private EditText edComment;
@@ -127,5 +127,15 @@ public class Frm_Part4_a extends Fragment implements View.OnClickListener {
             };
             mCountDownTimer1.start();
         }
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

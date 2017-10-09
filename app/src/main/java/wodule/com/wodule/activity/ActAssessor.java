@@ -98,7 +98,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(ActAssessor.this, ActAssessmentHistoryA.class));
                 break;
             case R.id.lbAssessmentRecord:
-                startActivity(new Intent(ActAssessor.this, ActAssessmentHistoryA.class));
+                startActivity(new Intent(ActAssessor.this, ActAssessmentHistoryE.class));
                 break;
             case R.id.iconCalendar:
                 startActivity(new Intent(ActAssessor.this, ActCalendarE.class));

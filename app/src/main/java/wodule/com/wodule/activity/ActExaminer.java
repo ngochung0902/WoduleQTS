@@ -133,7 +133,6 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
                     QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
 //                    QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
 //                    QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
-
                     QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
                     QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
                     QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());

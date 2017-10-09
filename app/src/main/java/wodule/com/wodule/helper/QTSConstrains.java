@@ -22,4 +22,5 @@ public class QTSConstrains
     public static File pictureFile = null;
     public static String FONT_SANSPRO_LIGHT = "fonts/ProximaNovaBold.otf";
     public static ArrayList<ExamCategory> arrayList = new ArrayList<ExamCategory>();
+    public static ArrayList<UserObject> arrUserObject = new ArrayList<UserObject>();
 }

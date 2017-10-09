@@ -1,5 +1,6 @@
 package wodule.com.wodule.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class ActAssessmentHistoryE extends AppCompatActivity implements View.OnC
     private AdapterAssessmentHistoryE adapter;
     private APIService mAPIService;
     private TextView lbNoresult;
+    private ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,9 @@ public class ActAssessmentHistoryE extends AppCompatActivity implements View.OnC
         ivBack.setOnClickListener(this);
         mAPIService = APIUtils.getAPIService();
         getAhistory();
+        pDialog = new ProgressDialog(ActAssessmentHistoryE.this);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
     }
 
 
@@ -70,12 +75,15 @@ public class ActAssessmentHistoryE extends AppCompatActivity implements View.OnC
                     lbNoresult.setVisibility(View.GONE);
                     adapter = new AdapterAssessmentHistoryE(getApplicationContext(),arr);
                     list_history.setAdapter(adapter);
+                    pDialog.cancel();
+                }else {
+                    pDialog.cancel();
                 }
             }
 
             @Override
             public void onFailure(Call<ListData> call, Throwable t) {
-
+                pDialog.cancel();
             }
         });
     }

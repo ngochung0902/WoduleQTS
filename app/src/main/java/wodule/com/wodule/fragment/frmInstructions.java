@@ -59,7 +59,7 @@ public class FrmInstructions extends BaseTFragment {
             public void onResponse(Call<ListDataExam> call, Response<ListDataExam> response) {
                 Log.e("category exam reponse",response.body().getData().toString());
                 if (response.isSuccessful()){
-                    for (int i =0;i<=response.body().getData().size()-1;i++){
+                    for (int i =0;i<=response.body().getData().size()-1;i++){audiofile1.getPath().trim().toString();
                         if (response.body().getData().get(i).getQuestioner()!=null)
                         {
                             QTSConstrains.arrayList.add(new ExamCategory(
@@ -102,7 +102,6 @@ public class FrmInstructions extends BaseTFragment {
             }
         });
     }
-
     @Override
     public String getFragmentTitle() {
         return null;

@@ -116,6 +116,36 @@ public class UserObject {
     @Expose
     private String class1;
 
+    public UserObject() {
+    }
+
+    public UserObject(String firstName, String middleName, String lastName, String nativeName, Object suffix, Object lnFirst, String dateOfBirth, String countryOfBirth, String address, String city, String country, String telephone, String email, String nationality, String ethnicity, String status, String religion, String gender, String organization, String studentClass, String adviser, String userName, String password, String picture) {
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.nativeName = nativeName;
+        this.suffix = suffix;
+        this.lnFirst = lnFirst;
+        this.dateOfBirth = dateOfBirth;
+        this.countryOfBirth = countryOfBirth;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.telephone = telephone;
+        this.nationality = nationality;
+        this.ethnicity = ethnicity;
+        this.status = status;
+        this.religion = religion;
+        this.gender = gender;
+        this.organization = organization;
+        this.studentClass = studentClass;
+        this.adviser = adviser;
+        this.userName = userName;
+        this.picture = picture;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+    }
+
     public String getClass1() {
         return class1;
     }
@@ -404,5 +434,32 @@ public class UserObject {
         this.deletedAt = deletedAt;
     }
 
-
+    public UserObject(String middleName, String lastName, String nativeName, Object suffix, Object lnFirst, String dateOfBirth, String code, String countryOfBirth, String address, String city, String country, String telephone, String nationality, String ethnicity, String status, String religion, String gender, String organization, String studentClass, String adviser, String userName, String picture, String type, String email, String password, String firstName) {
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.nativeName = nativeName;
+        this.suffix = suffix;
+        this.lnFirst = lnFirst;
+        this.dateOfBirth = dateOfBirth;
+        this.code = code;
+        this.countryOfBirth = countryOfBirth;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.telephone = telephone;
+        this.nationality = nationality;
+        this.ethnicity = ethnicity;
+        this.status = status;
+        this.religion = religion;
+        this.gender = gender;
+        this.organization = organization;
+        this.studentClass = studentClass;
+        this.adviser = adviser;
+        this.userName = userName;
+        this.picture = picture;
+        this.type = type;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+    }
 }

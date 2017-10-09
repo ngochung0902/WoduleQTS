@@ -170,7 +170,7 @@ public class ChooseCropAct extends BaseTFragment {
         RequestBody gender = RequestBody.create(MediaType.parse("text/plain"),newUser.getGender().toString());
         RequestBody username = RequestBody.create(MediaType.parse("text/plain"),newUser.getUserName().toString());
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"),newUser.getEmail().toString());
-//        RequestBody password = RequestBody.create(MediaType.parse("text/plain"),newUser.getPassword().toString());
+        RequestBody password = RequestBody.create(MediaType.parse("text/plain"),newUser.getPassword().toString());
         RequestBody fname = RequestBody.create(MediaType.parse("text/plain"),newUser.getFirstName().toString());
         RequestBody mname = RequestBody.create(MediaType.parse("text/plain"),newUser.getMiddleName().toString());
         RequestBody lname = RequestBody.create(MediaType.parse("text/plain"),newUser.getLastName().toString());
@@ -188,18 +188,21 @@ public class ChooseCropAct extends BaseTFragment {
         if (QTSConstrains.pictureFile != null) {
             Log.e("getUpdateApi", "QTSConstrains.picture # null");
             Log.e("token",QTSHelp.getAccessToken(getActivity()));
-            mAPIService.postUpdateImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,username,email).enqueue(new Callback<UserObject>() {
+            mAPIService.postUpdateImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,username,email,password,fname,mname,lname,dateofbirth,countryofbirth,nativename,suffx,ln_first,address,ethnicity,religion,organization,student_class,adviser).enqueue(new Callback<UserObject>() {
                 @Override
                 public void onResponse(Call<UserObject> call, Response<UserObject> response) {
                     Log.e("update",response.toString());
                     if (response.code()==200){
-                        QTSHelp.ShowpopupMessage(getActivity(),"Success");
+//                        QTSHelp.ShowpopupMessage(getActivity(),"Success");
+                        getActivity().finish();
+                        QTSHelp.setIsEdit(getActivity(),false);
                         pDialog.dismiss();
                         pDialog.cancel();
                     }else {
                         try {
                             pDialog.dismiss();
                             pDialog.cancel();
+                            QTSHelp.setIsEdit(getActivity(),false);
                             QTSHelp.ShowpopupMessage(getActivity(),response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -211,6 +214,7 @@ public class ChooseCropAct extends BaseTFragment {
                 public void onFailure(Call<UserObject> call, Throwable t) {
                     pDialog.cancel();
                     getActivity().finish();
+                    QTSHelp.setIsEdit(getActivity(),false);
                 }
             });
         } else {

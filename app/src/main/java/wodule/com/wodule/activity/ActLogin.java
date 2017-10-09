@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -93,6 +94,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         QTSHelp.setIsLogin(ActLogin.this,false);
         mAPIService = APIUtils.getAPIService();
         initUI();
+        QTSHelp.setIsEdit(ActLogin.this,false);
         edUserName.setText("brown");
         edPassword.setText("tatskie");
         //lay key hash fb
@@ -146,6 +148,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             Log.e("Login.this", "Login.initializeFacebook.onSuccess Granted Permissions= " + loginResult.getRecentlyGrantedPermissions().toString());
             Log.e("Login.this", "result.getAccessToken():" + loginResult.getAccessToken().getToken());
             facebook_access_token = loginResult.getAccessToken().getToken();
+//            QTSHelp.setAccessToken(ActLogin.this,facebook_access_token);
             GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
 
@@ -164,7 +167,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             parameters.putString("fields", "id,name,email,gender,birthday");
             request.setParameters(parameters);
             request.executeAsync();
-            username = "u01"+"10901034612369";//loginResult.getAccessToken().getUserId();
+            username = "u01"+"0901034612362";//loginResult.getAccessToken().getUserId();
             password = "facebook";
             social = true;
             Log.e("Id facebook",username +"\n"+ password);
@@ -357,13 +360,14 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                                         finish();
                                         mProgressDialog.cancel();
                                     } else {
+                                        Log.e("Login reponse: ",response.toString());
 
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<Example> call, Throwable t) {
-
+                                    Log.e("Login onFailure: ",t.toString());
                                 }
                             });
                             Log.e("token", response.body().getToken().toString());
@@ -405,7 +409,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             password = "google";
             Login();
         } else {
-
+            Log.e("google login","login failed"+"result"+result.toString());
         }
     }
 
@@ -425,11 +429,10 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         else if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        }else
+        {
+            Toast.makeText(this, "Login failed", Toast.LENGTH_LONG).show();
         }
-//        else
-//        {
-//            Toast.makeText(this, "Login failed", Toast.LENGTH_LONG).show();
-//        }
     }
 
     private void signIn() {
@@ -459,6 +462,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
             }
         });
         btnOk.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Log.e("token",QTSHelp.getAccessToken(ActLogin.this));
@@ -468,7 +472,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                         Log.e("reponse get code",response.toString());
                         if (response.isSuccessful()){
                             dialog_code.dismiss();
-                            for (int i =0;i<=response.body().size()-1;i++){
+                            for (int i =0;i<=response.body().size()-1;i++)
+                            {
                                 organization1 = response.body().get(i).getOrganization().toString();
                                 student_class1 = response.body().get(i).getClass1().toString();
                                 adviser1 = response.body().get(i).getAdviser().toString();
@@ -530,18 +535,25 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         mAPIService.savePost(username, password, social).enqueue(new Callback<UserExaminer>() {
             @Override
             public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
-                Log.e("Login response", response.toString());
-                QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
-                if (response.body().getFirst().equalsIgnoreCase("true")){
-                    dialogCode();
-                }else if (response.body().getFirst().equalsIgnoreCase("false")){
-                    QTSHelp.showToast(ActLogin.this,"first false");
+                if (response.isSuccessful()){
+                    Log.e("Login response", response.toString());
+                    QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
+                    Log.e("to ken login fb",QTSHelp.getAccessToken(ActLogin.this)+"");
+                    if (response.body().getFirst().equalsIgnoreCase("true")){
+    //                    QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
+                        dialogCode();
+                    }else if (response.body().getFirst().equalsIgnoreCase("false")){
+                        QTSHelp.showToast(ActLogin.this,"first false");
+                    }
+                }else {
+                    Log.e("error",response.toString());
                     mProgressDialog.cancel();
                 }
-}
+    }
             @Override
             public void onFailure(Call<UserExaminer> call, Throwable t) {
-
+                Log.e("onFailure",t.toString());
+                mProgressDialog.cancel();
             }
 
             });
