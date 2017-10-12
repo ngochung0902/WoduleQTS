@@ -118,6 +118,12 @@ public class ProfileFragment4 extends BaseTFragment {
     public void onBackPressed() {
 
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
+
     private void getRegisterApi(){
         Log.e("organization:  ",newUser.getOrganization().toString());
         Log.e("student_class :",newUser.getStudentClass().toString());
@@ -197,6 +203,7 @@ public class ProfileFragment4 extends BaseTFragment {
                         QTSHelp.setIsLogin(getActivity(),true);
                         QTSHelp.setIsStudent(getActivity(),true);
 
+
                     }
                     else {
                         Intent intent = new Intent(getActivity(), ActAssessor.class);
@@ -208,6 +215,7 @@ public class ProfileFragment4 extends BaseTFragment {
                         QTSHelp.setIsStudent(getActivity(),false);
                     }
                     getActivity().finish();
+                    pDialog.cancel();
                 }
             }
 

@@ -13,10 +13,16 @@ import wodule.com.wodule.object.UserObject;
  */
 public class QTSConstrains
 {
+    public static String ID = "";
+    public static String IDCategory = "";
     public static UserObject userObj = new UserObject();
-    public static int Splash_Time = 3000;
-    public static String code = "";
+    public static boolean checkdate = false;
+//    public static String code = "";
     public static String SHAREPRE_ID = "hungQTS";
+    public static File audiofile1 = null;
+    public static File audiofile2 = null;
+    public static File audiofile3 = null;
+    public static File audiofile4 = null;
 
     public static Bitmap bmAvatar = null;
     public static File pictureFile = null;

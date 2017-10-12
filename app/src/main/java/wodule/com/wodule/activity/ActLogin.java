@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -51,7 +50,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -67,13 +65,13 @@ import wodule.com.wodule.utils.APIService;
 import wodule.com.wodule.utils.APIUtils;
 
 public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
-    private ImageView img_logosmall,iconFacebook,iconGPlus,iconInstagram;
-    private TextView tvRegister,tvForgotPass,tvLicense;
+    private ImageView img_logosmall, iconFacebook, iconGPlus, iconInstagram;
+    private TextView tvRegister, tvForgotPass, tvLicense;
     private Button btnSubmit;
-    private EditText edUserName,edPassword;
+    private EditText edUserName, edPassword;
     private ProgressDialog mProgressDialog;
     private APIService mAPIService;
-    private String username ="",password="";
+    private String username = "", password = "";
     private CallbackManager callbackManager;
     private LoginManager loginManager;
     private String facebook_access_token = "";
@@ -82,8 +80,7 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
     private InstagramHelper instagramHelper;
     private CountDownTimer mCountDownTimer1;
     private boolean checktimeout = true, social = false, notlogin = false;
-    private RequestBody user_name,pass_word, organization, student_class, adviser,patch,type;
-    private String organization1,student_class1,adviser1,type1;
+    private RequestBody code, pass_word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +88,12 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.act_login);
-        QTSHelp.setIsLogin(ActLogin.this,false);
+        QTSHelp.setIsLogin(ActLogin.this, false);
         mAPIService = APIUtils.getAPIService();
         initUI();
-        QTSHelp.setIsEdit(ActLogin.this,false);
-        edUserName.setText("brown");
-        edPassword.setText("tatskie");
+        QTSHelp.setIsEdit(ActLogin.this, false);
+        edUserName.setText("hungnn34");
+        edPassword.setText("123456");
         //lay key hash fb
         try {
             PackageInfo info = null;
@@ -112,7 +109,8 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                 md.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
-        } catch (NoSuchAlgorithmException e) {}
+        } catch (NoSuchAlgorithmException e) {
+        }
         //con net google va lay thong tin ng dung
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -140,56 +138,56 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
 
     private void loginFB() {
         loginManager = getLoginManager();
-    loginManager.logInWithReadPermissions(this,
-            Arrays.asList("public_profile", "email"));
-    loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            Log.e("Login.this", "Login.initializeFacebook.onSuccess Granted Permissions= " + loginResult.getRecentlyGrantedPermissions().toString());
-            Log.e("Login.this", "result.getAccessToken():" + loginResult.getAccessToken().getToken());
-            facebook_access_token = loginResult.getAccessToken().getToken();
+        loginManager.logInWithReadPermissions(this,
+                Arrays.asList("public_profile", "email"));
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.e("Login.this", "Login.initializeFacebook.onSuccess Granted Permissions= " + loginResult.getRecentlyGrantedPermissions().toString());
+                Log.e("Login.this", "result.getAccessToken():" + loginResult.getAccessToken().getToken());
+                facebook_access_token = loginResult.getAccessToken().getToken();
 //            QTSHelp.setAccessToken(ActLogin.this,facebook_access_token);
-            GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                    new GraphRequest.GraphJSONObjectCallback() {
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
 
-                        @Override
-                        public void onCompleted(JSONObject object,
-                                                GraphResponse response) {
-                            if (response.getError() != null) {
-                                // handle error
-                            } else {
-                                Log.e("loginfacebook",response.getJSONObject().toString());
+                            @Override
+                            public void onCompleted(JSONObject object,
+                                                    GraphResponse response) {
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+                                    Log.e("loginfacebook", response.getJSONObject().toString());
+                                }
+
                             }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+                username = "u01" + "09010346123600";//loginResult.getAccessToken().getUserId();
+                password = "facebook";
+                social = true;
+                Log.e("Id facebook", username + "\n" + password);
+                Login();
+            }
 
-                        }
-                    });
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender,birthday");
-            request.setParameters(parameters);
-            request.executeAsync();
-            username = "u01"+"0901034612362";//loginResult.getAccessToken().getUserId();
-            password = "facebook";
-            social = true;
-            Log.e("Id facebook",username +"\n"+ password);
-            Login();
-        }
+            @Override
+            public void onCancel() {
+                Log.e("Login Facebook", "Login attempt canceled.");
+            }
 
-        @Override
-        public void onCancel() {
-            Log.e("Login Facebook", "Login attempt canceled.");
-        }
-
-        @Override
-        public void onError(FacebookException error) {
-            Log.e("Login.this", "Login.initializeFacebook.onError " + error.getMessage());
-            if (error instanceof FacebookAuthorizationException) {
-                if (AccessToken.getCurrentAccessToken() != null) {
-                    LoginManager.getInstance().logOut();
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("Login.this", "Login.initializeFacebook.onError " + error.getMessage());
+                if (error instanceof FacebookAuthorizationException) {
+                    if (AccessToken.getCurrentAccessToken() != null) {
+                        LoginManager.getInstance().logOut();
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
     private void initUI() {
         img_logosmall = (ImageView) findViewById(R.id.img_logosmall);
@@ -220,25 +218,24 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                         username = edUserName.getText().toString().trim();
                         password = edPassword.getText().toString().trim();
                         new GetData().execute();
-                        mCountDownTimer1=new CountDownTimer(20000,1000) {
+                        mCountDownTimer1 = new CountDownTimer(20000, 1000) {
 
                             @Override
                             public void onTick(long millisUntilFinished) {
 
                             }
+
                             @Override
                             public void onFinish() {
-                                if(checktimeout==true)
-                                {
+                                if (checktimeout == true) {
                                     mProgressDialog.cancel();
-                                    QTSHelp.showToast(ActLogin.this,"Time out");
+                                    QTSHelp.showToast(ActLogin.this, "Time out");
                                 }
                             }
                         };
                         mCountDownTimer1.start();
-                    }
-                    else {
-                        QTSHelp.showToast(ActLogin.this,"No Internet");
+                    } else {
+                        QTSHelp.showToast(ActLogin.this, "No Internet");
                     }
                     return true;
                 }
@@ -252,26 +249,26 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int height = displaymetrics.heightPixels;
         int wwidth = displaymetrics.widthPixels;
-        QTSHelp.SetHeightDevice(this,height);
-        QTSHelp.SetWidthDevice(this,wwidth);
+        QTSHelp.SetHeightDevice(this, height);
+        QTSHelp.SetWidthDevice(this, wwidth);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("LoginGoogle",""+connectionResult);
+        Log.e("LoginGoogle", "" + connectionResult);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tvLicense:
-                startActivity(new Intent(ActLogin.this,ActLicense.class));
+                startActivity(new Intent(ActLogin.this, ActLicense.class));
                 break;
             case R.id.tvForgotPass:
-                startActivity(new Intent(ActLogin.this,ActForgotPass.class));
+                startActivity(new Intent(ActLogin.this, ActForgotPass.class));
                 break;
             case R.id.tvRegister:
-                startActivity(new Intent(ActLogin.this,ActRegister.class));
+                startActivity(new Intent(ActLogin.this, ActRegister.class));
                 break;
             case R.id.btnSubmit:
                 social = false;
@@ -280,25 +277,24 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
                     username = edUserName.getText().toString().trim();
                     password = edPassword.getText().toString().trim();
                     new GetData().execute();
-                    mCountDownTimer1=new CountDownTimer(20000,1000) {
+                    mCountDownTimer1 = new CountDownTimer(20000, 1000) {
 
                         @Override
                         public void onTick(long millisUntilFinished) {
 
                         }
+
                         @Override
                         public void onFinish() {
-                            if(checktimeout==true)
-                            {
+                            if (checktimeout == true) {
                                 mProgressDialog.cancel();
-                                QTSHelp.showToast(ActLogin.this,"Time out");
+                                QTSHelp.showToast(ActLogin.this, "Time out");
                             }
                         }
                     };
                     mCountDownTimer1.start();
-                }
-                else {
-                    QTSHelp.showToast(ActLogin.this,"No Internet");
+                } else {
+                    QTSHelp.showToast(ActLogin.this, "No Internet");
                 }
                 break;
             case R.id.iconFacebook:
@@ -326,75 +322,75 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         @Override
         protected String doInBackground(final String... params) {
             final String status = "";
-                mAPIService.savePost(username, password, social).enqueue(new Callback<UserExaminer>() {
-                    @Override
-                    public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
-                        Log.e("Login response", response.toString());
-                        if (response.isSuccessful()&&social==false) {
-                            final String token = response.body().getToken().toString().trim();
-                            QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
-                            mAPIService.getAnswers("Bearer " + response.body().getToken().toString()).enqueue(new Callback<Example>() {
-                                @Override
-                                public void onResponse(Call<Example> call, Response<Example> response) {
-                                    if (response.isSuccessful()) {
-                                        Log.e("Type", response.body().getUser().getType().toString());
-                                        if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
-                                            Intent intent = new Intent(ActLogin.this, ActExaminer.class);
-                                            intent.putExtra("token", token);
-                                            intent.putExtra("password",password);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                            QTSHelp.setIsLogin(ActLogin.this, true);
-                                            QTSHelp.setIsStudent(ActLogin.this, true);
+            mAPIService.savePost(username, password, social).enqueue(new Callback<UserExaminer>() {
+                @Override
+                public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
+                    Log.e("Login response", response.toString());
+                    if (response.isSuccessful() && social == false) {
+                        final String token = response.body().getToken().toString().trim();
+                        QTSHelp.setAccessToken(ActLogin.this, response.body().getToken().toString());
+                        mAPIService.getAnswers("Bearer " + response.body().getToken().toString()).enqueue(new Callback<Example>() {
+                            @Override
+                            public void onResponse(Call<Example> call, Response<Example> response) {
+                                if (response.isSuccessful()) {
+                                    Log.e("Type", response.body().getUser().getType().toString());
+                                    if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
+                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+                                        intent.putExtra("token", token);
+                                        intent.putExtra("password", password);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                        QTSHelp.setIsStudent(ActLogin.this, true);
 
-                                        } else {
-                                            Intent intent = new Intent(ActLogin.this, ActAssessor.class);
-                                            intent.putExtra("token", token);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                            QTSHelp.setIsLogin(ActLogin.this, true);
-                                            QTSHelp.setIsStudent(ActLogin.this, false);
-                                        }
-                                        finish();
-                                        mProgressDialog.cancel();
                                     } else {
-                                        Log.e("Login reponse: ",response.toString());
-
+                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+                                        intent.putExtra("token", token);
+                                        intent.putExtra("password", password);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                        QTSHelp.setIsStudent(ActLogin.this, false);
                                     }
-                                }
+                                    finish();
+                                    mProgressDialog.cancel();
+                                } else {
+                                    Log.e("Login reponse: ", response.toString());
 
-                                @Override
-                                public void onFailure(Call<Example> call, Throwable t) {
-                                    Log.e("Login onFailure: ",t.toString());
                                 }
-                            });
-                            Log.e("token", response.body().getToken().toString());
-                            mProgressDialog.cancel();
-                            finish();
-                            checktimeout = false;
-                        }
-                        if (!response.isSuccessful()) {
-                            checktimeout = false;
-                            mProgressDialog.cancel();
-                            try {
-                                StringBuilder a = new StringBuilder(response.errorBody().string());
-                                a.delete(0, 10);
-                                a.delete(a.length() - 2, a.length());
-                                QTSHelp.ShowpopupMessage(ActLogin.this, a.toString());
-                                }
-                            catch (IOException e) {
-                                e.printStackTrace();
                             }
+
+                            @Override
+                            public void onFailure(Call<Example> call, Throwable t) {
+                                Log.e("Login onFailure: ", t.toString());
+                            }
+                        });
+                        Log.e("token", response.body().getToken().toString());
+                        mProgressDialog.cancel();
+                        finish();
+                        checktimeout = false;
+                    }
+                    if (!response.isSuccessful()) {
+                        checktimeout = false;
+                        mProgressDialog.cancel();
+                        try {
+                            StringBuilder a = new StringBuilder(response.errorBody().string());
+                            a.delete(0, 10);
+                            a.delete(a.length() - 2, a.length());
+                            QTSHelp.ShowpopupMessage(ActLogin.this, a.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<UserExaminer> call, Throwable t) {
+                @Override
+                public void onFailure(Call<UserExaminer> call, Throwable t) {
 
-                    }
-                });
+                }
+            });
             return status;
         }
     }
@@ -403,42 +399,38 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.e("Showinfo Googlelogin",acct.getId().toString()+" - "+acct.getEmail().toString()+" - "+acct.getDisplayName().toString()+"-"+acct.getPhotoUrl().toString());
+            Log.e("Showinfo Googlelogin", acct.getId().toString() + " - " + acct.getEmail().toString() + " - " + acct.getDisplayName().toString() + "-" + acct.getPhotoUrl().toString());
             social = true;
-            username = "u03"+"104843305268657692765";//"u03"+acct.getId();
+            username = "u03" + "104843305268657692761";//"u03"+acct.getId();
             password = "google";
             Login();
         } else {
-            Log.e("google login","login failed"+"result"+result.toString());
+            Log.e("google login", "login failed" + "result" + result.toString());
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == InstagramHelperConstants.INSTA_LOGIN && resultCode == RESULT_OK) {
             InstagramUser user = instagramHelper.getInstagramUser(this);
-            Log.e("login instagram",user.getData().getUsername() + "\n" + user.getData().getFullName() + "\n"
-                    + user.getData().getWebsite()+"\n"+ user.getData().getId());
+            Log.e("login instagram", user.getData().getUsername() + "\n" + user.getData().getFullName() + "\n"
+                    + user.getData().getWebsite() + "\n" + user.getData().getId());
             social = true;
-            username ="u02"+"5598549555";//user.getData().getId();
+            username = "u02" + "5598549555";//user.getData().getId();
             password = "instagram";
             Login();
-        }
-        else if (requestCode == RC_SIGN_IN) {
+        } else if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        }else
-        {
-            Toast.makeText(this, "Login failed", Toast.LENGTH_LONG).show();
         }
     }
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        Log.e("GoogleLogin",mGoogleApiClient.isConnected()+"");
+        Log.e("GoogleLogin", mGoogleApiClient.isConnected() + "");
     }
 
     private void dialogCode() {
@@ -465,64 +457,74 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
 
             @Override
             public void onClick(View v) {
-                Log.e("token",QTSHelp.getAccessToken(ActLogin.this));
-                mAPIService.getCode("Bearer "+QTSHelp.getAccessToken(ActLogin.this),"api/code/"+edCode.getText().toString()).enqueue(new Callback<List<UserObject>>() {
+                Log.e("token", QTSHelp.getAccessToken(ActLogin.this));
+                mAPIService.getAnswers("Bearer " + QTSHelp.getAccessToken(ActLogin.this)).enqueue(new Callback<Example>() {
                     @Override
-                    public void onResponse(Call<List<UserObject>> call, Response<List<UserObject>> response) {
-                        Log.e("reponse get code",response.toString());
-                        if (response.isSuccessful()){
-                            dialog_code.dismiss();
-                            for (int i =0;i<=response.body().size()-1;i++)
-                            {
-                                organization1 = response.body().get(i).getOrganization().toString();
-                                student_class1 = response.body().get(i).getClass1().toString();
-                                adviser1 = response.body().get(i).getAdviser().toString();
-                                type1 = response.body().get(i).getType().toString();
-                                Log.e("repose list",response.body().get(i).getOrganization().toString()+"\n"+
-                                        response.body().get(i).getClass1().toString()+"\n"+
-                                        response.body().get(i).getAdviser().toString()+"\n"+
-                                        response.body().get(i).getType().toString());
-                            }
-                            patch = RequestBody.create(MediaType.parse("text/plain"),"PATCH");
-                            organization = RequestBody.create(MediaType.parse("text/plain"),organization1.toString());
-                            student_class = RequestBody.create(MediaType.parse("text/plain"),student_class1.toString());
-                            type = RequestBody.create(MediaType.parse("text/plain"),type1.toString());
-                            adviser = RequestBody.create(MediaType.parse("text/plain"),adviser1.toString());
-                            user_name = RequestBody.create(MediaType.parse("text/plain"),username.toString());
-                            pass_word = RequestBody.create(MediaType.parse("text/plain"),password.toString());
-
-                            mAPIService.postUpdateLogin("Bearer "+QTSHelp.getAccessToken(ActLogin.this),patch,organization,student_class,type,user_name,pass_word,adviser).enqueue(new Callback<UserObject>() {
+                    public void onResponse(Call<Example> call, Response<Example> response) {
+                        if (response.isSuccessful()) {
+                            code = RequestBody.create(MediaType.parse("text/plain"), edCode.getText().toString());
+                            pass_word = RequestBody.create(MediaType.parse("text/plain"), password.toString());
+                            mAPIService.postUpdateLogin("api/socialite/" + response.body().getUser().getId(), "Bearer " + QTSHelp.getAccessToken(ActLogin.this), pass_word, code).enqueue(new Callback<UserObject>() {
                                 @Override
                                 public void onResponse(Call<UserObject> call, Response<UserObject> response) {
-                                    Log.e("update get code",response.toString());
-                                    if (response.isSuccessful()){
-                                        Log.e("update login fb", response.toString());
-                                    }else {
-                                        try {
-                                            QTSHelp.ShowpopupMessage(ActLogin.this,response.errorBody().string());
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
+                                    Log.e("reponse updatelogin", response.toString());
+                                    if (response.isSuccessful()) {
+                                        mAPIService.getAnswers("Bearer " + QTSHelp.getAccessToken(ActLogin.this)).enqueue(new Callback<Example>() {
+                                            @Override
+                                            public void onResponse(Call<Example> call, Response<Example> response) {
+                                                dialog_code.dismiss();
+                                                dialog_code.cancel();
+                                                if (response.isSuccessful()) {
+                                                    if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
+                                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+                                                        intent.putExtra("token", QTSHelp.getAccessToken(ActLogin.this));
+                                                        intent.putExtra("password", password);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        startActivity(intent);
+                                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                                        QTSHelp.setIsStudent(ActLogin.this, true);
+
+                                                    } else {
+                                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+                                                        intent.putExtra("token", QTSHelp.getAccessToken(ActLogin.this));
+                                                        intent.putExtra("password", password);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        startActivity(intent);
+                                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                                        QTSHelp.setIsStudent(ActLogin.this, false);
+                                                    }
+                                                    finish();
+                                                } else {
+                                                    Log.e("Login reponse: ", response.toString());
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Example> call, Throwable t) {
+                                                Log.e("Login onFailure: ", t.toString());
+                                            }
+                                        });
+                                    } else {
+                                        Log.e("reponse updatelogin", response.toString());
                                     }
                                 }
+
                                 @Override
                                 public void onFailure(Call<UserObject> call, Throwable t) {
-                                    Log.e("onFailure",t.toString());
+                                    Log.e("onFailure updatelogin", t.toString());
                                 }
                             });
-                        }else {
-                            try {
-                                QTSHelp.ShowpopupMessage(ActLogin.this,response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        } else {
+                            Log.e("error", response.toString());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<UserObject>> call, Throwable t) {
-                        Log.e("onFailure","onFailure");
-                        Log.e("error",t.getMessage().toString());
+                    public void onFailure(Call<Example> call, Throwable t) {
+                        Log.e("error", t.toString());
                     }
                 });
             }
@@ -531,31 +533,68 @@ public class ActLogin extends AppCompatActivity implements GoogleApiClient.OnCon
         dialog_code.show();
     }
 
-    private void Login(){
+    private void Login() {
         mAPIService.savePost(username, password, social).enqueue(new Callback<UserExaminer>() {
             @Override
             public void onResponse(Call<UserExaminer> call, Response<UserExaminer> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.e("Login response", response.toString());
-                    QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
-                    Log.e("to ken login fb",QTSHelp.getAccessToken(ActLogin.this)+"");
-                    if (response.body().getFirst().equalsIgnoreCase("true")){
-    //                    QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
+                    QTSHelp.setAccessToken(ActLogin.this, response.body().getToken().toString());
+                    Log.e("to ken login fb", QTSHelp.getAccessToken(ActLogin.this) + "");
+                    if (response.body().getFirst().equalsIgnoreCase("true")) {
+                        //                    QTSHelp.setAccessToken(ActLogin.this,response.body().getToken().toString());
                         dialogCode();
-                    }else if (response.body().getFirst().equalsIgnoreCase("false")){
-                        QTSHelp.showToast(ActLogin.this,"first false");
+                    } else if (response.body().getFirst().equalsIgnoreCase("false")) {
+                        QTSHelp.showToast(ActLogin.this, "first false");
+                        mAPIService.getAnswers("Bearer " + response.body().getToken().toString()).enqueue(new Callback<Example>() {
+                            @Override
+                            public void onResponse(Call<Example> call, Response<Example> response) {
+                                if (response.isSuccessful()) {
+//                                    Log.e("Type", response.body().getUser().getType());
+                                    if (response.body().getUser().getType().equalsIgnoreCase("examinee")) {
+                                        Intent intent = new Intent(ActLogin.this, ActExaminer.class);
+                                        intent.putExtra("token", QTSHelp.getAccessToken(ActLogin.this));
+                                        intent.putExtra("password", password);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                        QTSHelp.setIsStudent(ActLogin.this, true);
+
+                                    } else {
+                                        Intent intent = new Intent(ActLogin.this, ActAssessor.class);
+                                        intent.putExtra("token", QTSHelp.getAccessToken(ActLogin.this));
+                                        intent.putExtra("password", password);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        QTSHelp.setIsLogin(ActLogin.this, true);
+                                        QTSHelp.setIsStudent(ActLogin.this, false);
+                                    }
+                                    finish();
+                                } else {
+                                    Log.e("Login reponse: ", response.toString());
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Example> call, Throwable t) {
+                                Log.e("Login onFailure: ", t.toString());
+                            }
+                        });
                     }
-                }else {
-                    Log.e("error",response.toString());
-                    mProgressDialog.cancel();
+                } else {
+                    Log.e("error", response.toString());
                 }
-    }
+            }
+
             @Override
             public void onFailure(Call<UserExaminer> call, Throwable t) {
-                Log.e("onFailure",t.toString());
+                Log.e("onFailure", t.toString());
                 mProgressDialog.cancel();
             }
 
-            });
+        });
     }
 }

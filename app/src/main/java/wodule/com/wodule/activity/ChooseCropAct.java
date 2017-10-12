@@ -118,6 +118,12 @@ public class ChooseCropAct extends BaseTFragment {
     public void onBackPressed() {
 
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
+
     private File getFiles(Bitmap bitmap, String file_name) {
         File file = null;
         try {
@@ -174,6 +180,7 @@ public class ChooseCropAct extends BaseTFragment {
         RequestBody fname = RequestBody.create(MediaType.parse("text/plain"),newUser.getFirstName().toString());
         RequestBody mname = RequestBody.create(MediaType.parse("text/plain"),newUser.getMiddleName().toString());
         RequestBody lname = RequestBody.create(MediaType.parse("text/plain"),newUser.getLastName().toString());
+        Log.e("error",newUser.getDateOfBirth().toString());
         RequestBody dateofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getDateOfBirth().toString());
         RequestBody countryofbirth = RequestBody.create(MediaType.parse("text/plain"),newUser.getCountryOfBirth().toString());
         RequestBody nativename = RequestBody.create(MediaType.parse("text/plain"),newUser.getNativeName().toString());
@@ -185,15 +192,14 @@ public class ChooseCropAct extends BaseTFragment {
         RequestBody organization = RequestBody.create(MediaType.parse("text/plain"),newUser.getOrganization().toString());
         RequestBody student_class = RequestBody.create(MediaType.parse("text/plain"),newUser.getStudentClass().toString());
         RequestBody adviser = RequestBody.create(MediaType.parse("text/plain"),newUser.getAdviser().toString());
-        if (QTSConstrains.pictureFile != null) {
+        if (QTSConstrains.pictureFile != null && QTSConstrains.checkdate==false) {
             Log.e("getUpdateApi", "QTSConstrains.picture # null");
             Log.e("token",QTSHelp.getAccessToken(getActivity()));
-            mAPIService.postUpdateImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,username,email,password,fname,mname,lname,dateofbirth,countryofbirth,nativename,suffx,ln_first,address,ethnicity,religion,organization,student_class,adviser).enqueue(new Callback<UserObject>() {
+            mAPIService.postUpdateImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,fname,mname,lname,countryofbirth,nativename,suffx,ln_first,address,ethnicity,religion,organization,student_class,adviser).enqueue(new Callback<UserObject>() {
                 @Override
                 public void onResponse(Call<UserObject> call, Response<UserObject> response) {
                     Log.e("update",response.toString());
                     if (response.code()==200){
-//                        QTSHelp.ShowpopupMessage(getActivity(),"Success");
                         getActivity().finish();
                         QTSHelp.setIsEdit(getActivity(),false);
                         pDialog.dismiss();
@@ -202,7 +208,6 @@ public class ChooseCropAct extends BaseTFragment {
                         try {
                             pDialog.dismiss();
                             pDialog.cancel();
-                            QTSHelp.setIsEdit(getActivity(),false);
                             QTSHelp.ShowpopupMessage(getActivity(),response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -214,17 +219,18 @@ public class ChooseCropAct extends BaseTFragment {
                 public void onFailure(Call<UserObject> call, Throwable t) {
                     pDialog.cancel();
                     getActivity().finish();
-                    QTSHelp.setIsEdit(getActivity(),false);
                 }
             });
         } else {
             Log.e("getUpdateApi", "QTSConstrains.picture null");
-            mAPIService.postUpdatenoImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,username,email,fname,mname,lname,dateofbirth,countryofbirth,nativename,
+            mAPIService.postUpdatenoImage("Bearer "+QTSHelp.getAccessToken(getActivity()),patch ,city,country,telephone,nationality,status,gender,fname,mname,lname,dateofbirth,countryofbirth,nativename,
                     suffx,ln_first,address,ethnicity,religion,organization,student_class,adviser).enqueue(new Callback<UserObject>() {
                 @Override
                 public void onResponse(Call<UserObject> call, Response<UserObject> response) {
                     if (response.isSuccessful()){
-                        QTSHelp.ShowpopupMessage(getActivity(),"Success");
+                        getActivity().finish();
+                        QTSConstrains.checkdate = false;
+                        QTSHelp.setIsEdit(getActivity(),false);
                         pDialog.dismiss();
                         pDialog.cancel();
                     }else {

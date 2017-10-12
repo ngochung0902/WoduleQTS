@@ -155,6 +155,11 @@ public class ProfileFragment3 extends BaseTFragment {
 
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
+
     private void selectImage() {
         final CharSequence[] items = {"Capture photo", "Choose photo from Gallery"};
 

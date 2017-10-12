@@ -117,40 +117,70 @@ public class ActExaminer extends AppCompatActivity implements View.OnClickListen
             public void onResponse(Call<Example> call, Response<Example> response) {
                 Log.e("Examiner response",response.toString());
                 if (response.isSuccessful()){
+                    QTSConstrains.ID = response.body().getUser().getId().toString();
                     mProgressDialog.cancel();
-                    lbName.setText(response.body().getUser().getFirstName());
-                    tvIdExam.setText(response.body().getUser().getRoleId()+"");
-                    lbSchool.setText(response.body().getUser().getOrganization());
-                    lbSex.setText(response.body().getUser().getGender());
-                    Log.e("picture",response.body().getUser().getPicture());
-                    String[] strdate =response.body().getUser().getDateOfBirth().split("-");
-                    lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
-                    Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
+                    if (response.body().getUser().getFirstName()!=null)
+                        lbName.setText(response.body().getUser().getFirstName());
+                    if (response.body().getUser().getRoleId()!=null)
+                        tvIdExam.setText(response.body().getUser().getRoleId()+"");
+                    if (response.body().getUser().getOrganization()!=null)
+                        lbSchool.setText(response.body().getUser().getOrganization());
+                    if (response.body().getUser().getGender()!=null)
+                        lbSex.setText(response.body().getUser().getGender());
+                    if (response.body().getUser().getDateOfBirth()!=null) {
+                        String[] strdate = response.body().getUser().getDateOfBirth().split("-");
+                        lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
+                    }
+                    if (response.body().getUser().getPicture()!=null)
+                        Picasso.with(ActExaminer.this).load(response.body().getUser().getPicture()).into(iconAvatar);
 
-                    QTSConstrains.userObj.setFirstName(response.body().getUser().getFirstName().toString());
-                    QTSConstrains.userObj.setMiddleName(response.body().getUser().getMiddleName().toString());
-                    QTSConstrains.userObj.setLastName(response.body().getUser().getLastName().toString());
-                    QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
-//                    QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
-//                    QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
-                    QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
-                    QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
-                    QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());
-                    QTSConstrains.userObj.setCity(response.body().getUser().getCity().toString());
-                    QTSConstrains.userObj.setCountry(response.body().getUser().getCountry().toString());
-                    QTSConstrains.userObj.setTelephone(response.body().getUser().getTelephone().toString());
-                    QTSConstrains.userObj.setEmail(response.body().getUser().getEmail().toString());
-                    QTSConstrains.userObj.setNationality(response.body().getUser().getNationality().toString());
-                    QTSConstrains.userObj.setEthnicity(response.body().getUser().getEthnicity().toString());
-                    QTSConstrains.userObj.setStatus(response.body().getUser().getStatus().toString());
-//                    QTSConstrains.userObj.setReligion(response.body().getUser().getReligion().toString());
-                    QTSConstrains.userObj.setGender(response.body().getUser().getGender().toString());
-                    QTSConstrains.userObj.setOrganization(response.body().getUser().getOrganization().toString());
-                    QTSConstrains.userObj.setStudentClass(response.body().getUser().getStudentClass().toString());
-                    QTSConstrains.userObj.setAdviser(response.body().getUser().getAdviser().toString());
-                    QTSConstrains.userObj.setUserName(response.body().getUser().getUserName().toString());
+                    if (response.body().getUser().getFirstName()!=null)
+                        QTSConstrains.userObj.setFirstName(response.body().getUser().getFirstName().toString());
+                    if (response.body().getUser().getMiddleName()!=null)
+                        QTSConstrains.userObj.setMiddleName(response.body().getUser().getMiddleName().toString());
+                    if (response.body().getUser().getLastName()!=null)
+                        QTSConstrains.userObj.setLastName(response.body().getUser().getLastName().toString());
+                    if (response.body().getUser().getNativeName()!=null)
+                        QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
+                    if (response.body().getUser().getSuffix()!=null)
+                        QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
+                    if (response.body().getUser().getLnFirst()!=null)
+                        QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
+                    if (response.body().getUser().getDateOfBirth()!=null)
+                        QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
+                    if (response.body().getUser().getCountryOfBirth()!=null)
+                        QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
+                    if (response.body().getUser().getAddress()!=null)
+                        QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());
+                    if (response.body().getUser().getCity()!=null)
+                        QTSConstrains.userObj.setCity(response.body().getUser().getCity().toString());
+                    if (response.body().getUser().getCountry()!=null)
+                        QTSConstrains.userObj.setCountry(response.body().getUser().getCountry().toString());
+                    if (response.body().getUser().getTelephone()!=null)
+                        QTSConstrains.userObj.setTelephone(response.body().getUser().getTelephone().toString());
+                    if (response.body().getUser().getEmail()!=null)
+                        QTSConstrains.userObj.setEmail(response.body().getUser().getEmail().toString());
+                    if (response.body().getUser().getNationality()!=null)
+                        QTSConstrains.userObj.setNationality(response.body().getUser().getNationality().toString());
+                    if (response.body().getUser().getEthnicity()!=null)
+                        QTSConstrains.userObj.setEthnicity(response.body().getUser().getEthnicity().toString());
+                    if (response.body().getUser().getStatus()!=null)
+                        QTSConstrains.userObj.setStatus(response.body().getUser().getStatus().toString());
+                    if (response.body().getUser().getReligion()!=null)
+                        QTSConstrains.userObj.setReligion(response.body().getUser().getReligion().toString());
+                    if (response.body().getUser().getGender()!=null)
+                        QTSConstrains.userObj.setGender(response.body().getUser().getGender().toString());
+                    if (response.body().getUser().getOrganization()!=null)
+                        QTSConstrains.userObj.setOrganization(response.body().getUser().getOrganization().toString());
+                    if (response.body().getUser().getStudentClass()!=null)
+                        QTSConstrains.userObj.setStudentClass(response.body().getUser().getStudentClass().toString());
+                    if (response.body().getUser().getAdviser()!=null)
+                        QTSConstrains.userObj.setAdviser(response.body().getUser().getAdviser().toString());
+                    if (response.body().getUser().getUserName()!=null)
+                        QTSConstrains.userObj.setUserName(response.body().getUser().getUserName().toString());
                     QTSConstrains.userObj.setPassword(password);
-                    QTSConstrains.userObj.setPicture(response.body().getUser().getPicture().toString());
+                    if (response.body().getUser().getPicture()!=null)
+                        QTSConstrains.userObj.setPicture(response.body().getUser().getPicture().toString());
                 }
                 else{
                     mProgressDialog.cancel();

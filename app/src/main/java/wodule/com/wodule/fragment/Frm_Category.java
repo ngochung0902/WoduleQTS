@@ -111,4 +111,9 @@ public class Frm_Category extends BaseTFragment {
     public void onBackPressed() {
 
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
 }

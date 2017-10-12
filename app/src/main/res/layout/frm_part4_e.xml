@@ -49,6 +49,7 @@
                 android:visibility="visible" />
 
             <TextView
+                android:background="@drawable/border_rect_green_dark"
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
                 android:layout_marginTop="@dimen/margin5"
                 android:paddingLeft="@dimen/margin10"
                 android:paddingRight="@dimen/margin10"
-                android:text="01:00"
+                android:text="STOP"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/text16"
                 android:visibility="invisible" />

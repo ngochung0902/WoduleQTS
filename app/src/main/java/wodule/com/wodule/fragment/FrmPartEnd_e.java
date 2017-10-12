@@ -2,7 +2,6 @@ package wodule.com.wodule.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import wodule.com.wodule.R;
+import wodule.com.wodule.utils.BaseTFragment;
 
 /**
  * Created by MyPC on 14/09/2017.
  */
-public class FrmPartEnd_e extends Fragment {
+public class FrmPartEnd_e extends BaseTFragment {
     private TextView btnHome;
     private ImageView ivAvatar;
     @Nullable
@@ -36,5 +36,20 @@ public class FrmPartEnd_e extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
     }
 }

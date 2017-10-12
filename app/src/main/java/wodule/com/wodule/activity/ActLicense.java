@@ -34,4 +34,5 @@ public class ActLicense extends AppCompatActivity {
         lbAgree = (TextView) findViewById(R.id.lbAgree);
         lbDisagree = (TextView) findViewById(R.id.lbDisagree);
     }
+
 }

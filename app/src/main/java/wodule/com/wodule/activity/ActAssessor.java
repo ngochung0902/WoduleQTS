@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wodule.com.wodule.R;
+import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.object.Example;
 import wodule.com.wodule.utils.APIService;
@@ -24,7 +25,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
     private ImageView iconAccount, iconBag, iconCalendar, iconStart, iconAvatar,btnEdit;
     private TextView lbAccounting, lbAssessmentRecord, lbCalender, lbStartAssessment, lbName, tvIdExam, lbSchool, lbSex, lbAge, lbLogout;
     private APIService mAPIService;
-    private String token;
+    private String token,password;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -33,6 +34,7 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.act_assessor);
         mAPIService = APIUtils.getAPIService();
         token = getIntent().getStringExtra("token");
+        password = getIntent().getStringExtra("password");
         load();
         getProfile();
         initUI();
@@ -159,17 +161,74 @@ public class ActAssessor extends AppCompatActivity implements View.OnClickListen
                             response.body().getUser().getAdviser().toString()
                     );
                     mProgressDialog.cancel();
-                    lbName.setText(response.body().getUser().getFirstName());
-                    tvIdExam.setText(response.body().getUser().getRoleId() + "");
-                    lbSchool.setText(response.body().getUser().getOrganization() + "");
-                    lbSex.setText("Sex: " + response.body().getUser().getGender());
-                    String[] strdate = response.body().getUser().getDateOfBirth().split("-");
-                    lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
-                    Picasso.with(ActAssessor.this).load(response.body().getUser().getPicture()).into(iconAvatar);
 
+                    QTSConstrains.ID = response.body().getUser().getId().toString();
+                    if (response.body().getUser().getFirstName()!=null)
+                        lbName.setText(response.body().getUser().getFirstName());
+                    if (response.body().getUser().getRoleId()!=null)
+                        tvIdExam.setText(response.body().getUser().getRoleId()+"");
+                    if (response.body().getUser().getOrganization()!=null)
+                        lbSchool.setText(response.body().getUser().getOrganization());
+                    if (response.body().getUser().getGender()!=null)
+                        lbSex.setText(response.body().getUser().getGender());
+                    if (response.body().getUser().getDateOfBirth()!=null) {
+                        String[] strdate = response.body().getUser().getDateOfBirth().split("-");
+                        lbAge.setText("Age: " + QTSHelp.getAge(Integer.parseInt(strdate[0]), Integer.parseInt(strdate[1]), Integer.parseInt(strdate[2])));
+                    }
+                    if (response.body().getUser().getPicture()!=null)
+                        Picasso.with(ActAssessor.this).load(response.body().getUser().getPicture()).into(iconAvatar);
+
+                    if (response.body().getUser().getFirstName()!=null)
+                        QTSConstrains.userObj.setFirstName(response.body().getUser().getFirstName().toString());
+                    if (response.body().getUser().getMiddleName()!=null)
+                        QTSConstrains.userObj.setMiddleName(response.body().getUser().getMiddleName().toString());
+                    if (response.body().getUser().getLastName()!=null)
+                        QTSConstrains.userObj.setLastName(response.body().getUser().getLastName().toString());
+                    if (response.body().getUser().getNativeName()!=null)
+                        QTSConstrains.userObj.setNativeName(response.body().getUser().getNativeName().toString());
+                    if (response.body().getUser().getSuffix()!=null)
+                        QTSConstrains.userObj.setSuffix(response.body().getUser().getSuffix().toString());
+                    if (response.body().getUser().getLnFirst()!=null)
+                        QTSConstrains.userObj.setLnFirst(response.body().getUser().getLnFirst().toString());
+                    if (response.body().getUser().getDateOfBirth()!=null)
+                        QTSConstrains.userObj.setDateOfBirth(response.body().getUser().getDateOfBirth().toString());
+                    if (response.body().getUser().getCountryOfBirth()!=null)
+                        QTSConstrains.userObj.setCountryOfBirth(response.body().getUser().getCountryOfBirth().toString());
+                    if (response.body().getUser().getAddress()!=null)
+                        QTSConstrains.userObj.setAddress(response.body().getUser().getAddress().toString());
+                    if (response.body().getUser().getCity()!=null)
+                        QTSConstrains.userObj.setCity(response.body().getUser().getCity().toString());
+                    if (response.body().getUser().getCountry()!=null)
+                        QTSConstrains.userObj.setCountry(response.body().getUser().getCountry().toString());
+                    if (response.body().getUser().getTelephone()!=null)
+                        QTSConstrains.userObj.setTelephone(response.body().getUser().getTelephone().toString());
+                    if (response.body().getUser().getEmail()!=null)
+                        QTSConstrains.userObj.setEmail(response.body().getUser().getEmail().toString());
+                    if (response.body().getUser().getNationality()!=null)
+                        QTSConstrains.userObj.setNationality(response.body().getUser().getNationality().toString());
+                    if (response.body().getUser().getEthnicity()!=null)
+                        QTSConstrains.userObj.setEthnicity(response.body().getUser().getEthnicity().toString());
+                    if (response.body().getUser().getStatus()!=null)
+                        QTSConstrains.userObj.setStatus(response.body().getUser().getStatus().toString());
+                    if (response.body().getUser().getReligion()!=null)
+                        QTSConstrains.userObj.setReligion(response.body().getUser().getReligion().toString());
+                    if (response.body().getUser().getGender()!=null)
+                        QTSConstrains.userObj.setGender(response.body().getUser().getGender().toString());
+                    if (response.body().getUser().getOrganization()!=null)
+                        QTSConstrains.userObj.setOrganization(response.body().getUser().getOrganization().toString());
+                    if (response.body().getUser().getStudentClass()!=null)
+                        QTSConstrains.userObj.setStudentClass(response.body().getUser().getStudentClass().toString());
+                    if (response.body().getUser().getAdviser()!=null)
+                        QTSConstrains.userObj.setAdviser(response.body().getUser().getAdviser().toString());
+                    if (response.body().getUser().getUserName()!=null)
+                        QTSConstrains.userObj.setUserName(response.body().getUser().getUserName().toString());
+                    QTSConstrains.userObj.setPassword(password);
+                    if (response.body().getUser().getPicture()!=null)
+                        QTSConstrains.userObj.setPicture(response.body().getUser().getPicture().toString());
 
                 }else{
                     mProgressDialog.cancel();
+                    QTSHelp.showToast(ActAssessor.this,"Token is invalid");
                     Intent intent = new Intent(ActAssessor.this,ActLogin.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -43,7 +43,7 @@
             android:layout_height="60dp"
             android:id="@+id/btnStartAssess"
             android:layout_gravity="top"
-            android:layout_marginTop="@dimen/margin40"
+            android:layout_marginTop="@dimen/margin50"
             />
     </LinearLayout>
 </RelativeLayout>

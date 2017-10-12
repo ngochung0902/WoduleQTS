@@ -138,4 +138,9 @@ public class Frm_Part4_a extends BaseTFragment implements View.OnClickListener {
     public void onBackPressed() {
 
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
 }

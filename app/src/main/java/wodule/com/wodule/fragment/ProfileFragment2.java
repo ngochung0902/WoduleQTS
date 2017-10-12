@@ -88,6 +88,7 @@ public class ProfileFragment2 extends BaseTFragment {
         edCity.setText(String.valueOf(QTSConstrains.userObj.getCity()));
         edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountry()));
         edEmail.setText(String.valueOf(QTSConstrains.userObj.getEmail()));
+        edEmail.setEnabled(false);
         edPhone.setText(String.valueOf(QTSConstrains.userObj.getTelephone()));
         edNational.setText(String.valueOf(QTSConstrains.userObj.getNationality()));
         edEthn.setText(String.valueOf(QTSConstrains.userObj.getEthnicity()));
@@ -101,6 +102,12 @@ public class ProfileFragment2 extends BaseTFragment {
     public void onBackPressed() {
 
     }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
+    }
+
     private String checkValid(){
         if (edAddress.getText().toString().trim().length() == 0){
             return getString(R.string.check_address);

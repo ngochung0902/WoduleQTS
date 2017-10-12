@@ -88,17 +88,27 @@ public class ProfileFragment1 extends BaseTFragment{
 
     private void getProfile(){
         Log.e("fist name",String.valueOf(QTSConstrains.userObj.getFirstName()));
-        edFirstName.setText(String.valueOf(QTSConstrains.userObj.getFirstName()));
-        edLastName.setText(String.valueOf(QTSConstrains.userObj.getLastName()));
-        edMiddleName.setText(String.valueOf(QTSConstrains.userObj.getMiddleName()));
-        edNativeName.setText(String.valueOf(QTSConstrains.userObj.getNativeName()));
-        edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountryOfBirth()));
-        edDate.setText(String.valueOf(QTSConstrains.userObj.getDateOfBirth()));
-        edSuffx.setText(String.valueOf(QTSConstrains.userObj.getSuffix()));
-        if (QTSConstrains.userObj.getLnFirst().toString().trim().equalsIgnoreCase("1")){
-            ivChecked.setImageResource(R.mipmap.ic_ticked);
-        }else {
-            ivChecked.setImageResource(R.mipmap.ic_tick);
+        if(QTSConstrains.userObj.getFirstName()!=null)
+            edFirstName.setText(String.valueOf(QTSConstrains.userObj.getFirstName()));
+        if(QTSConstrains.userObj.getLastName()!=null)
+            edLastName.setText(String.valueOf(QTSConstrains.userObj.getLastName()));
+        if(QTSConstrains.userObj.getMiddleName()!=null)
+            edMiddleName.setText(String.valueOf(QTSConstrains.userObj.getMiddleName()));
+        if(QTSConstrains.userObj.getNativeName()!=null)
+            edNativeName.setText(String.valueOf(QTSConstrains.userObj.getNativeName()));
+        if(QTSConstrains.userObj.getCountryOfBirth()!=null)
+            edCountry.setText(String.valueOf(QTSConstrains.userObj.getCountryOfBirth()));
+        if(QTSConstrains.userObj.getDateOfBirth()!=null)
+            edDate.setText(String.valueOf(QTSConstrains.userObj.getDateOfBirth()));
+        if(QTSConstrains.userObj.getSuffix()!=null){
+            edSuffx.setText(String.valueOf(QTSConstrains.userObj.getSuffix()));
+        }
+        if(QTSConstrains.userObj.getLnFirst()!=null) {
+            if (QTSConstrains.userObj.getLnFirst().toString().trim().equalsIgnoreCase("1")) {
+                ivChecked.setImageResource(R.mipmap.ic_ticked);
+            } else {
+                ivChecked.setImageResource(R.mipmap.ic_tick);
+            }
         }
     }
 
@@ -111,6 +121,11 @@ public class ProfileFragment1 extends BaseTFragment{
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return null;
     }
 
     private void setOnListener(){
@@ -141,6 +156,7 @@ public class ProfileFragment1 extends BaseTFragment{
             @Override
             public void onClick(View v) {
                 fromDatePickerDialog.show();
+                QTSConstrains.checkdate = true;
             }
         });
         edCountry.setOnClickListener(new View.OnClickListener() {

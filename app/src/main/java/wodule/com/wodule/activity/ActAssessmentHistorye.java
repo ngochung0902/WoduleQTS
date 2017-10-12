@@ -16,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wodule.com.wodule.R;
 import wodule.com.wodule.adapter.AdapterAssessmentHistoryE;
+import wodule.com.wodule.helper.QTSConstrains;
 import wodule.com.wodule.helper.QTSHelp;
 import wodule.com.wodule.object.HistoryExam;
 import wodule.com.wodule.object.ListData;
@@ -59,7 +60,7 @@ public class ActAssessmentHistoryE extends AppCompatActivity implements View.OnC
     }
 
     private void getAhistory(){
-        mAPIService.getAhistory("Bearer " + QTSHelp.getAccessToken(getApplicationContext())).enqueue(new Callback<ListData>() {
+        mAPIService.getAhistory("Bearer " + QTSHelp.getAccessToken(getApplicationContext()),"api/users/"+QTSConstrains.ID+"/records").enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
                 Log.e("reponse Ahistory",response.toString());

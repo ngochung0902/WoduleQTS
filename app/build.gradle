@@ -20,6 +20,7 @@ android {
 }
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -34,5 +35,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.2.1'
     compile  'com.github.thelester:Instagram-Helper:1.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 }
 apply plugin: 'com.google.gms.google-services'

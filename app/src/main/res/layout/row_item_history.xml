@@ -27,7 +27,7 @@
 
     <TextView
         android:text="34"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/row_score"
         android:layout_weight="1"

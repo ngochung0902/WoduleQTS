@@ -99,5 +99,5 @@ public abstract class BaseTFragment extends Fragment {
         else return k;
     }
 
-
+    public abstract Object onRetainCustomNonConfigurationInstance();
 }
